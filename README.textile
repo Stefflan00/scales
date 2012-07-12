@@ -8,11 +8,11 @@ Add this line to your application's Gemfile:
 
 bc.. gem 'scales'
 
-And then execute:
+p. And then execute:
 
 bc.. $ bundle
 
-Or install it yourself as:
+p. Or install it yourself as:
 
 bc.. $ gem install scales
 
