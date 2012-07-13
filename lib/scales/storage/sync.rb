@@ -18,12 +18,24 @@ module Scales
           )
         end
         
+        def connection
+          @@redis
+        end
+        
         def set(key, value)
           @@redis.set(key, value)
         end
         
         def get(key)
           @@redis.get(key)
+        end
+        
+        def add(queue, job)
+          @@redis.lpush queue, job
+        end
+        
+        def pop(queue)
+          @@redis.brpop(queue).last
         end
         
       end

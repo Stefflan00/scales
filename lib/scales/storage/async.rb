@@ -14,15 +14,31 @@ module Scales
           @@redis = EM::Hiredis.connect "redis://#{Scales.config.redis_host}:#{Scales.config.redis_port}"
         end
         
+        def connection
+          @@redis
+        end
+        
         def set(key, value)
           @@redis.set(key, value) do
-            yield
+            yield if block_given?
           end
         end
         
         def get(key)
           @@redis.get(key) do |value|
-            yield(value)
+            yield(value) if block_given?
+          end
+        end
+        
+        def add(queue, job)
+          @@redis.lpush queue, job do
+            yield if block_given?
+          end
+        end
+        
+        def pop(queue)
+          @@redis.brpop(queue) do |value|
+            yield(value.last)
           end
         end
         

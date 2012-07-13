@@ -5,6 +5,7 @@ module Scales
   autoload :Helper,   "scales/helper"
   autoload :Config,   "scales/config"
   autoload :Storage,  "scales/storage"
+  autoload :Queue,    "scales/queue"
 end
 
 require "scales/version"

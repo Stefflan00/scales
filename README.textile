@@ -4,8 +4,8 @@ TODO: Write a gem description
 
 h3. Build Status
 
-* master: "!https://secure.travis-ci.org/southdesign/scales.png?branch=master!":http://travis-ci.org/southdesign/scales
-* dev: "!https://secure.travis-ci.org/southdesign/scales.png?branch=dev!":http://travis-ci.org/southdesign/scales
+* "!https://secure.travis-ci.org/southdesign/scales.png?branch=master!":http://travis-ci.org/southdesign/scales on master branch
+* "!https://secure.travis-ci.org/southdesign/scales.png?branch=dev!":http://travis-ci.org/southdesign/scales on dev branch
 
 h3. Installation
 
