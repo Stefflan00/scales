@@ -1,6 +1,20 @@
 require 'scales'
 
-module Helpers  
+module Helpers
+  
+  def async
+    if EM.reactor_running?
+      yield
+    else
+      out = nil
+      EM.synchrony do
+        out = yield
+        EM.stop
+      end
+      out
+    end
+  end
+  
 end
 
 RSpec.configure do |config|

@@ -1,4 +1,4 @@
-Storage:
+AsyncStorage + SyncStorage:
   Wraps the redis storage
 
 RequestQueue:
