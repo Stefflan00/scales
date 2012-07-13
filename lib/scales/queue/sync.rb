@@ -3,18 +3,16 @@ module Scales
     module Sync
             
       module Base
-        @@key = nil
-        
         def key(key)
-          @@key = key
+          @key = key
         end
         
         def add(job)
-          Scales::Storage::Sync.add(@@key, job)
+          Scales::Storage::Sync.add(@key, job)
         end
         
         def pop
-          Scales::Storage::Sync.pop(@@key)
+          Scales::Storage::Sync.pop(@key)
         end
       end
       

@@ -3,20 +3,18 @@ module Scales
     module Async
             
       module Base
-        @@key = nil, nil
-        
         def key(key)
-          @@key = key
+          @key = key
         end
         
         def add(job)
-          Scales::Storage::Async.add(@@key, job) do
+          Scales::Storage::Async.add(@key, job) do
             yield if block_given?
           end
         end
         
         def pop
-          Scales::Storage::Async.pop(@@key) do |value|
+          Scales::Storage::Async.pop(@key) do |value|
             yield(value)
           end
         end

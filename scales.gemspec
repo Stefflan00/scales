@@ -4,8 +4,8 @@ require File.expand_path('../lib/scales/version', __FILE__)
 Gem::Specification.new do |gem|
   gem.authors       = ["Thomas Fankhauser"]
   gem.email         = ["tommylefunk@googlemail.com"]
-  gem.description   = %q{TODO: Write a gem description}
-  gem.summary       = %q{TODO: Write a gem summary}
+  gem.description   = %q{Super Scale System}
+  gem.summary       = %q{Super Scale System}
   gem.homepage      = "http://itscales.org"
 
   gem.files         = `git ls-files`.split($\)
