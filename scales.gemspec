@@ -20,10 +20,11 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency "rspec", ">= 2.11"
   
   # Production
-  gem.add_dependency "redis",         ">= 3.0.1"
-  gem.add_dependency "eventmachine",  ">= 1.0.0.beta.4"
-  gem.add_dependency "em-synchrony",  ">= 1.0.2"
-  gem.add_dependency "em-hiredis",    ">= 0.1.1"
-  gem.add_dependency "goliath",       ">= 1.0.0.beta.1"
+  gem.add_dependency "redis",             ">= 3.0.1"
+  gem.add_dependency "eventmachine",      ">= 1.0.0.beta.4"
+  gem.add_dependency "em-http-request",   ">= 1.0.2"
+  gem.add_dependency "em-synchrony",      ">= 1.0.2"
+  gem.add_dependency "em-hiredis",        ">= 0.1.1"
+  gem.add_dependency "goliath",           ">= 1.0.0.beta.1"
   
 end
