@@ -8,11 +8,11 @@ module Scales
         end
         
         def add(job)
-          Scales::Storage::Sync.add(@key, job)
+          Storage::Sync.add(@key, job)
         end
         
         def pop
-          Scales::Storage::Sync.pop(@key)
+          Storage::Sync.pop(@key)
         end
       end
       

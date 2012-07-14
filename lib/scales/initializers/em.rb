@@ -1,3 +1,3 @@
 require 'eventmachine'
 require 'em-synchrony'
-require 'em-hiredis'
+require 'em-synchrony/em-hiredis'

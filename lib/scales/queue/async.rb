@@ -8,15 +8,11 @@ module Scales
         end
         
         def add(job)
-          Scales::Storage::Async.add(@key, job) do
-            yield if block_given?
-          end
+          Storage::Async.add(@key, job)
         end
         
         def pop
-          Scales::Storage::Async.pop(@key) do |value|
-            yield(value)
-          end
+          Storage::Async.pop(@key)
         end
       end
       

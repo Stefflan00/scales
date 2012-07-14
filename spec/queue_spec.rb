@@ -37,9 +37,9 @@ describe Scales::Queue::Async do
 
       it "should take them out blocking" do
         async do
-          queue.pop{ |job| job.should == "job 1" }
-          queue.pop{ |job| job.should == "job 2" }
-          queue.pop{ |job| job.should == "job 3" }
+          queue.pop.should == "job 1"
+          queue.pop.should == "job 2"
+          queue.pop.should == "job 3"
         end
       end
 

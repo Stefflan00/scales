@@ -30,12 +30,16 @@ module Scales
           @@redis.get(key)
         end
         
+        def del(key)
+          @@redis.del(key)
+        end
+        
         def add(queue, job)
-          @@redis.lpush queue, job
+          @@redis.lpush(queue, job)
         end
         
         def pop(queue)
-          @@redis.brpop(queue).last
+          @@redis.brpop(queue, 0).last
         end
         
       end

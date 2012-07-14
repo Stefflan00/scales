@@ -10,7 +10,7 @@ module Scales
       class << self
         
         def connect!
-          return if @@redis && @@redis.connected?
+          return if @@redis and @@redis.connected?
           @@redis = EM::Hiredis.connect "redis://#{Scales.config.redis_host}:#{Scales.config.redis_port}"
         end
         
@@ -19,27 +19,23 @@ module Scales
         end
         
         def set(key, value)
-          @@redis.set(key, value) do
-            yield if block_given?
-          end
+          @@redis.set(key, value)
         end
         
         def get(key)
-          @@redis.get(key) do |value|
-            yield(value) if block_given?
-          end
+          @@redis.get(key)
+        end
+        
+        def del(key)
+          @@redis.del(key)
         end
         
         def add(queue, job)
-          @@redis.lpush queue, job do
-            yield if block_given?
-          end
+          @@redis.lpush(queue, job)
         end
         
         def pop(queue)
-          @@redis.brpop(queue) do |value|
-            yield(value.last)
-          end
+          @@redis.brpop(queue, 0).last
         end
         
       end
