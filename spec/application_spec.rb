@@ -11,6 +11,8 @@ describe Scales::Application do
       ARGV << "-p" << "3000"
       Scales::Application.run!
     end
+    
+    sleep 2
   end
   
   after :all do
