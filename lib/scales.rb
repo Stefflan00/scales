@@ -1,4 +1,4 @@
-require 'scales/autoload'
+require 'scales/boot/autoload'
 
 module Scales
   autoload :Helper,       "scales/helper"
@@ -7,9 +7,6 @@ module Scales
   autoload :Queue,        "scales/queue"
   autoload :Server,       "scales/server"
   autoload :Dispatch,     "scales/dispatch"
-  autoload :Lookup,       "scales/lookup"
-  autoload :ContentType,  "scales/content_type"
-  autoload :Application,  "scales/application"
 end
 
 require "scales/version"

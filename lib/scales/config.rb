@@ -1,7 +1,6 @@
-require 'ostruct'
-
 module Scales
   module Config
+    require 'ostruct'
     
     DEFAULTS = {
       :redis_host => "localhost",

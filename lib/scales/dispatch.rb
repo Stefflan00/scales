@@ -1,5 +1,7 @@
 module Scales
-  module Dispatch    
+  module Dispatch
+    autoload :Lookup, "scales/dispatch/lookup"
+     
     class << self
       
       def request(env)

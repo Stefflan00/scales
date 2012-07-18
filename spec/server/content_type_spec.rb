@@ -3,16 +3,16 @@ require 'helper'
 class TestServer < Goliath::API
   use Goliath::Rack::Params
   use Goliath::Rack::DefaultMimeType
-  use Scales::ContentType, 'html'
+  use Scales::Server::ContentType, 'html'
   
   def response(env)
     [200,{},""]
   end
 end
 
-describe Scales::ContentType do
+describe Scales::Server::ContentType do
   
-  Scales::ContentType::TYPES.each do |format, type|
+  Scales::Server::ContentType::TYPES.each do |format, type|
     it "#{format} should be recognized" do
       with_api(TestServer, :log_stdout => true) do
         get_request(:path => "/test.#{format}") do |client|
