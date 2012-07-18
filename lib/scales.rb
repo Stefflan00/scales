@@ -9,6 +9,7 @@ module Scales
   autoload :Dispatch,     "scales/dispatch"
   autoload :Lookup,       "scales/lookup"
   autoload :ContentType,  "scales/content_type"
+  autoload :Application,  "scales/application"
 end
 
 require "scales/version"
