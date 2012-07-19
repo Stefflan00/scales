@@ -5,6 +5,7 @@ module Scales
   autoload :Config,       "scales/config"
   autoload :Storage,      "scales/storage"
   autoload :Queue,        "scales/queue"
+  autoload :PubSub,       "scales/pub_sub"
   autoload :Server,       "scales/server"
   autoload :Dispatch,     "scales/dispatch"
 end

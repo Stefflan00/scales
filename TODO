@@ -24,3 +24,8 @@ Worker:
 
 Cache:
   Enables to push content or incremental updates to the storage
+    
+--
+
+* 15 seconds timeout - em-redis, eventmachine, em-http?
+  

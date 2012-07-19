@@ -42,6 +42,14 @@ module Scales
           @@redis.brpop(queue, 0).last
         end
         
+        def publish(channel, message)
+          add(channel, message)
+        end
+        
+        def subscribe(channel)
+          pop(channel)
+        end
+        
       end
     end
   end

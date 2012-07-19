@@ -1,30 +1,16 @@
 module Scales
   module Queue
     module Async
-            
-      module Base
-        def key(key)
-          @key = key
-        end
+      class << self
         
         def add(job)
-          Storage::Async.add(@key, job)
+          Storage::Async.add(Queue::NAME, job)
         end
         
         def pop
-          Storage::Async.pop(@key)
+          Storage::Async.pop(Queue::NAME)
         end
-      end
-      
-      
-      module Request
-        extend Base
-        key "scales_request_queue"
-      end
-      
-      module Response
-        extend Base
-        key "scales_response_queue"
+        
       end
       
     end
