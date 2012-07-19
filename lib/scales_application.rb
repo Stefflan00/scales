@@ -1,19 +1,19 @@
 require 'drb/drb'
 
 module ScalesApplication
-  URI = "druby://localhost:8787"
+  URI   = "druby://localhost:8787"
   
-  @@pid = nil
+  autoload :Rails, "scales_application/rails"
   
   class << self
-    def run!
+    @@pid = nil
+    
+    def run!(klass = Rails)
       @@pid = fork do
         $running = true
         Signal.trap("INT") { $running = false }
         
-        require './config/application.rb'
-        # todo -> get real app module name
-        DRb.start_service(URI, App::Application.initialize!)
+        DRb.start_service(URI, klass.app)
         while $running do sleep(1) end
         DRb.stop_service
       end
