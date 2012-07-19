@@ -50,6 +50,10 @@ module Scales
           pop(channel)
         end
         
+        def flushall!
+          @@redis.flushall
+        end
+        
       end
     end
   end

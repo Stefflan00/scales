@@ -7,7 +7,7 @@ describe Scales::Dispatch::Job do
   end
   
   it "converts response to a rack response" do
-    Scales::Dispatch::Job.to_response({}).should be_a(Array)
+    Scales::Dispatch::Job.to_response(JSON.generate([201, {}, ""])).should be_a(Array)
   end
   
 end

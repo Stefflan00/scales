@@ -24,28 +24,12 @@
   "HTTP_COOKIE"=>"...", 
   "HTTP_CONNECTION"=>"keep-alive", 
   "rack.version"=>[1, 1], 
-  "rack.input"=>"stringio", 
-  "rack.errors"=>"iostderr",
+  "rack.input"=>StringIO.new,
   "rack.multithread"=>false, 
   "rack.multiprocess"=>false, 
   "rack.run_once"=>false, 
   "rack.url_scheme"=>"http", 
   "HTTP_VERSION"=>"HTTP/1.1", 
   "REQUEST_PATH"=>"/songs", 
-  "ORIGINAL_FULLPATH"=>"/songs", 
-  "rack.request.form_input"=>"stringio", 
-  "rack.request.form_hash"=>
-    { 
-      "utf8"=>"✓", 
-      "authenticity_token"=>"tcSbFRtVhjm5/SH89EJ7VUSfOXcO9X5zubxym8VNzl8=", 
-      "song"=>{"artist"=>"Tommy", "name"=>"Ultraschmog"}, 
-      "commit"=>"Create Song"
-    }, 
-  "rack.request.form_vars"=>"utf8=%E2%9C%93&authenticity_token=tcSbFRtVhjm5%2FSH89EJ7VUSfOXcO9X5zubxym8VNzl8%3D&song%5Bartist%5D=Tommy&song%5Bname%5D=Ultraschmog&commit=Create+Song", 
-  "action_dispatch.request_id"=>"07306c523a57bed0e150962dbc62995f", "action_dispatch.remote_ip"=>127.0.0.1, "rack.session"=>{"session_id"=>"f40def3204778fe40e4577203dd77514", "_csrf_token"=>"tcSbFRtVhjm5/SH89EJ7VUSfOXcO9X5zubxym8VNzl8="}, 
-  "rack.request.cookie_hash"=>{}, 
-  "rack.request.cookie_string"=>"", 
-  "action_dispatch.cookies"=>"...", 
-  "action_dispatch.request.unsigned_session_cookie"=>{"session_id"=>"f40def3204778fe40e4577203dd77514", "_csrf_token"=>"tcSbFRtVhjm5/SH89EJ7VUSfOXcO9X5zubxym8VNzl8="}, 
-  "action_dispatch.request.content_type"=>"application/x-www-form-urlencoded"
+  "ORIGINAL_FULLPATH"=>"/songs"
 }
