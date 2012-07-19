@@ -8,6 +8,7 @@ module Scales
   autoload :PubSub,       "scales/pub_sub"
   autoload :Server,       "scales/server"
   autoload :Dispatch,     "scales/dispatch"
+  autoload :Worker,       "scales/worker"
 end
 
 require "scales/version"

@@ -1,8 +1,10 @@
+require 'securerandom'
+
 autoload :Redis,          "scales/boot/initializers/redis"
 autoload :EventMachine,   "scales/boot/initializers/em"
 autoload :Goliath,        "scales/boot/initializers/goliath"
-autoload :ActiveSupport,  "scales/boot/initializers/activesupport"
 autoload :JSON,           "scales/boot/initializers/json"
+#autoload :SecureRandom,   "scales/boot/initializers/securerandom"
 
 module EventMachine
   autoload :Synchrony,  "scales/boot/initializers/em"

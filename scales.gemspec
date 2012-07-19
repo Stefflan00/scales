@@ -26,7 +26,6 @@ Gem::Specification.new do |gem|
   gem.add_dependency "em-synchrony",      ">= 1.0.2"
   gem.add_dependency "em-hiredis",        ">= 0.1.1"
   gem.add_dependency "goliath",           ">= 1.0.0.beta.1"
-  gem.add_dependency "activesupport",     ">= 3.2.6"
   gem.add_dependency "json",              ">= 1.7.3"
   
 end
