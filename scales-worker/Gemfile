@@ -4,3 +4,6 @@ source 'https://rubygems.org'
 gemspec
 
 gem "scales-core", :path => "../scales-core"
+
+# Load the dependencies of the rails app
+eval(IO.read(File.expand_path("../spec/fixtures/app/Gemfile", __FILE__)), binding)
