@@ -1,11 +1,11 @@
 AsyncStorage + SyncStorage:
   Wraps the redis storage
 
-RequestQueue:
-  Pub/Sub queue for the requests: LPUSH RPUSH
+Queue:
+  Blocking Requests Queue
 
-ResponseQueue:
-  Pub/Sub queue for the responses: LPUSH RPUSH
+PubSub:
+  Blocking Response Queue
 
 Dispatch:
   Module takes a request and either triggers the lookup or a request

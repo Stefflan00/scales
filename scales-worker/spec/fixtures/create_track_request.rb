@@ -1,0 +1,23 @@
+{
+  "scales.id" => "2c43b4fa508b923ad563b5395e1f4619",
+  "SERVER_NAME" => "localhost",
+  "SERVER_PORT" => "3000",
+  "REQUEST_METHOD" => "POST",
+  "QUERY_STRING" => "",
+  "SCRIPT_NAME" => "/tracks",
+  "PATH_INFO" => "/tracks",
+  "HTTP_HOST" => "localhost:3000",
+  "HTTP_USER_AGENT" => "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_4) AppleWebKit/536.6.1 (KHTML, like Gecko) Version/5.2 Safari/536.6.1",
+  "HTTP_ACCEPT" => "text/html, application/xhtml+xml, application/xml;q=0.9, */*;q=0.8",
+  "HTTP_ORIGIN" => "http://localhost:3000",
+  "HTTP_AUTHORIZATION" => "Basic YWRtaW46bXByb2plY3RidWlsZDRkbWlu",
+  "HTTP_REFERER" => "http://localhost:3000/tracks/new",
+  "HTTP_ACCEPT_LANGUAGE" => "en-us",
+  "HTTP_ACCEPT_ENCODING" => "gzip, deflate",
+  "HTTP_COOKIE" => "__utma=111872281.541960523.1334332296.1337539026.1337769137.4; __utmz=111872281.1334332296.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none); _app_session=BAh7B0kiD3Nlc3Npb25faWQGOgZFRkkiJWYxMzMwZGQ0MjY5MzRiNDgzOWM2OWY4ZmZiZTViYTI5BjsAVEkiEF9jc3JmX3Rva2VuBjsARkkiMU5uR1dTY01qTEV1NDFXUXlRSXlWQUs5ZEE1OGJZcEExNWZGTkFuYitkODg9BjsARg%3D%3D--7b4a0828fcf47e089b62591ebe96959d49b79ac7; _worker_session=BAh7B0kiD3Nlc3Npb25faWQGOgZFRkkiJWY0MGRlZjMyMDQ3NzhmZTQwZTQ1NzcyMDNkZDc3NTE0BjsAVEkiEF9jc3JmX3Rva2VuBjsARkkiMXRjU2JGUnRWaGptNS9TSDg5RUo3VlVTZk9YY085WDV6dWJ4eW04Vk56bDg9BjsARg%3D%3D--1a605568383baf3f9aef8f3f7cb109e114d29578; _espresso_theater_session=BAh7CEkiD3Nlc3Npb25faWQGOgZFRkkiJWQ4MWM0MDMwNmJlNmIxZDg5YWY4NzYxYTc1ODJjNTA1BjsAVEkiEF9jc3JmX3Rva2VuBjsARkkiMUpLQll4NVJqR2paTjJyMmg3YXE0bkVIWnpnRUNQSFplZ2doSjdWMXYzVUU9BjsARkkiGXdhcmRlbi51c2VyLnVzZXIua2V5BjsAVFsISSIJVXNlcgY7AEZbBmkHSSIiJDJhJDEwJFJXd0ZGRnRta0p1dVJYbnBXbGdMeC4GOwBU--7fa4789ee149308bad1f4b82fb37b4e3b984109c; remember_user_token=BAhbB1sGaQdJIiIkMmEkMTAkUld3RkZGdG1rSnV1UlhucFdsZ0x4LgY6BkVU--11b5f1fbb343842fb77501d6e5be77ea00978ba8; _keeptrack_session=BAh7B0kiD3Nlc3Npb25faWQGOgZFRkkiJTU3YTBkMDFkYWJlNjg3ODg3ODA1YjI2ZGVlNzM3NjAyBjsAVEkiEF9jc3JmX3Rva2VuBjsARkkiMWF4T1RmWEgvMmxxb05PUERvWHZsQldZaGw0YWVYTWZvSkVISTVKcTAvM0U9BjsARg%3D%3D--1d6377a1fa6c822039f575d137a23c66f1f98f3c",
+  "HTTP_CONNECTION" => "keep-alive",
+  "HTTP_VERSION" => "1.1",
+  "rack.version" => [1,0],
+  "rack.url_scheme" => nil,
+  "rack.input" => StringIO.new("utf8=%E2%9C%93&authenticity_token=wcCoDTHW9jkPF7Ka%2FdvGTpyL7dsIqEv1l43kd1SwnMk%3D&track%5Bname%5D=Thomas+Fankhauser&track%5Bartist%5D=Islandary&commit=Create+Track")
+}

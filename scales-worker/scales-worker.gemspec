@@ -6,10 +6,10 @@ Gem::Specification.new do |gem|
   gem.email         = ["tommylefunk@googlemail.com"]
   gem.description   = %q{Scales Worker}
   gem.summary       = %q{Takes requests out of the queue and processes them}
-  gem.homepage      = ""
+  gem.homepage      = "http://itscales.org"
 
-  gem.files         = `git ls-files`.split($\)
-  gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
+  gem.files         = Dir['LICENSE', 'lib/**/*']
+  gem.executables   = Dir['bin/*'].map{ |f| File.basename(f) }
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
   gem.name          = "scales-worker"
   gem.require_paths = ["lib"]
