@@ -22,4 +22,5 @@ Gem::Specification.new do |gem|
   # Production
   gem.add_dependency  "scales-core",  ">= 0.0.1"
   gem.add_dependency  "rails",        ">= 3.2.6"
+  gem.add_dependency  "sqlite3",      ">= 1.3.6"
 end
