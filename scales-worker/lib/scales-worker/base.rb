@@ -3,7 +3,7 @@ module Scales
     class << self
       
       def run!
-        Worker.new
+        Worker.new.work!
       end
       
     end

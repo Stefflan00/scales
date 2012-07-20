@@ -4,7 +4,7 @@ describe Scales::Worker::Worker do
   
   before(:all) do
     in_app_folder do
-      @worker = Scales::Worker.run!
+      @worker = Scales::Worker::Worker.new
     end
   end
   

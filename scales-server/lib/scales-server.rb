@@ -1,4 +1,3 @@
-require 'bundler/setup'
 require 'scales-server/boot/autoload'
 
 module Scales

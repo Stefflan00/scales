@@ -1,1 +1,2 @@
-require 'scales-core'
+require 'bundler/setup'
+Bundler.require
