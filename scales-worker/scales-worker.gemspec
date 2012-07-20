@@ -4,8 +4,8 @@ require File.expand_path('../lib/scales-worker/version', __FILE__)
 Gem::Specification.new do |gem|
   gem.authors       = ["Thomas Fankhauser"]
   gem.email         = ["tommylefunk@googlemail.com"]
-  gem.description   = %q{TODO: Write a gem description}
-  gem.summary       = %q{TODO: Write a gem summary}
+  gem.description   = %q{Scales Worker}
+  gem.summary       = %q{Takes requests out of the queue and processes them}
   gem.homepage      = ""
 
   gem.files         = `git ls-files`.split($\)

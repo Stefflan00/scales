@@ -4,8 +4,8 @@ require File.expand_path('../lib/scales-server/version', __FILE__)
 Gem::Specification.new do |gem|
   gem.authors       = ["Thomas Fankhauser"]
   gem.email         = ["tommylefunk@googlemail.com"]
-  gem.description   = %q{TODO: Write a gem description}
-  gem.summary       = %q{TODO: Write a gem summary}
+  gem.description   = %q{Scales Server}
+  gem.summary       = %q{Receives all requests and dispatches them}
   gem.homepage      = ""
 
   gem.files         = `git ls-files`.split($\)
