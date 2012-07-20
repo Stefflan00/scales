@@ -1,6 +1,6 @@
 require 'bundler/setup'
-Bundler.require
 
+require 'scales-core'
 require 'securerandom'
 
 autoload :Goliath, "scales-server/boot/initializers/goliath"
