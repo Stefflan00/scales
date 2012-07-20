@@ -18,8 +18,8 @@ Gem::Specification.new do |gem|
   # Development
   gem.add_development_dependency  "rake",  ">= 0.9.2.2"
   gem.add_development_dependency  "rspec", ">= 2.11"
-  gem.add_development_dependency  "rails", ">= 3.2.6"
   
   # Production
-  gem.add_dependency "scales-core", ">= 0.0.1"
+  gem.add_dependency  "scales-core",  ">= 0.0.1"
+  gem.add_dependency  "rails",        ">= 3.2.6"
 end

@@ -1,3 +1,4 @@
+require 'bundler/setup'
 require "scales-worker/boot/autoload"
 
 module Scales
