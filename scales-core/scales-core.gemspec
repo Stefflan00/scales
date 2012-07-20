@@ -15,11 +15,9 @@ Gem::Specification.new do |gem|
   gem.require_paths = ["lib"]
   gem.version       = Scales::Core::VERSION
   
-  # Development
-  gem.add_development_dependency "rake",  ">= 0.9.2.2"
-  gem.add_development_dependency "rspec", ">= 2.11"
-  
-  # Production
+  # Dependencies
+  gem.add_dependency "rake",              ">= 0.9.2.2"
+  gem.add_dependency "rspec",             ">= 2.11"
   gem.add_dependency "redis",             ">= 3.0.1"
   gem.add_dependency "eventmachine",      ">= 1.0.0.beta.4"
   gem.add_dependency "em-http-request",   ">= 1.0.2"

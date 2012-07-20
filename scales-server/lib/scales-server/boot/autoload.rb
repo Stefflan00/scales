@@ -1,5 +1,3 @@
-require 'bundler/setup'
-
 require 'scales-core'
 require 'securerandom'
 
