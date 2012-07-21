@@ -13,6 +13,12 @@ module Helpers
     Dir.chdir(pwd)
   end
   
+  def in_process_thread
+    thread = Thread.new do
+      Thread.current[:post_process_queue] = []
+      yield
+    end.join
+  end
 end
 
 RSpec.configure do |config|

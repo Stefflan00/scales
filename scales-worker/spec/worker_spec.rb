@@ -64,4 +64,18 @@ describe Scales::Worker::Worker do
     JSON.parse(job).should == response
   end
   
+  context "post processing" do
+    
+    it "should post process all jobs" do
+      job = fixture "no_route_request.json"
+      
+      in_process_thread do
+        Scales.update "/tracks", "/tracks/1/edit"
+        @worker.post_process!(job)
+        Thread.current[:post_process_queue].should be_empty
+      end
+    end
+    
+  end
+  
 end

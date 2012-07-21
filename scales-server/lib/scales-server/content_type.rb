@@ -18,8 +18,7 @@ module Scales
       }
     
       def initialize(app, format = 'html')
-        @app = app
-        @format = format
+        @app, @format = app, format
       end
 
       def post_process(env, status, headers, body)

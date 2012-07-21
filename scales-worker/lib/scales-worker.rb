@@ -7,6 +7,7 @@ module Scales
     autoload :Response,     "scales-worker/response"
     autoload :Worker,       "scales-worker/worker"
     autoload :Cache,        "scales-worker/cache"
+    autoload :Path,         "scales-worker/path"
   end
 end
 
