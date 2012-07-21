@@ -24,4 +24,5 @@ Gem::Specification.new do |gem|
   gem.add_dependency "em-synchrony",      ">= 1.0.2"
   gem.add_dependency "em-hiredis",        ">= 0.1.1"
   gem.add_dependency "json",              ">= 1.7.3"
+  gem.add_dependency "colorize",          ">= 0.5.8"
 end

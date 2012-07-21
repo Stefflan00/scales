@@ -1,3 +1,4 @@
+require 'colorize'
 require 'json'
 
 autoload :Redis,          "scales-core/boot/initializers/redis"

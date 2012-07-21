@@ -9,6 +9,10 @@ module Scales
           def app
             @app ||= initialize_app!
           end
+          
+          def name
+            "Rails application #{@app.class.to_s.split("::").first}"
+          end
     
           private
         

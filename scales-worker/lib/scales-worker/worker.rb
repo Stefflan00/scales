@@ -2,10 +2,10 @@ module Scales
   module Worker
     class Worker
       attr_reader :app
-      attr_reader :threads
+      attr_reader :type
     
-      def initialize(application = Application::Rails)
-        @app, @threads = application.app, []
+      def initialize(type = Application::Rails)
+        @type, @app = type, type.app
       end
       
       def parse(job)
@@ -42,7 +42,12 @@ module Scales
       
       # Loop the processing of requests
       def work!
-        loop{ process_request! }
+        begin
+          puts "Started working with #{@type.name} from #{Dir.pwd}".green
+          loop{ process_request! }
+        rescue Interrupt => e
+          puts "Goodbye".green
+        end
       end
     
     end
