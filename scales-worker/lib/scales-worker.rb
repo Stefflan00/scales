@@ -6,6 +6,7 @@ module Scales
     autoload :Job,          "scales-worker/job"
     autoload :Response,     "scales-worker/response"
     autoload :Worker,       "scales-worker/worker"
+    autoload :Cache,        "scales-worker/cache"
   end
 end
 
