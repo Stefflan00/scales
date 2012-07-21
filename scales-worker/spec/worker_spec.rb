@@ -42,11 +42,23 @@ describe Scales::Worker::Worker do
     response[2].should be_a(String)
   end
   
-  it "should work one iteration: take job out of queue, process, but answer back" do
+  it "should not crash on a process error" do
+    job           = fixture "no_route_request.json"
+    id, response  = @worker.process!(job)
+    
+    response.should be_a(Array)
+    response.should have(3).entries
+    response[0].should == 404
+    response[1].should be_a(Hash)
+    response[1]['scales.id'].should == "2c43b4fa508b923ad563b5395e1f4619"
+    response[2].should be_a(String)
+  end
+  
+  it "process a whole iteration with the queue" do
     job = fixture "create_track_request.json"
     Scales::Queue::Sync.add(job)
     
-    id, response = @worker.process_request!
+    id, response = @worker.process_request!(true)
     
     job = Scales::PubSub::Sync.subscribe(id)
     JSON.parse(job).should == response
