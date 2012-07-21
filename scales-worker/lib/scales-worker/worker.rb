@@ -26,7 +26,7 @@ module Scales
       end
       
       # Wait for a request, process it, publish the response and exit
-      def process_request!(blocking = false)
+      def process_request!(should_wait_for_request_to_finish = false)
         job = Scales::Queue::Sync.pop
         id, response = nil, nil
         
@@ -35,7 +35,7 @@ module Scales
           Scales::PubSub::Sync.publish(id, JSON.generate(response))
         end
         
-        thread.join if blocking
+        thread.join if should_wait_for_request_to_finish
         
         [id, response]
       end
