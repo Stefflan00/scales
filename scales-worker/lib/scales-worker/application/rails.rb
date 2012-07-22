@@ -5,33 +5,26 @@ module Scales
         class << self
         
           @@app = nil
-    
-          def app
-            @app ||= initialize_app!
+        
+          def initialize_app!
+            @@app ||= load_application.initialize!
           end
+          alias_method :app,                      :initialize_app!
+          alias_method :initialize_environment!,  :initialize_app!
           
           def name
             "Rails application #{@app.class.to_s.split("::").first}"
           end
-          
-          def initialize_environment!
-            before_modules = Object.constants
-            require './application'
-            after_modules  = Object.constants
-            delta_modules  = after_modules - before_modules
-          
-            Kernel.const_get(delta_modules.last)::Application.load_tasks
-          end
     
           private
-        
-          def initialize_app!
+          
+          def load_application
             before_modules = Object.constants
             require './config/application.rb'
             after_modules  = Object.constants
             delta_modules  = after_modules - before_modules
-          
-            Kernel.const_get(delta_modules.last)::Application.initialize!
+            
+            Kernel.const_get(delta_modules.last)::Application
           end
     
         end
