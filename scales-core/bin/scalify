@@ -1,0 +1,6 @@
+#!/usr/bin/env ruby
+
+require 'scales-core'
+
+Dir.chdir ARGV.first unless ARGV.first.nil?
+Scales::Scalify.start
