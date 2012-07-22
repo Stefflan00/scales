@@ -13,6 +13,15 @@ module Scales
           def name
             "Rails application #{@app.class.to_s.split("::").first}"
           end
+          
+          def initialize_environment!
+            before_modules = Object.constants
+            require './application'
+            after_modules  = Object.constants
+            delta_modules  = after_modules - before_modules
+          
+            Kernel.const_get(delta_modules.last)::Application.load_tasks
+          end
     
           private
         
