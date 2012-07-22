@@ -33,7 +33,11 @@ module Scales
           begin
             response  = @app.call(request)
             response.last.close
-          rescue
+            content   = Response.to_string(response)
+            
+            Scales.push(content, :to => path)
+          rescue Exception => e
+            puts e
           end
         end
       end

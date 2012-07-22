@@ -23,7 +23,7 @@ module Scales
             "SERVER_SOFTWARE"=>"Scales-Worker #{Scales::Worker::VERSION}", 
             "HTTP_HOST"=>"localhost", 
             "HTTP_USER_AGENT"=>"Scales-Worker #{Scales::Worker::VERSION}", 
-            "HTTP_ACCEPT"=>"*", 
+            "HTTP_ACCEPT"=>"*/*", 
             "HTTP_ORIGIN"=>"http://localhost",
             "HTTP_REFERER"=>"http://localhost", 
             "HTTP_CONNECTION"=>"keep-alive", 

@@ -72,7 +72,10 @@ describe Scales::Worker::Worker do
       in_process_thread do
         Scales.update "/tracks", "/tracks/1/edit"
         @worker.post_process!(job)
+        
         Thread.current[:post_process_queue].should be_empty
+        Scales::Storage::Sync.get("/tracks").should have_at_least(100).characters
+        Scales::Storage::Sync.get("/tracks/1/edit").should have_at_least(100).characters
       end
     end
     

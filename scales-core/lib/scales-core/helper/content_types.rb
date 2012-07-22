@@ -14,12 +14,10 @@ module Scales
         :xml   => 'application/xml',
         :pdf   => 'application/pdf'
       }
-
-      def self.included(base)
-        class Symbol
-          def to_content_type
-            Scales::Helper::ContentTypes::TYPES[self]
-          end
+      
+      class ::Symbol
+        def to_content_type
+          Scales::Helper::ContentTypes::TYPES[self]
         end
       end
       
