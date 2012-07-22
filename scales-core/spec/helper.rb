@@ -21,9 +21,23 @@ module Helpers
   
   def in_app_folder
     pwd = Dir.pwd
-    Dir.chdir File.expand_path("../fixtures/app", __FILE__)
+    Dir.chdir File.expand_path("../../../spec/app", __FILE__)
     yield
     Dir.chdir(pwd)
+  end
+  
+  def in_temp_folder
+    pwd = Dir.pwd
+    Dir.mkdir "spec/tmp"
+    Dir.chdir "spec/tmp"
+    begin
+      yield
+    rescue Exception => e
+      raise e
+    ensure
+      Dir.chdir(pwd)
+      FileUtils.rm_rf("spec/tmp")
+    end
   end
   
 end

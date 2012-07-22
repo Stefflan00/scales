@@ -8,7 +8,7 @@ module Helpers
   
   def in_app_folder
     pwd = Dir.pwd
-    Dir.chdir File.expand_path("../fixtures/app", __FILE__)
+    Dir.chdir File.expand_path("../../../spec/app", __FILE__)
     yield
     Dir.chdir(pwd)
   end
