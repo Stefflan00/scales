@@ -1,3 +1,3 @@
 require 'scales-worker'
 
-Scales::Up.application = Worker::Application::Rails
+Scales::Up.application = Scales::Worker::Application::Rails
