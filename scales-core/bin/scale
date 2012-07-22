@@ -1,0 +1,14 @@
+#!/usr/bin/env ruby
+
+require 'rake'
+
+Rake.application.instance_eval do
+  @name = "scale"
+  @rakefiles  = ['config/scaleup.rb']
+  @rakefile   = 'config/scaleup.rb'
+  standard_exception_handling do
+    init(@name)
+    load_rakefile
+    top_level
+  end
+end
