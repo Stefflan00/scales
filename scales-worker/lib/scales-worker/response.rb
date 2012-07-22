@@ -27,6 +27,12 @@ module Scales
           
           [status, headers, body]
         end
+        
+        def to_string(response)
+          body = ""
+          response.last.each{ |chunk| body << chunk }
+          body
+        end
     
       end
     end
