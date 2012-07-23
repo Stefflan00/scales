@@ -30,7 +30,7 @@ describe Scales::Worker::Pusher do
   
   it "process a threaded push" do    
     path  = { :to => "/tracks", :format => :html }
-    @pusher.process_push!(path, true)
+    @pusher.process_push!(path)
     
     Scales::Storage::Sync.get("/tracks").should have_at_least(100).characters
   end
@@ -47,7 +47,7 @@ describe Scales::Worker::Pusher do
     @pusher.done.should == 0
     @pusher.progress.should == 0
     
-    @pusher.push!(paths, true)
+    @pusher.push!(paths)
     
     @pusher.total.should == 3
     @pusher.done.should == 3

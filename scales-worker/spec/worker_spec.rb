@@ -14,6 +14,7 @@ describe Scales::Worker::Worker do
   
   it "app should respond to call" do
     @worker.app.should respond_to(:call)
+    @worker.type.name.should == "Rails App"
   end
   
   it "parses a job to a env" do

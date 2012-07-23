@@ -28,7 +28,7 @@ module Scales
     
       def parse_from_format?(uri)
         content_type = TYPES[@format]
-        TYPES.each { |format, type| content_type = type and break if uri =~ /\.#{format}$/ }
+        TYPES.each { |format, type| content_type = type and break if uri =~ /\.#{format}(\?|$)/ }
         content_type
       end
     end

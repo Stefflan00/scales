@@ -20,6 +20,14 @@ describe Scales::Server::ContentType do
         end
       end
     end
+    
+     it "#{format} should work with params" do
+        with_api(TestServer, :log_stdout => true) do
+          get_request(:path => "/test.#{format}?body=1&page=2&name=18") do |client|
+            client.response_header['CONTENT_TYPE'].should =~ %r{^#{Regexp.escape(type)}}
+          end
+        end
+      end
   end
   
   it "should set default empty content type to default value" do

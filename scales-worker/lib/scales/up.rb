@@ -24,7 +24,6 @@ module Scales
           yield self if block_given?
           
           @pusher.push!(@paths)
-          @pusher.loop_status!
         end
       end
     end

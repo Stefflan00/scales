@@ -19,22 +19,7 @@ module Scales
       def progress
         ((@done.to_f / @total.to_f) * 100).to_i rescue 0
       end
-      
-      def is_running?
-        @total != @done
-      end
-      
-      def loop_status!
-        Thread.new {
-          while is_running? do
-            print "       Scaling up #{@done}/#{@total} (#{progress}%)".green
-            sleep 0.5
-            print "\b"
-          end
-          puts "\n       Done.".green
-        }.join
-      end
-      
+
       def process!(path)
         env = Path.with_options_to_env(path)
         
@@ -61,21 +46,28 @@ module Scales
       end
       
       # Process a single path in thread
-      def process_push!(path, should_wait_for_request_to_finish = false)        
-        thread = Thread.new do
-          Thread.current[:post_process_queue] = []
-          env = process!(path)
-          post_process!(env)
-          @done += 1
-        end
-        
-        thread.join if should_wait_for_request_to_finish
+      def process_push!(path)
+        Thread.current[:post_process_queue] = []
+        env = process!(path)
+        post_process!(env)
+        @done += 1
       end
       
-      def push!(paths, should_wait_for_request_to_finish = false)
+      def push!(paths)
         raise "No Paths added".red if paths.nil? or paths.empty?
+        
+        puts "Application:    #{@type.name}".green
+        puts "Path:           #{Dir.pwd}".green
+        
         @total, @done = paths.size, 0
-        paths.each { |path| process_push!(path, should_wait_for_request_to_finish) }
+        paths.each do |path|
+          print "Pushing paths:  #{progress}% (#{@done}/#{@total})".green
+          process_push!(path)
+          print "\r"
+        end
+        
+        puts "Pushing paths:  #{progress}% (#{@done}/#{@total})".green
+        puts "\nScaled up successfully".green
       end
     end
   end

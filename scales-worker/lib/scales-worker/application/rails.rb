@@ -8,12 +8,14 @@ module Scales
         
           def initialize_app!
             @@app ||= load_application.initialize!
+            raise "Could not load Rails Application" if @@app.nil?
+            @@app
           end
           alias_method :app,                      :initialize_app!
           alias_method :initialize_environment!,  :initialize_app!
           
           def name
-            "Rails application #{@app.class.to_s.split("::").first}"
+            "Rails #{app.class.to_s.split("::").first}"
           end
     
           private

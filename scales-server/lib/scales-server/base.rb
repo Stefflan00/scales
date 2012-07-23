@@ -3,6 +3,8 @@ module Scales
     class << self
       
       def run!
+        ARGV << "--stdout"
+        
         server = Server.new
 
         runner = Goliath::Runner.new(ARGV, server)
