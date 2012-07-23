@@ -55,7 +55,7 @@ describe Scales::Worker::Worker do
     response[2].should be_a(String)
   end
   
-  it "process a whole iteration with the queue" do
+  it "process a whole iteration with the queue", :iteration do
     job = fixture "create_track_request.json"
     Scales::Queue::Sync.add(job)
     
@@ -75,8 +75,6 @@ describe Scales::Worker::Worker do
         @worker.post_process!(job)
         
         Thread.current[:post_process_queue].should be_empty
-        Scales::Storage::Sync.get("/tracks").should have_at_least(100).characters
-        Scales::Storage::Sync.get("/tracks/1/edit").should have_at_least(100).characters
       end
     end
     

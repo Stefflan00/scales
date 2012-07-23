@@ -25,7 +25,9 @@ module Scales
         
         response  = @app.call(env)
         response.last.close
-        Storage::Sync.set(path[:to], Response.to_string(response))
+        
+        Storage::Sync.set(path[:to], Response.to_string(response)) if path[:push]
+        
         env
       end
       
@@ -36,9 +38,6 @@ module Scales
           begin
             response  = @app.call(request)
             response.last.close
-            content   = Response.to_string(response)
-            
-            Scales.push(content, :to => path)
           rescue Exception => e
             puts e
           end

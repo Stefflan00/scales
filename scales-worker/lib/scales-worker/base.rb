@@ -17,8 +17,8 @@ module Scales
     end
     alias_method :set, :push
     
-    def destroy(path)
-      Worker::Cache::Destroy.destroy(path)
+    def destroy(*paths)
+      Worker::Cache::Destroy.destroy(*paths)
     end
     alias_method :delete, :destroy
     alias_method :remove, :destroy

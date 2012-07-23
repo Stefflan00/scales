@@ -7,6 +7,10 @@ module Scales
     attr_accessor :paths
 
     def push format, options
+      paths << { :format => format, :push => true }.merge(options)
+    end
+    
+    def update format, options
       paths << { :format => format }.merge(options)
     end
 

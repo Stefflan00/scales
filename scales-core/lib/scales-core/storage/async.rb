@@ -1,17 +1,13 @@
 module Scales
   module Storage
-    module Async
-      include Helper::BeforeFilter
-      
-      before_filter :connect!
-      
+    module Async      
       @@redis = nil
         
       class << self
         
         def connect!
           return if @@redis and @@redis.connected?
-          @@redis = EM::Hiredis.connect "redis://#{Scales.config.redis_host}:#{Scales.config.redis_port}"
+          @@redis = new_connection!
         end
         
         def connection
@@ -19,23 +15,23 @@ module Scales
         end
         
         def set(key, value)
-          @@redis.set(key, value)
+          with_connection{ @@redis.set(key, value) }
         end
         
         def get(key)
-          @@redis.get(key)
+          with_connection{ @@redis.get(key) }
         end
         
         def del(key)
-          @@redis.del(key)
+          with_connection{ @@redis.del(key) }
         end
         
         def add(queue, job)
-          @@redis.lpush(queue, job)
+          with_connection{ @@redis.lpush(queue, job) }
         end
         
         def pop(queue)
-          @@redis.brpop(queue, 0).last
+          with_new_connection{ |redis| redis.brpop(queue, 0) }.last
         end
         
         def publish(channel, message)
@@ -44,6 +40,30 @@ module Scales
         
         def subscribe(channel)
           pop(channel)
+        end
+        
+        def flushall!
+          with_connection{ @@redis.flushall }
+        end
+        
+        private
+        
+        def new_connection!
+          EM::Hiredis.connect "redis://#{Scales.config.redis_host}:#{Scales.config.redis_port}"
+        end
+        
+        def with_connection
+          connect!
+          yield
+        end
+        
+        # Creates a new connection for blocking calls and closes it after the block
+        def with_new_connection
+          redis = new_connection!
+          out = yield(redis)
+          redis.quit
+          redis = nil
+          out
         end
         
       end

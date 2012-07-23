@@ -4,8 +4,8 @@ module Scales
       module Destroy
         class << self
         
-          def destroy(path)
-            Storage::Sync.del(path)
+          def destroy(*paths)
+            paths.each{ |path| Storage::Sync.del(path) }
           end
         
         end

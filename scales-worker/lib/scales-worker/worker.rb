@@ -33,9 +33,6 @@ module Scales
           begin
             response  = @app.call(request)
             response.last.close
-            content   = Response.to_string(response)
-            
-            Scales.push(content, :to => path)
           rescue Exception => e
             puts e
           end
@@ -47,11 +44,15 @@ module Scales
         job = Scales::Queue::Sync.pop
         id, response = nil, nil
         
+        Thread.abort_on_exception = true
         thread = Thread.new do
           Thread.current[:post_process_queue] = []
-          id, response  = process!(job)
+          id, response = process!(job)
+          print "#{id} -> " + "#{response.first}".green + " - #{Thread.current[:post_process_queue].size} post jobs -> "
           post_process!(job)
-          Scales::PubSub::Sync.publish(id, JSON.generate(response))
+          print "done".green + " - publishing -> "
+          Scales::PubSub::Sync.publish(id, JSON.generate(response)) # already blocking waiting for next job
+          puts "done".green
         end
         
         thread.join if should_wait_for_request_to_finish
@@ -61,8 +62,10 @@ module Scales
       
       # Loop the processing of requests
       def work!
+        puts "Application:    #{@type.name}".green
+        puts "Path:           #{Dir.pwd}".green
+        
         begin
-          puts "Started working with #{@type.name} from #{Dir.pwd}".green
           loop{ process_request! }
         rescue Interrupt => e
           puts "Goodbye".green

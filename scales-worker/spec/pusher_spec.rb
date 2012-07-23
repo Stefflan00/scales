@@ -21,18 +21,23 @@ describe Scales::Worker::Pusher do
   end
   
   it "processes a push completely" do
-    path  = { :to => "/tracks", :format => :html }
+    path  = { :to => "/tracks", :format => :html, :push => true }
     env   = @pusher.process!(path)
     
     env.should be_a(Hash)
     Scales::Storage::Sync.get("/tracks").should have_at_least(100).characters
   end
   
-  it "process a threaded push" do    
-    path  = { :to => "/tracks", :format => :html }
+  it "processes a full push" do    
+    path  = { :to => "/tracks", :format => :html, :push => true }
     @pusher.process_push!(path)
     
     Scales::Storage::Sync.get("/tracks").should have_at_least(100).characters
+  end
+  
+  it "processes a full update" do    
+    path  = { :to => "/tracks", :format => :html }
+    @pusher.process_push!(path)
   end
   
   it "tracks progress" do
@@ -65,8 +70,6 @@ describe Scales::Worker::Pusher do
         @pusher.post_process!(env)
         
         Thread.current[:post_process_queue].should be_empty
-        Scales::Storage::Sync.get("/tracks/1").should have_at_least(100).characters
-        Scales::Storage::Sync.get("/tracks/1/edit").should have_at_least(100).characters
       end
     end
     
