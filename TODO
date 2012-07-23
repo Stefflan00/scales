@@ -26,6 +26,10 @@ Cache:
   Enables to push content or incremental updates to the storage
     
 --
-
+* cache.yml configuration with environment
+* Push/Append/Prepend/remove partials
+* 404/500 -> fancy error page
+* logging
+* redis key deletion after request?
 * 15 seconds timeout - em-redis, eventmachine, em-http?
   
