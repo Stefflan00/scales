@@ -2,6 +2,8 @@ module Scales
   module Worker
     module Application
       module Rails
+        ENV['RAILS_ENV'] ||= "development"
+        
         class << self
         
           @@app = nil
@@ -15,7 +17,7 @@ module Scales
           alias_method :initialize_environment!,  :initialize_app!
           
           def name
-            "Rails #{app.class.to_s.split("::").first}"
+            "Rails #{app.class.to_s.split("::").first} (#{ENV['RAILS_ENV']})"
           end
     
           private

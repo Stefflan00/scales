@@ -14,7 +14,7 @@ describe Scales::Worker::Worker do
   
   it "app should respond to call" do
     @worker.app.should respond_to(:call)
-    @worker.type.name.should == "Rails App"
+    @worker.type.name.should == "Rails App (test)"
   end
   
   it "parses a job to a env" do
@@ -71,7 +71,7 @@ describe Scales::Worker::Worker do
       job = fixture "no_route_request.json"
       
       in_process_thread do
-        Scales.update "/tracks", "/tracks/1/edit"
+        Scales.update "/tracks", "/tracks/1/edit", :format => :html
         @worker.post_process!(job)
         
         Thread.current[:post_process_queue].should be_empty

@@ -66,7 +66,7 @@ describe Scales::Worker::Pusher do
       env   = @pusher.process!(path)
       
       in_process_thread do
-        Scales.update "/tracks/1", "/tracks/1/edit"
+        Scales.update "/tracks/1", "/tracks/1/edit", :format => :html
         @pusher.post_process!(env)
         
         Thread.current[:post_process_queue].should be_empty

@@ -66,7 +66,7 @@ module Scales
         end
         
         puts "Pushing paths:  #{progress}% (#{@done}/#{@total})".green
-        puts "\nScaled up successfully".green
+        puts "Done.".green
       end
     end
   end

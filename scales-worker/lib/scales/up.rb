@@ -1,6 +1,7 @@
 module Scales
   class Up < ::Rake::TaskLib
     include ::Rake::DSL if defined?(::Rake::DSL)
+    include Helper::ContentTypes
     
     attr_reader :name
     attr_reader :app
@@ -10,8 +11,11 @@ module Scales
       paths << { :format => format, :push => true }.merge(options)
     end
     
-    def update format, options
-      paths << { :format => format }.merge(options)
+    def update *new_paths, params
+      raise "Please define a format like this :format => :html" unless params.is_a?(Hash)
+      format = params.delete(:format)
+      raise "Unknown format :#{format}"                         if format.to_content_type.nil?
+      new_paths.each{ |path| paths << { :format => format, :to => path }}
     end
 
     def initialize(*args)

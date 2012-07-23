@@ -28,3 +28,5 @@ RSpec.configure do |config|
     Scales::Storage::Sync.flushall!
   end
 end
+
+ENV['RAILS_ENV'] = "test"

@@ -47,11 +47,12 @@ module Scales
           }
         end
     
-        def to_env(path, env)
-          full, path, query = parse_path(path)
+        def to_env(options, env)
+          full, path, query = parse_path(options[:to])
+          content_type      = options[:format].to_content_type rescue env["CONTENT_TYPE"]
           {
             "GATEWAY_INTERFACE"=>"CGI/1.1",
-            "CONTENT_TYPE" => env["CONTENT_TYPE"],
+            "CONTENT_TYPE" => content_type,
             "PATH_INFO"=>path,
             "QUERY_STRING"=>query,
             "REMOTE_ADDR"=>"127.0.0.1",
