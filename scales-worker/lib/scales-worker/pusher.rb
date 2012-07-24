@@ -55,8 +55,10 @@ module Scales
       def push!(paths)
         raise "No Paths added".red if paths.nil? or paths.empty?
         
+        puts "Environment:    #{Scales.env}".green
         puts "Application:    #{@type.name}".green
         puts "Path:           #{Dir.pwd}".green
+        puts "Redis:          #{Scales.config.host}:#{Scales.config.port}/#{Scales.config.database}".green
         
         @total, @done = paths.size, 0
         paths.each do |path|

@@ -1,5 +1,6 @@
 require 'colorize'
 require 'json'
+require 'yaml'
 
 autoload :Redis,          "scales-core/boot/initializers/redis"
 autoload :EventMachine,   "scales-core/boot/initializers/em"
@@ -14,3 +15,5 @@ module EM
   autoload :Synchrony,    "scales-core/boot/initializers/em"
   autoload :Hiredis,      "scales-core/boot/initializers/em"
 end
+
+ENV['SCALES_ENV'] ||= "development"

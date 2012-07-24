@@ -1,5 +1,7 @@
 require 'scales-core'
 
+Scales.env = "test"
+
 module Helpers
   
   def async

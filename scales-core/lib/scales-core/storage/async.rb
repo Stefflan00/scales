@@ -49,7 +49,7 @@ module Scales
         private
         
         def new_connection!
-          EM::Hiredis.connect "redis://#{Scales.config.redis_host}:#{Scales.config.redis_port}"
+          EM::Hiredis.connect "redis://:#{Scales.config.password}@#{Scales.config.host}:#{Scales.config.port}/#{Scales.config.database}"
         end
         
         def with_connection

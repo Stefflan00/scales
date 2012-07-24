@@ -49,7 +49,12 @@ module Scales
         private
         
         def new_connection!
-          Redis.new(:host => Scales.config.redis_host, :port => Scales.config.redis_port)
+          Redis.new(
+            :host     => Scales.config.host, 
+            :port     => Scales.config.port, 
+            :password => Scales.config.password, 
+            :database => Scales.config.database
+          )
         end
         
         def with_connection
