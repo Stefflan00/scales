@@ -23,6 +23,10 @@ module Helpers
   def squeeze string
     string.gsub(/(\n|\t|\r)/, ' ').gsub(/>\s*</, '><').squeeze(' ').strip
   end
+  
+  def squeeze_json json
+    squeeze(json).gsub " ", ""
+  end
 end
 
 RSpec.configure do |config|
