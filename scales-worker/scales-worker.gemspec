@@ -16,9 +16,10 @@ Gem::Specification.new do |gem|
   gem.version       = Scales::Worker::VERSION
   
   # Dependencies
-  gem.add_dependency  "scales-core",  ">= 0.0.1"
-  gem.add_dependency  "rails",        ">= 3.2.6"
-  gem.add_dependency  "sqlite3",      ">= 1.3.6"
-  gem.add_dependency  "rspec",        ">= 2.11"
-  gem.add_dependency  "rake",         ">= 0.9.2.2"
+  gem.add_dependency "scales-core",  ">= 0.0.1"
+  gem.add_dependency "rails",        ">= 3.2.6"
+  gem.add_dependency "sqlite3",      ">= 1.3.6"
+  gem.add_dependency "rspec",        ">= 2.11"
+  gem.add_dependency "rake",         ">= 0.9.2.2"
+  gem.add_dependency "nokogiri",     ">= 1.5.5"
 end
