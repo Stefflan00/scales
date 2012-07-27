@@ -61,7 +61,7 @@ describe Scales::Worker::Worker do
     
     id, response = @worker.process_request!(true)
     
-    job = Scales::PubSub::Sync.subscribe(id)
+    job = Scales::PubSub::Sync.subscribe("scales_response_#{id}")
     JSON.parse(job).should == response
   end
   

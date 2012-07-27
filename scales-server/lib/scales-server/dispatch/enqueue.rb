@@ -10,7 +10,7 @@ module Scales
           
             Queue::Async.add(JSON.generate(job))
           
-            response = PubSub::Async.subscribe(id)
+            response = PubSub::Async.subscribe("scales_response_#{id}")
             Job.to_response(response)
           end
         
@@ -18,7 +18,7 @@ module Scales
         
           def create_random_id
             id = SecureRandom.hex(16)
-            Storage::Async.set("test_last_request_id", id) if Goliath.env == :test
+            Storage::Async.set("test_last_request_id", "scales_response_#{id}") if Goliath.env == :test
             id
           end
       

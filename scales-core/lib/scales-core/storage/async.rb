@@ -15,15 +15,15 @@ module Scales
         end
         
         def set(key, value)
-          with_connection{ @@redis.set(key, value) }
+          with_connection(key){ @@redis.set(key, value) }
         end
         
         def get(key, partials = false)
-          with_connection{ partials ? Helper::PartialResolver.resolve(@@redis, key) : @@redis.get(key) }
+          with_connection(key){ partials ? Helper::PartialResolver.resolve(@@redis, key) : @@redis.get(key) }
         end
         
         def del(key)
-          with_connection{ @@redis.del(key) }
+          with_connection(key){ @@redis.del(key) }
         end
         
         def add(queue, job)
@@ -52,7 +52,8 @@ module Scales
           EM::Hiredis.connect "redis://:#{Scales.config.password}@#{Scales.config.host}:#{Scales.config.port}/#{Scales.config.database}"
         end
         
-        def with_connection
+        def with_connection(key = nil)
+          ReservedKeys.validate!(key) if key
           connect!
           yield
         end

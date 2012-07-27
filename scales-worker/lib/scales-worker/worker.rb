@@ -51,7 +51,7 @@ module Scales
           print "#{id} -> " + "#{response.first}".green + " - #{Thread.current[:post_process_queue].size} post jobs -> "
           post_process!(job)
           print "done".green + " - publishing -> "
-          Scales::PubSub::Sync.publish(id, JSON.generate(response)) # already blocking waiting for next job
+          Scales::PubSub::Sync.publish("scales_response_#{id}", JSON.generate(response)) # already blocking waiting for next job
           puts "done".green
         end
         
