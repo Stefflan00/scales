@@ -43,6 +43,10 @@ module Scales
     def update(*paths, params)
       Worker::Cache::Update.update(*paths, params)
     end
+    
+    def get(path)
+      Storage::Sync::get(path)
+    end
         
   end
 end
