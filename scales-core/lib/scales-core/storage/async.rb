@@ -11,7 +11,7 @@ module Scales
         end
         
         def connection
-          @@redis
+          with_connection{ @@redis }
         end
         
         def set(key, value)

@@ -18,7 +18,7 @@ module Scales
         
           def create_random_id
             id = SecureRandom.hex(16)
-            Storage::Async.set("test_last_request_id", "scales_response_#{id}") if Goliath.env == :test
+            Storage::Async.connection.set("test_last_request_id", "scales_response_#{id}") if Goliath.env == :test
             id
           end
       

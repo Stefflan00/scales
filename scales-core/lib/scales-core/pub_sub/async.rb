@@ -9,7 +9,7 @@ module Scales
         
         def subscribe(channel)
           out = Storage::Async.subscribe(channel)
-          Storage::Async.del(channel)
+          Storage::Async.connection.del(channel)
           out
         end
         
