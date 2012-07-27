@@ -42,6 +42,10 @@ module Helpers
     end
   end
   
+  def squeeze string
+    string.gsub(/(\n|\t|\r)/, ' ').gsub(/>\s*</, '><').squeeze(' ').strip
+  end
+  
 end
 
 RSpec.configure do |config|

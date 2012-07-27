@@ -18,8 +18,8 @@ module Scales
           with_connection{ @@redis.set(key, value) }
         end
         
-        def get(key)
-          with_connection{ @@redis.get(key) }
+        def get(key, partials = false)
+          with_connection{ partials ? Helper::PartialResolver.resolve(@@redis, key) : @@redis.get(key) }
         end
         
         def del(key)

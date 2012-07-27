@@ -3,15 +3,18 @@ development:
   port: 6379
   password: 
   database: 1
+  partials: false
 
 test:
   host: localhost
   port: 6379
   password: 
   database: 2
+  partials: false
 
 production:
   host: localhost
   port: 6379
   password: 
   database: 0
+  partials: false

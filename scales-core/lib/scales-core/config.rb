@@ -3,10 +3,11 @@ module Scales
     require 'ostruct'
     
     DEFAULTS = {
-      :host     => "localhost",
-      :port     => 6379,
-      :password => nil,
-      :database => 0
+      :host       => "localhost",
+      :port       => 6379,
+      :password   => nil,
+      :database   => 0,
+      :partials   => false
     }
     
     CONFIG_PATHS = ['config/cache.yml', 'cache.yml']
@@ -14,7 +15,7 @@ module Scales
     class << self
       
       def config
-        @@config ||= load! || OpenStruct.new(DEFAULTS)
+        @@config ||= OpenStruct.new DEFAULTS.merge(load!)
       end
       
       def reset!
@@ -23,12 +24,12 @@ module Scales
       
       def load!
         load_paths = CONFIG_PATHS.map{ |path| File.exists?(path) }
-        return unless load_paths.any?
+        return {} unless load_paths.any?
         
         cache   = CONFIG_PATHS[load_paths.index(true)]
         config  = YAML.load_file(cache)[Scales.env]
         
-        OpenStruct.new(config)
+        Hash[config.map{|(k,v)| [k.to_sym,v]}]
       end
       
     end

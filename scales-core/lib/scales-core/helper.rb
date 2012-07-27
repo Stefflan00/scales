@@ -1,6 +1,6 @@
 module Scales
   module Helper
-    autoload :BeforeFilter, "scales-core/helper/before_filter"
-    autoload :ContentTypes, "scales-core/helper/content_types"
+    autoload :ContentTypes,     "scales-core/helper/content_types"
+    autoload :PartialResolver,  "scales-core/helper/partial_resolver"
   end
 end

@@ -19,6 +19,10 @@ module Helpers
     File.read(File.expand_path("../fixtures/#{file}", __FILE__))
   end
   
+  def squeeze string
+    string.gsub(/(\n|\t|\r)/, ' ').gsub(/>\s*</, '><').squeeze(' ').strip
+  end
+  
 end
 
 RSpec.configure do |config|
