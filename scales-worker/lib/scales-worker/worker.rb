@@ -62,7 +62,7 @@ module Scales
       
       # Loop the processing of requests
       def work!
-        puts "Environment:    #{Scales.env}"
+        puts "Environment:    #{Scales.env}".green
         puts "Application:    #{@type.name}".green
         puts "Path:           #{Dir.pwd}".green
         puts "Redis:          #{Scales.config.host}:#{Scales.config.port}/#{Scales.config.database}".green

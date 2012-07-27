@@ -53,7 +53,7 @@ module Scales
             :host     => Scales.config.host, 
             :port     => Scales.config.port, 
             :password => Scales.config.password, 
-            :database => Scales.config.database
+            :db       => Scales.config.database
           )
         end
         

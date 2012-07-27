@@ -2,4 +2,5 @@
 
 require 'scales-server'
 
+Scales.try_to_setup_env!
 Scales::Server.run!

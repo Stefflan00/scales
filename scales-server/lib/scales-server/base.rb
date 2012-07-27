@@ -3,7 +3,7 @@ module Scales
     class << self
       
       def run!
-        ARGV << "--stdout"
+        ARGV << "--stdout" << "--environment" << "#{Scales.env}"
         
         server = Server.new
 

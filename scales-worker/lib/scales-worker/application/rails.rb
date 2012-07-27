@@ -2,7 +2,7 @@ module Scales
   module Worker
     module Application
       module Rails
-        ENV['RAILS_ENV'] ||= "development"
+        ENV['RAILS_ENV'] ||= Scales.env
         
         class << self
         

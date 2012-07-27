@@ -5,12 +5,17 @@ require './version'
 
 PROJECTS = %w(scales-core scales-server scales-worker)
 
+RSpec::Core::RakeTask.new(:integration) do |rspec|
+  rspec.rspec_opts = "-f d", "--color"
+end
+
 desc "Run spec task for all projects"
 task :spec do
   errors = []
   PROJECTS.each do |project|
-    system(%(cd #{project} && ENV=test RAILS_ENV=test #{$0} spec)) || errors << project
+    system(%(cd #{project} && SCALES_ENV=test #{$0} spec))      || errors << project
   end
+  system(%(cd #{Dir.pwd} && SCALES_ENV=test #{$0} integration)) || errors << "integration"
   fail("Errors in #{errors.join(', ')}") unless errors.empty?
 end
 task :default => :spec
