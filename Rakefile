@@ -16,6 +16,7 @@ task :spec do
     system(%(cd #{project} && SCALES_ENV=test #{$0} spec))      || errors << project
   end
   system(%(cd #{Dir.pwd} && SCALES_ENV=test #{$0} integration)) || errors << "integration"
+  system(%(cd #{Dir.pwd}/spec/app && rails runner -e test "Track.destroy_all"))
   fail("Errors in #{errors.join(', ')}") unless errors.empty?
 end
 task :default => :spec
