@@ -38,7 +38,6 @@ describe Scales::Worker::Worker do
     
     response.should be_a(Array)
     response.should have(3).entries
-    puts "Process a JOB error is: #{response[2]}"
     response[0].should == 302
     response[1].should be_a(Hash)
     response[1]['scales.id'].should == "2c43b4fa508b923ad563b5395e1f4619"
