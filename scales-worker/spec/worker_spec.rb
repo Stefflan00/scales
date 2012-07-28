@@ -32,6 +32,7 @@ describe Scales::Worker::Worker do
   end
   
   it "processes a job completely" do
+    Thread.current[:post_process_queue] = []
     job           = fixture "create_track_request.json"
     id, response  = @worker.process!(job)
     
@@ -45,6 +46,7 @@ describe Scales::Worker::Worker do
   end
   
   it "should not crash on a process error" do
+    Thread.current[:post_process_queue] = []
     job           = fixture "no_route_request.json"
     id, response  = @worker.process!(job)
     
