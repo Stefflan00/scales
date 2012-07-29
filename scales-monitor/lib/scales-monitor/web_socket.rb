@@ -20,6 +20,7 @@ module Scales
       end
       
       def response(env)
+        env.logger.info "Scales.config.database #{Scales.config.database}"
         path = env['REQUEST_PATH']
         
         if path == '/socket'
@@ -38,11 +39,15 @@ module Scales
 
       def server_statuses
         servers = Storage::Async.connection.keys("scales_server_*")
+        return [] if servers.empty?
+        
         Storage::Async.connection.mget(*servers)
       end
       
       def worker_statuses
         workers = Storage::Async.connection.keys("scales_worker_*")
+        return [] if workers.empty?
+        
         Storage::Async.connection.mget(*workers)
       end
       

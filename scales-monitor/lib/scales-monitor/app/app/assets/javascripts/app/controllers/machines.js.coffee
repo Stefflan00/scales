@@ -10,6 +10,10 @@ class App.Machines extends Spine.Controller
     [@servers, @caches, @workers] = [[{name:"Test"}], [], []]
     @render()
     @renderServers()
+    
+    Spine.bind 'start', (data) =>
+      console.log "Machines started:"
+      console.log data
   
   render: ->
     @html JST['app/views/machines'](@)

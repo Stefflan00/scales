@@ -15,6 +15,7 @@ module Scales
     class << self
       
       def config
+        puts "Using config: #{DEFAULTS.merge(load!)}"
         @@config ||= OpenStruct.new DEFAULTS.merge(load!)
       end
       

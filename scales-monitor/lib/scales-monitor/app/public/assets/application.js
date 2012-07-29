@@ -2117,27 +2117,75 @@ replace(/(?:^|:|,)(?:\s*\[)+/g, ''))) {
   var __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-  App.Root = (function(_super) {
+  App.Machines = (function(_super) {
 
-    __extends(Root, _super);
+    __extends(Machines, _super);
 
-    function Root() {
-      Root.__super__.constructor.apply(this, arguments);
-      this.render();
-    }
-
-    Root.prototype.render = function() {
-      return this.html(JST['app/views/root'](this));
+    Machines.prototype.elements = {
+      '#servers': 'serversDiv',
+      '#caches': 'cachesDiv',
+      '#workers': 'workersDiv'
     };
 
-    return Root;
+    function Machines() {
+      var _ref;
+      Machines.__super__.constructor.apply(this, arguments);
+      _ref = [
+        [
+          {
+            name: "Test"
+          }
+        ], [], []
+      ], this.servers = _ref[0], this.caches = _ref[1], this.workers = _ref[2];
+      this.render();
+      this.renderServers();
+    }
+
+    Machines.prototype.render = function() {
+      return this.html(JST['app/views/machines'](this));
+    };
+
+    Machines.prototype.renderServers = function() {
+      var out, server, _i, _len, _ref;
+      out = "";
+      _ref = this.servers;
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        server = _ref[_i];
+        out += JST['app/views/_machine'](server);
+      }
+      return this.serversDiv.html(out);
+    };
+
+    Machines.prototype.renderCaches = function() {
+      var cache, out, _i, _len, _ref;
+      out = "";
+      _ref = this.caches;
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        cache = _ref[_i];
+        out += JST['app/views/_machine'](cache);
+      }
+      return this.cachesDiv.html(out);
+    };
+
+    Machines.prototype.renderWorkers = function() {
+      var out, worker, _i, _len, _ref;
+      out = "";
+      _ref = this.workers;
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        worker = _ref[_i];
+        out += JST['app/views/_machine'](worker);
+      }
+      return this.workersDiv.html(out);
+    };
+
+    return Machines;
 
   })(Spine.Controller);
 
 }).call(this);
 (function() {
   this.JST || (this.JST = {});
-  this.JST["app/views/root"] = function(__obj) {
+  this.JST["app/views/_machine"] = function(__obj) {
     if (!__obj) __obj = {};
     var __out = [], __capture = function(callback) {
       var out = __out, result;
@@ -2177,7 +2225,62 @@ replace(/(?:^|:|,)(?:\s*\[)+/g, ''))) {
     (function() {
       (function() {
       
-        __out.push('<h1>Spinebox</h1>\n<p>Is working!</p>\n');
+        __out.push('<p>');
+      
+        __out.push(__sanitize(this.name));
+      
+        __out.push('</p>\n');
+      
+      }).call(this);
+      
+    }).call(__obj);
+    __obj.safe = __objSafe, __obj.escape = __escape;
+    return __out.join('');
+  };
+}).call(this);
+(function() {
+  this.JST || (this.JST = {});
+  this.JST["app/views/machines"] = function(__obj) {
+    if (!__obj) __obj = {};
+    var __out = [], __capture = function(callback) {
+      var out = __out, result;
+      __out = [];
+      callback.call(this);
+      result = __out.join('');
+      __out = out;
+      return __safe(result);
+    }, __sanitize = function(value) {
+      if (value && value.ecoSafe) {
+        return value;
+      } else if (typeof value !== 'undefined' && value != null) {
+        return __escape(value);
+      } else {
+        return '';
+      }
+    }, __safe, __objSafe = __obj.safe, __escape = __obj.escape;
+    __safe = __obj.safe = function(value) {
+      if (value && value.ecoSafe) {
+        return value;
+      } else {
+        if (!(typeof value !== 'undefined' && value != null)) value = '';
+        var result = new String(value);
+        result.ecoSafe = true;
+        return result;
+      }
+    };
+    if (!__escape) {
+      __escape = __obj.escape = function(value) {
+        return ('' + value)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;');
+      };
+    }
+    (function() {
+      (function() {
+      
+        __out.push('<header class="jumbotron subhead">\n  <h1>Machines</h1>\n  <p class="lead">Overview of all Servers, Caches and Workers</p>\n</header>\n\n<section>\n\n<div class="row">\n  \n  <div class="span4">\n    <div class="page-header"><h1>Servers</h1></div>\n    <div id="servers"></div>\n  </div>\n  \n  <div class="span4">\n    <div class="page-header"><h1>Caches</h1></div>\n    <div id="caches"></div>\n  </div>\n  \n  <div class="span4">\n    <div class="page-header"><h1>Workers</h1></div>\n    <div id="workers"></div>\n  </div>\n  \n</div>\n\n</section>\n');
       
       }).call(this);
       
@@ -2199,14 +2302,14 @@ replace(/(?:^|:|,)(?:\s*\[)+/g, ''))) {
     }
 
     Routes.prototype.controllers = {
-      root: App.Root
+      machines: App.Machines
     };
 
     Routes.prototype.routes = {
-      '/': 'root'
+      '/': 'machines'
     };
 
-    Routes.prototype["default"] = 'root';
+    Routes.prototype["default"] = 'machines';
 
     Routes.prototype.className = 'stack base';
 

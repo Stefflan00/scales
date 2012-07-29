@@ -4,3 +4,5 @@ class App.Index extends Spine.Controller
     
     @append new App.Routes
     Spine.Route.setup()
+    
+    App.Socket.setup()
