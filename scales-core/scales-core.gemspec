@@ -23,7 +23,7 @@ Gem::Specification.new do |gem|
   gem.add_dependency "em-http-request",   ">= 1.0.2"
   gem.add_dependency "em-synchrony",      ">= 1.0.2"
   gem.add_dependency "em-hiredis",        ">= 0.1.1"
-  gem.add_dependency "json",              ">= 1.7.3"
+  gem.add_dependency "json",              ">= 1.7.4"
   gem.add_dependency "colorize",          ">= 0.5.8"
   gem.add_dependency "thor",              ">= 0.15.4"
 end

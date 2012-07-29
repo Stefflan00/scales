@@ -12,30 +12,28 @@ class App.Machines extends Spine.Controller
     @bindEvents()
   
   bindEvents: ->
+    
     Spine.bind 'server_started', (server) =>
       @servers[server.id] = server
-      @renderServers()
+      @renderMachines(@servers, @serversDiv)
     
     Spine.bind 'server_stopped', (server) =>
       delete @servers[server.id]
-      @renderServers()
+      @renderMachines(@servers, @serversDiv)
+    
+    Spine.bind 'worker_started', (worker) =>
+      @workers[worker.id] = worker
+      @renderMachines(@workers, @workersDiv)
+
+    Spine.bind 'worker_stopped', (worker) =>
+      delete @workers[worker.id]
+      @renderMachines(@workers, @workersDiv)
   
   render: ->
-    $("time.timeago").timeago()
     @html JST['app/views/machines'](@)
-    
   
-  renderServers: ->
+  renderMachines: (machines, div) ->
     out = ""
-    out += JST['app/views/_machine'](server) for id, server of @servers
-    @serversDiv.html out
-  
-  renderCaches: ->
-    out = ""
-    out += JST['app/views/_machine'](cache) for cache in @caches
-    @cachesDiv.html out
-  
-  renderWorkers: ->
-    out = ""
-    out += JST['app/views/_machine'](worker) for worker in @workers
-    @workersDiv.html out
+    out += JST['app/views/_machine'](machine) for id, machine of machines
+    div.html out
+    $("time.timeago").timeago()

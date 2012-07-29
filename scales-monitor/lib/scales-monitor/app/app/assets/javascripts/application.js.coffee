@@ -4,6 +4,7 @@
 #= require ./lib/spine/manager
 #= require ./lib/spine/ajax
 #= require ./lib/spine/route
+#= require_tree ./lib
 
 #= require ./app/config/config
 #= require_tree ./app/controllers
