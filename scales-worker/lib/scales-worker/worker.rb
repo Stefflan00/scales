@@ -5,7 +5,8 @@ module Scales
       attr_reader :type
     
       def initialize(type = Application::Rails)
-        @type, @app = type, type.app
+        @type, @app, @status = type, type.app, Status.new("localhost")
+        at_exit{ @status.stop! }
       end
       
       def parse(job)
@@ -62,6 +63,8 @@ module Scales
       
       # Loop the processing of requests
       def work!
+        @status.start!
+        
         puts "Environment:    #{Scales.env}".green
         puts "Application:    #{@type.name}".green
         puts "Path:           #{Dir.pwd}".green

@@ -9,6 +9,7 @@ module Scales
     autoload :Pusher,       "scales-worker/pusher"
     autoload :Cache,        "scales-worker/cache"
     autoload :Path,         "scales-worker/path"
+    autoload :Status,       "scales-worker/status"
   end
   
   autoload :Up,             "scales/up"
