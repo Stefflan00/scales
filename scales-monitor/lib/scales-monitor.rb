@@ -2,7 +2,8 @@ require "scales-monitor/boot/autoload"
 
 module Scales
   module Monitor
-    autoload :Monitor, "scales-monitor/monitor"
+    autoload :Monitor,    "scales-monitor/monitor"
+    autoload :WebSocket,  "scales-monitor/web_socket"
   end
 end
 

@@ -1,24 +1,32 @@
 module Scales
   module Monitor
     
-    APP_DIR = File.expand_path("../app", __FILE__)
+    PUBLIC_APP_DIR = File.expand_path("../app/public", __FILE__)
     
-    class Monitor
+    module Monitor
       
-      def initialize
-        start!
-      end
+      @@cache = nil
       
-      def start!
-        @pid = spawn "cd #{APP_DIR} && thin start -R monitor.ru"
-        sleep 4
-      end
-      
-      def stop!
-        Process.kill('INT', -Process.getpgid(@pid))
+      class << self
+        
+        def serve(path)
+          cache_files! if @@cache.nil?
+          @@cache[path]
+        end
+        
+        private
+        
+        def cache_files!
+          @@cache = {}
+          
+          Dir.chdir(PUBLIC_APP_DIR)
+          Dir["*.html", "assets/*"].each{ |file| @@cache["/#{file}"] = File.read(file) }
+          
+          @@cache["/"] = @@cache["/index.html"]
+        end
+        
       end
       
     end
-    
   end
 end
