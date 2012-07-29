@@ -20,4 +20,5 @@ Gem::Specification.new do |gem|
   gem.add_dependency  "rspec",        ">= 2.11"
   gem.add_dependency  "scales-core",  ">= 0.0.1"
   gem.add_dependency  "goliath",      ">= 1.0.0.beta.1"
+  gem.add_dependency  "thin",         ">= 1.4.1"
 end

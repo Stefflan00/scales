@@ -1,4 +1,6 @@
 require 'scales-monitor'
+require "net/http"
+require "uri"
 
 module Helpers
   
@@ -13,6 +15,19 @@ module Helpers
       end
       out
     end
+  end
+  
+  def get url
+    uri     = URI.parse(url)
+    http    = Net::HTTP.new(uri.host, uri.port)
+    request = Net::HTTP::Get.new(uri.request_uri)
+
+    http.request(request)
+  end
+  
+  def post url, data = {}
+    uri = URI.parse(url)
+    Net::HTTP.post_form(uri, data)
   end
   
   def fixture(file)

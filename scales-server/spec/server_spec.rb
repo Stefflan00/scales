@@ -8,6 +8,8 @@ describe Scales::Server do
         exit 0
       end
       
+      Scales::Storage::Sync.force_reconnect!
+      
       ARGV << "-p" << "3000"
       Scales::Server.run!
     end

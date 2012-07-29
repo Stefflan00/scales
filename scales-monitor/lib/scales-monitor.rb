@@ -1,7 +1,10 @@
-require "scales-monitor/version"
+require "scales-monitor/boot/autoload"
 
 module Scales
   module Monitor
-    # Your code goes here...
+    autoload :Monitor, "scales-monitor/monitor"
   end
 end
+
+require "scales-monitor/version"
+require "scales-monitor/base"

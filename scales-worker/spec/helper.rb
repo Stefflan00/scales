@@ -1,5 +1,7 @@
 require 'scales-worker'
 
+Scales.env = "test"
+
 module Helpers
   
   def fixture(file)
@@ -36,5 +38,3 @@ RSpec.configure do |config|
     Scales::Storage::Sync.flushall!
   end
 end
-
-ENV['RAILS_ENV'] = "test"

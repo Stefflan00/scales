@@ -10,6 +10,10 @@ module Scales
           @@redis = new_connection!
         end
         
+        def force_reconnect!
+          @@redis = new_connection!
+        end
+        
         def connection
           with_connection{ @@redis }
         end

@@ -5,12 +5,15 @@ module Scales
       def run!
         ARGV << "--stdout" << "--environment" << "#{Scales.env}"
         
-        server = Server.new
-
-        runner = Goliath::Runner.new(ARGV, server)
-        runner.app = Goliath::Rack::Builder.build(Server, server)
-
+        server      = Server.new
+        runner      = Goliath::Runner.new(ARGV, server)
+        runner.app  = Goliath::Rack::Builder.build(Server, server)
         runner.load_plugins(Server.plugins)
+        
+        status      = Status.new(runner.address, runner.port)
+        status.start!
+        at_exit{ status.stop! }
+        
         runner.run
       end
       
