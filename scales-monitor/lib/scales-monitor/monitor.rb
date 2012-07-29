@@ -19,11 +19,9 @@ module Scales
         def cache_files!
           @@cache = {}
           
-          puts "Before Caching files: #{Dir.pwd}"
-          pwd = Dir.pwd
           Dir.chdir(PUBLIC_APP_DIR)
           Dir["*.html", "assets/*"].each{ |file| @@cache["/#{file}"] = File.read(file) }
-          Dir.chdir(pwd)
+          Dir.chdir(Scales.pwd)
           
           @@cache["/"] = @@cache["/index.html"]
         end

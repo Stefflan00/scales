@@ -6,6 +6,8 @@ module Scales
       
       def on_open(env)
         send_initial_statuses(env)
+        setup_subscription
+        add_to_subscribers(env)
       end
 
       def on_error(env, error)
@@ -17,10 +19,10 @@ module Scales
       end
 
       def on_close(env)
+        remove_from_subscribers(env)
       end
       
       def response(env)
-        env.logger.info "Scales.config.database #{Scales.config.database}"
         path = env['REQUEST_PATH']
         
         if path == '/socket'
@@ -31,6 +33,26 @@ module Scales
       end
       
       private
+      
+      def setup_subscription
+        return if @subscribed
+        @subscribers = []
+        
+        events = Storage::Async.new_connection!
+        events.subscribe("scales_monitor_events")
+        events.on(:message) do |channel, message|
+          @subscribers.each { |subscriber| subscriber.stream_send(message) }
+        end
+        @subscribed = true
+      end
+      
+      def add_to_subscribers(env)
+        @subscribers << env
+      end
+      
+      def remove_from_subscribers(env)
+        @subscribers.delete(env)
+      end
       
       def send_initial_statuses(env)
         server_statuses.each{ |server| env.stream_send(server) }

@@ -10,12 +10,12 @@ module Scales
       :partials   => false
     }
     
-    CONFIG_PATHS = ['config/cache.yml', 'cache.yml']
+    @@pwd = "."
+    CONFIG_PATHS  = ['config/cache.yml', 'cache.yml']
     
     class << self
       
       def config
-        puts "Using config: #{DEFAULTS.merge(load!)}"
         @@config ||= OpenStruct.new DEFAULTS.merge(load!)
       end
       
@@ -24,13 +24,21 @@ module Scales
       end
       
       def load!
-        load_paths = CONFIG_PATHS.map{ |path| puts "Path: #{Dir.pwd}/#{path} -> exists? #{File.exists?(path)}"; File.exists?(path) }
+        load_paths = CONFIG_PATHS.map{ |path| File.exists?(File.join(@@pwd, path)) }
         return {} unless load_paths.any?
         
-        cache   = CONFIG_PATHS[load_paths.index(true)]
+        cache   = File.join(@@pwd, CONFIG_PATHS[load_paths.index(true)])
         config  = YAML.load_file(cache)[Scales.env]
         
         Hash[config.map{|(k,v)| [k.to_sym,v]}]
+      end
+      
+      def pwd=(pwd)
+        @@pwd = pwd
+      end
+      
+      def pwd
+        @@pwd
       end
       
     end

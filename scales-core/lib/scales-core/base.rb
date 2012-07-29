@@ -13,6 +13,14 @@ module Scales
       ENV['SCALES_ENV'] = env
     end
     
+    def pwd
+      Config.pwd
+    end
+    
+    def pwd=(pwd)
+      Config.pwd = pwd
+    end
+    
     def try_to_setup_env!
       return if ARGV.empty?
       return if ARGV.first =~ /^\-/

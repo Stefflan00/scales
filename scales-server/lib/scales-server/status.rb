@@ -14,7 +14,7 @@ module Scales
         data  = {
           :id         => @id,
           :key        => @key,
-          :type       => "start",
+          :type       => "server_started",
           :spawned_at => Time.now.to_i,
           :env        => Scales.env,
           :ip         => @address,
@@ -30,7 +30,7 @@ module Scales
         data  = {
           :id         => @id,
           :key        => @key,
-          :type       => "stop"
+          :type       => "server_stopped"
         }
         json = JSON.generate(data)
         Storage::Sync.connection.del(@key)

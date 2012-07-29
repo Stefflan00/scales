@@ -7,20 +7,27 @@ class App.Machines extends Spine.Controller
     
   constructor: ->
     super
-    [@servers, @caches, @workers] = [[{name:"Test"}], [], []]
+    [@servers, @caches, @workers] = [{}, {}, {}]
     @render()
-    @renderServers()
+    @bindEvents()
+  
+  bindEvents: ->
+    Spine.bind 'server_started', (server) =>
+      @servers[server.id] = server
+      @renderServers()
     
-    Spine.bind 'start', (data) =>
-      console.log "Machines started:"
-      console.log data
+    Spine.bind 'server_stopped', (server) =>
+      delete @servers[server.id]
+      @renderServers()
   
   render: ->
+    $("time.timeago").timeago()
     @html JST['app/views/machines'](@)
+    
   
   renderServers: ->
     out = ""
-    out += JST['app/views/_machine'](server) for server in @servers
+    out += JST['app/views/_machine'](server) for id, server of @servers
     @serversDiv.html out
   
   renderCaches: ->

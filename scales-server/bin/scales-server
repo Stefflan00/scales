@@ -2,5 +2,6 @@
 
 require 'scales-server'
 
+Scales.pwd = Dir.pwd
 Scales.try_to_setup_env!
 Scales::Server.run!

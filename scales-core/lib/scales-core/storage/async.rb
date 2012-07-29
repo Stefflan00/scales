@@ -50,11 +50,11 @@ module Scales
           with_connection{ @@redis.flushall }
         end
         
-        private
-        
         def new_connection!
           EM::Hiredis.connect "redis://:#{Scales.config.password}@#{Scales.config.host}:#{Scales.config.port}/#{Scales.config.database}"
         end
+        
+        private
         
         def with_connection(key = nil)
           ReservedKeys.validate!(key) if key

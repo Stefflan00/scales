@@ -2108,6 +2108,8 @@ replace(/(?:^|:|,)(?:\s*\[)+/g, ''))) {
 
     function Config() {}
 
+    Config.webSocket = "ws://localhost:9000/socket";
+
     return Config;
 
   })();
@@ -2130,27 +2132,34 @@ replace(/(?:^|:|,)(?:\s*\[)+/g, ''))) {
     function Machines() {
       var _ref;
       Machines.__super__.constructor.apply(this, arguments);
-      _ref = [
-        [
-          {
-            name: "Test"
-          }
-        ], [], []
-      ], this.servers = _ref[0], this.caches = _ref[1], this.workers = _ref[2];
+      _ref = [{}, {}, {}], this.servers = _ref[0], this.caches = _ref[1], this.workers = _ref[2];
       this.render();
-      this.renderServers();
+      this.bindEvents();
     }
 
+    Machines.prototype.bindEvents = function() {
+      var _this = this;
+      Spine.bind('server_started', function(server) {
+        _this.servers[server.id] = server;
+        return _this.renderServers();
+      });
+      return Spine.bind('server_stopped', function(server) {
+        delete _this.servers[server.id];
+        return _this.renderServers();
+      });
+    };
+
     Machines.prototype.render = function() {
+      $("time.timeago").timeago();
       return this.html(JST['app/views/machines'](this));
     };
 
     Machines.prototype.renderServers = function() {
-      var out, server, _i, _len, _ref;
+      var id, out, server, _ref;
       out = "";
       _ref = this.servers;
-      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        server = _ref[_i];
+      for (id in _ref) {
+        server = _ref[id];
         out += JST['app/views/_machine'](server);
       }
       return this.serversDiv.html(out);
@@ -2181,6 +2190,37 @@ replace(/(?:^|:|,)(?:\s*\[)+/g, ''))) {
     return Machines;
 
   })(Spine.Controller);
+
+}).call(this);
+(function() {
+
+  App.Socket = (function() {
+
+    function Socket() {}
+
+    Socket.setup = function() {
+      var _this = this;
+      console.log("Connecting to " + App.Config.webSocket);
+      this.socket = new WebSocket(App.Config.webSocket);
+      this.socket.onopen = function() {
+        return console.log("Connected");
+      };
+      this.socket.onerror = function(error) {
+        return console.log("Error: " + error);
+      };
+      return this.socket.onmessage = function(message) {
+        var data, type;
+        data = JSON.parse(message.data);
+        type = data.type;
+        console.log("Received: " + type + " with data:");
+        console.log(data);
+        return Spine.trigger(type, data);
+      };
+    };
+
+    return Socket;
+
+  })();
 
 }).call(this);
 (function() {
@@ -2225,11 +2265,35 @@ replace(/(?:^|:|,)(?:\s*\[)+/g, ''))) {
     (function() {
       (function() {
       
-        __out.push('<p>');
+        __out.push('<div class="well">\n  <h4>\n    ');
       
-        __out.push(__sanitize(this.name));
+        __out.push(__sanitize(this.id));
       
-        __out.push('</p>\n');
+        __out.push('\n    <small class="pull-right"><time class="timeago" datetime="');
+      
+        __out.push(__sanitize(this.spawned_at));
+      
+        __out.push('"></time></small>\n  </h4>\n  <hr />\n  <p class="machine">\n    <span><i class="icon-eye-open"></i> <a href="http://');
+      
+        __out.push(__sanitize(this.ip));
+      
+        __out.push(':');
+      
+        __out.push(__sanitize(this.port));
+      
+        __out.push('">');
+      
+        __out.push(__sanitize(this.ip));
+      
+        __out.push(':');
+      
+        __out.push(__sanitize(this.port));
+      
+        __out.push('</a></span>\n    <span class="pull-right"><i class="icon-leaf"></i> ');
+      
+        __out.push(__sanitize(this.env));
+      
+        __out.push('</span>\n  </p>\n</div>\n');
       
       }).call(this);
       
@@ -2330,6 +2394,7 @@ replace(/(?:^|:|,)(?:\s*\[)+/g, ''))) {
       Index.__super__.constructor.apply(this, arguments);
       this.append(new App.Routes);
       Spine.Route.setup();
+      App.Socket.setup();
     }
 
     return Index;

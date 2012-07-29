@@ -16,6 +16,10 @@
 */
 .stack > *:not(.active) {
   display: none; }
+
+p.machine {
+  margin-bottom: 0;
+  margin-top: 10px; }
 /*!
  * Bootstrap v2.0.4
  *

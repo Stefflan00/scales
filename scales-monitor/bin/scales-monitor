@@ -2,5 +2,7 @@
 
 require 'scales-monitor'
 
+Scales.pwd = Dir.pwd
 Scales.try_to_setup_env!
+
 Scales::Monitor.run!
