@@ -3,7 +3,7 @@
 require 'rspec/core/rake_task'
 require './version'
 
-PROJECTS = %w(scales-core scales-server scales-worker)
+PROJECTS = %w(scales-core scales-server scales-worker scales-monitor)
 
 RSpec::Core::RakeTask.new(:integration) do |rspec|
   rspec.rspec_opts = "-f d", "--color"
