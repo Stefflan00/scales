@@ -1,0 +1,6 @@
+#!/usr/bin/env ruby
+
+require 'scales-monitor'
+
+Scales.try_to_setup_env!
+Scales::Monitor.run!

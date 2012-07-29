@@ -22,7 +22,7 @@ module Scales
       def response(env)
         path = env['REQUEST_PATH']
         
-        if path == '/ws'
+        if path == '/socket'
           super(env)
         else
           [200, {}, Monitor.serve(path)]
