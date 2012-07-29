@@ -24,7 +24,7 @@ module Scales
       end
       
       def load!
-        load_paths = CONFIG_PATHS.map{ |path| File.exists?(path) }
+        load_paths = CONFIG_PATHS.map{ |path| puts "Path: #{Dir.pwd}/#{path} -> exists? #{File.exists?(path)}"; File.exists?(path) }
         return {} unless load_paths.any?
         
         cache   = CONFIG_PATHS[load_paths.index(true)]
