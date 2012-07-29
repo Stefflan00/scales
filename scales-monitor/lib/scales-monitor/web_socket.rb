@@ -19,7 +19,7 @@ module Scales
       end
 
       def on_close(env)
-        remove_from_subscribers(env)
+        remove_from_subscribers(env) if env['REQUEST_PATH'] == "/socket"
       end
       
       def response(env)
