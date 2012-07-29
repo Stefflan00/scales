@@ -56,6 +56,7 @@ module Scales
       
       def send_initial_statuses(env)
         server_statuses.each{ |server| env.stream_send(server) }
+        cache_statuses.each{  |cache| env.stream_send(cache)   }
         worker_statuses.each{ |worker| env.stream_send(worker) }
       end
 
@@ -66,11 +67,31 @@ module Scales
         Storage::Async.connection.mget(*servers)
       end
       
+      def cache_statuses
+        info = Storage::Async.connection.info
+        data  = {
+          :id         => redis_value("run_id", info)[0..16],
+          :key        => "",
+          :type       => "cache_started",
+          :spawned_at => Time.now.to_i - redis_value("uptime_in_seconds", info).to_i,
+          :env        => Scales.env,
+          :ip         => Scales.config.host,
+          :port       => Scales.config.port
+        }
+        [JSON.generate(data)]
+      end
+      
       def worker_statuses
         workers = Storage::Async.connection.keys("scales_worker_*")
         return [] if workers.empty?
         
         Storage::Async.connection.mget(*workers)
+      end
+      
+      private
+      
+      def redis_value(value, info)
+        info.scan(/^#{value}:.*/).first.split(":").last
       end
       
     end

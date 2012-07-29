@@ -28,6 +28,14 @@ class App.Machines extends Spine.Controller
     Spine.bind 'worker_stopped', (worker) =>
       delete @workers[worker.id]
       @renderMachines(@workers, @workersDiv)
+    
+    Spine.bind 'cache_started', (cache) =>
+      @caches[cache.id] = cache
+      @renderMachines(@caches, @cachesDiv)
+
+    Spine.bind 'cache_stopped', (cache) =>
+      delete @caches[cache.id]
+      @renderMachines(@caches, @cachesDiv)
   
   render: ->
     @html JST['app/views/machines'](@)
