@@ -3,6 +3,7 @@ require 'helper'
 describe Scales::Server::Dispatch::Enqueue do
   
   it "should put a request to the queue" do
+    Scales::Server.status = Scales::Server::Status.new("localhost", "3000")
     with_api(Scales::Server::Server, :log_stdout => true) do
       
       # Simulate response after 2 seconds

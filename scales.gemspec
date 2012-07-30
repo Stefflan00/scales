@@ -18,7 +18,8 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency "rspec", ">= 2.11"
   
   # Production
-  gem.add_dependency "scales-core",   Scales::VERSION
-  gem.add_dependency "scales-server", Scales::VERSION
-  gem.add_dependency "scales-worker", Scales::VERSION
+  gem.add_dependency "scales-core",     Scales::VERSION
+  gem.add_dependency "scales-server",   Scales::VERSION
+  gem.add_dependency "scales-worker",   Scales::VERSION
+  gem.add_dependency "scales-monitor",  Scales::VERSION
 end

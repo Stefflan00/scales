@@ -3,6 +3,6 @@ class App.Index extends Spine.Controller
     super
     
     @append new App.Routes
-    Spine.Route.setup()
     
     App.Socket.setup()
+    Spine.Route.setup(history: true)

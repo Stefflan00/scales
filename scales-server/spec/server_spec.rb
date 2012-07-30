@@ -10,7 +10,7 @@ describe Scales::Server do
       
       Scales::Storage::Sync.force_reconnect!
       
-      ARGV << "-p" << "3000"
+      ARGV << "-p" << "3004"
       Scales::Server.run!
     end
     
@@ -23,11 +23,15 @@ describe Scales::Server do
     Process.wait
   end
   
+  it "has a status object" do
+    described_class.status.is_a?(Scales::Server::Status)
+  end
+  
   it "should answer requests" do    
     Scales::Storage::Sync.set "/", "Hey there!"
     
     EventMachine.run {
-      http = EventMachine::HttpRequest.new('http://127.0.0.1:3000/').aget
+      http = EventMachine::HttpRequest.new('http://127.0.0.1:3004/').aget
 
       http.errback {
         EventMachine.stop

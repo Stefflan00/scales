@@ -1,0 +1,33 @@
+<header class="jumbotron subhead">
+  <h1>Queues</h1>
+  <p class="lead">Overview of all Requests, the Processing and the Responses</p>
+</header>
+
+<section>
+
+<div class="row">
+  
+  <div class="span4">
+    <div class="page-header"><h1>Requests</h1></div>
+    <div id="requests">
+      <div class="well dark-grey pagination-centered"><h2 class="white">0</h2></div>
+    </div>
+  </div>
+  
+  <div class="span4">
+    <div class="page-header"><h1>In Processing</h1></div>
+    <div id="processing">
+      <div class="well dark-grey pagination-centered"><h2 class="white">0</h2></div>
+    </div>
+  </div>
+  
+  <div class="span4">
+    <div class="page-header"><h1>Responses</h1></div>
+    <div id="responses">
+      <div class="well dark-grey pagination-centered"><h2 class="white">0</h2></div>
+    </div>
+  </div>
+  
+</div>
+
+</section>

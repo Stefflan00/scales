@@ -50,8 +50,6 @@ module Scales
           with_connection{ @@redis.flushall }
         end
         
-        private
-        
         def new_connection!
           Redis.new(
             :host     => Scales.config.host, 
@@ -60,6 +58,8 @@ module Scales
             :db       => Scales.config.database
           )
         end
+        
+        private
         
         def with_connection(key = nil)
           ReservedKeys.validate!(key) if key

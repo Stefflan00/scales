@@ -2290,6 +2290,18 @@ replace(/(?:^|:|,)(?:\s*\[)+/g, ''))) {
       this.bindEvents();
     }
 
+    Machines.prototype.activate = function() {
+      this.el.addClass("active");
+      $("li#nav_machines").addClass('active');
+      return this;
+    };
+
+    Machines.prototype.deactivate = function() {
+      this.el.removeClass("active");
+      $("li#nav_machines").removeClass('active');
+      return this;
+    };
+
     Machines.prototype.bindEvents = function() {
       var _this = this;
       Spine.bind('server_started', function(server) {
@@ -2334,6 +2346,91 @@ replace(/(?:^|:|,)(?:\s*\[)+/g, ''))) {
     };
 
     return Machines;
+
+  })(Spine.Controller);
+
+}).call(this);
+(function() {
+  var __hasProp = {}.hasOwnProperty,
+    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+
+  App.Queues = (function(_super) {
+
+    __extends(Queues, _super);
+
+    Queues.prototype.elements = {
+      '#requests': 'requestsDiv',
+      '#processing': 'processingDiv',
+      '#responses': 'responsesDiv'
+    };
+
+    function Queues() {
+      var _ref;
+      Queues.__super__.constructor.apply(this, arguments);
+      _ref = [{}, {}, {}], this.requests = _ref[0], this.processing = _ref[1], this.responses = _ref[2];
+      this.render();
+      this.bindEvents();
+    }
+
+    Queues.prototype.activate = function() {
+      this.el.addClass("active");
+      $("li#nav_queues").addClass('active');
+      return this;
+    };
+
+    Queues.prototype.deactivate = function() {
+      this.el.removeClass("active");
+      $("li#nav_queues").removeClass('active');
+      return this;
+    };
+
+    Queues.prototype.bindEvents = function() {
+      var _this = this;
+      Spine.bind('server_put_request_in_queue', function(request) {
+        _this.requests[request.id] = request;
+        return _this.renderQueueItems(_this.requests, _this.requestsDiv);
+      });
+      Spine.bind('worker_took_request_from_queue', function(request) {
+        delete _this.requests[request.id];
+        _this.processing[request.id] = request;
+        _this.renderQueueItems(_this.requests, _this.requestsDiv);
+        return _this.renderQueueItems(_this.processing, _this.processingDiv);
+      });
+      Spine.bind('worker_put_response_in_queue', function(response) {
+        delete _this.processing[response.id];
+        _this.responses[response.id] = response;
+        _this.renderQueueItems(_this.processing, _this.processingDiv);
+        return _this.renderQueueItems(_this.responses, _this.responsesDiv);
+      });
+      return Spine.bind('server_took_response_from_queue', function(response) {
+        delete _this.responses[response.id];
+        return _this.renderQueueItems(_this.responses, _this.responsesDiv);
+      });
+    };
+
+    Queues.prototype.render = function() {
+      return this.html(JST['app/views/queues'](this));
+    };
+
+    Queues.prototype.renderQueueItems = function(items, div) {
+      var id, item, itemAmount, out;
+      itemAmount = 0;
+      for (id in items) {
+        item = items[id];
+        itemAmount += 1;
+      }
+      div.html(JST['app/views/_queue_top']({
+        amount: itemAmount
+      }));
+      out = "";
+      for (id in items) {
+        item = items[id];
+        out += JST['app/views/_queue_item'](item);
+      }
+      return div.append(out);
+    };
+
+    return Queues;
 
   })(Spine.Controller);
 
@@ -2450,6 +2547,128 @@ replace(/(?:^|:|,)(?:\s*\[)+/g, ''))) {
 }).call(this);
 (function() {
   this.JST || (this.JST = {});
+  this.JST["app/views/_queue_item"] = function(__obj) {
+    if (!__obj) __obj = {};
+    var __out = [], __capture = function(callback) {
+      var out = __out, result;
+      __out = [];
+      callback.call(this);
+      result = __out.join('');
+      __out = out;
+      return __safe(result);
+    }, __sanitize = function(value) {
+      if (value && value.ecoSafe) {
+        return value;
+      } else if (typeof value !== 'undefined' && value != null) {
+        return __escape(value);
+      } else {
+        return '';
+      }
+    }, __safe, __objSafe = __obj.safe, __escape = __obj.escape;
+    __safe = __obj.safe = function(value) {
+      if (value && value.ecoSafe) {
+        return value;
+      } else {
+        if (!(typeof value !== 'undefined' && value != null)) value = '';
+        var result = new String(value);
+        result.ecoSafe = true;
+        return result;
+      }
+    };
+    if (!__escape) {
+      __escape = __obj.escape = function(value) {
+        return ('' + value)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;');
+      };
+    }
+    (function() {
+      (function() {
+      
+        __out.push('<div class="well">\n  <h4>\n    ');
+      
+        __out.push(__sanitize(this.id));
+      
+        __out.push('\n  </h4>\n  <hr />\n  <p class="machine">\n    <span><i class="icon-eye-open"></i> ');
+      
+        __out.push(__sanitize(this.method));
+      
+        __out.push(' ');
+      
+        __out.push(__sanitize(this.path));
+      
+        __out.push('</a></span>\n    <span class="pull-right"><i class="icon-leaf"></i> ');
+      
+        __out.push(__sanitize(this.server_id));
+      
+        __out.push('</span>\n  </p>\n</div>\n');
+      
+      }).call(this);
+      
+    }).call(__obj);
+    __obj.safe = __objSafe, __obj.escape = __escape;
+    return __out.join('');
+  };
+}).call(this);
+(function() {
+  this.JST || (this.JST = {});
+  this.JST["app/views/_queue_top"] = function(__obj) {
+    if (!__obj) __obj = {};
+    var __out = [], __capture = function(callback) {
+      var out = __out, result;
+      __out = [];
+      callback.call(this);
+      result = __out.join('');
+      __out = out;
+      return __safe(result);
+    }, __sanitize = function(value) {
+      if (value && value.ecoSafe) {
+        return value;
+      } else if (typeof value !== 'undefined' && value != null) {
+        return __escape(value);
+      } else {
+        return '';
+      }
+    }, __safe, __objSafe = __obj.safe, __escape = __obj.escape;
+    __safe = __obj.safe = function(value) {
+      if (value && value.ecoSafe) {
+        return value;
+      } else {
+        if (!(typeof value !== 'undefined' && value != null)) value = '';
+        var result = new String(value);
+        result.ecoSafe = true;
+        return result;
+      }
+    };
+    if (!__escape) {
+      __escape = __obj.escape = function(value) {
+        return ('' + value)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;');
+      };
+    }
+    (function() {
+      (function() {
+      
+        __out.push('<div class="well dark-grey pagination-centered"><h2 class="white">');
+      
+        __out.push(__sanitize(this.amount));
+      
+        __out.push('</h2></div>\n');
+      
+      }).call(this);
+      
+    }).call(__obj);
+    __obj.safe = __objSafe, __obj.escape = __escape;
+    return __out.join('');
+  };
+}).call(this);
+(function() {
+  this.JST || (this.JST = {});
   this.JST["app/views/machines"] = function(__obj) {
     if (!__obj) __obj = {};
     var __out = [], __capture = function(callback) {
@@ -2500,6 +2719,57 @@ replace(/(?:^|:|,)(?:\s*\[)+/g, ''))) {
   };
 }).call(this);
 (function() {
+  this.JST || (this.JST = {});
+  this.JST["app/views/queues"] = function(__obj) {
+    if (!__obj) __obj = {};
+    var __out = [], __capture = function(callback) {
+      var out = __out, result;
+      __out = [];
+      callback.call(this);
+      result = __out.join('');
+      __out = out;
+      return __safe(result);
+    }, __sanitize = function(value) {
+      if (value && value.ecoSafe) {
+        return value;
+      } else if (typeof value !== 'undefined' && value != null) {
+        return __escape(value);
+      } else {
+        return '';
+      }
+    }, __safe, __objSafe = __obj.safe, __escape = __obj.escape;
+    __safe = __obj.safe = function(value) {
+      if (value && value.ecoSafe) {
+        return value;
+      } else {
+        if (!(typeof value !== 'undefined' && value != null)) value = '';
+        var result = new String(value);
+        result.ecoSafe = true;
+        return result;
+      }
+    };
+    if (!__escape) {
+      __escape = __obj.escape = function(value) {
+        return ('' + value)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;');
+      };
+    }
+    (function() {
+      (function() {
+      
+        __out.push('<header class="jumbotron subhead">\n  <h1>Queues</h1>\n  <p class="lead">Overview of all Requests, the Processing and the Responses</p>\n</header>\n\n<section>\n\n<div class="row">\n  \n  <div class="span4">\n    <div class="page-header"><h1>Requests</h1></div>\n    <div id="requests">\n      <div class="well dark-grey pagination-centered"><h2 class="white">0</h2></div>\n    </div>\n  </div>\n  \n  <div class="span4">\n    <div class="page-header"><h1>In Processing</h1></div>\n    <div id="processing">\n      <div class="well dark-grey pagination-centered"><h2 class="white">0</h2></div>\n    </div>\n  </div>\n  \n  <div class="span4">\n    <div class="page-header"><h1>Responses</h1></div>\n    <div id="responses">\n      <div class="well dark-grey pagination-centered"><h2 class="white">0</h2></div>\n    </div>\n  </div>\n  \n</div>\n\n</section>\n');
+      
+      }).call(this);
+      
+    }).call(__obj);
+    __obj.safe = __objSafe, __obj.escape = __escape;
+    return __out.join('');
+  };
+}).call(this);
+(function() {
   var __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
@@ -2512,11 +2782,13 @@ replace(/(?:^|:|,)(?:\s*\[)+/g, ''))) {
     }
 
     Routes.prototype.controllers = {
-      machines: App.Machines
+      machines: App.Machines,
+      queues: App.Queues
     };
 
     Routes.prototype.routes = {
-      '/': 'machines'
+      '/machines': 'machines',
+      '/queues': 'queues'
     };
 
     Routes.prototype["default"] = 'machines';
@@ -2539,8 +2811,10 @@ replace(/(?:^|:|,)(?:\s*\[)+/g, ''))) {
     function Index() {
       Index.__super__.constructor.apply(this, arguments);
       this.append(new App.Routes);
-      Spine.Route.setup();
       App.Socket.setup();
+      Spine.Route.setup({
+        history: true
+      });
     }
 
     return Index;

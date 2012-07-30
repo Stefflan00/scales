@@ -11,6 +11,16 @@ class App.Machines extends Spine.Controller
     @render()
     @bindEvents()
   
+  activate: ->
+    @el.addClass("active")
+    $("li#nav_machines").addClass('active')
+    @
+
+  deactivate: ->
+    @el.removeClass("active")
+    $("li#nav_machines").removeClass('active')
+    @
+  
   bindEvents: ->
     
     Spine.bind 'server_started', (server) =>

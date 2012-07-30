@@ -17,6 +17,8 @@ module Scales
         env = parse(job)
         id  = env['scales.id']
         
+        @status.took_request_from_queue!(env)
+        
         begin
           response  = @app.call(env)
           response.last.close
@@ -52,7 +54,8 @@ module Scales
           print "#{id} -> " + "#{response.first}".green + " - #{Thread.current[:post_process_queue].size} post jobs -> "
           post_process!(job)
           print "done".green + " - publishing -> "
-          Scales::PubSub::Sync.publish("scales_response_#{id}", JSON.generate(response)) # already blocking waiting for next job
+          @status.put_response_in_queue!(response)
+          Scales::PubSub::Sync.publish("scales_response_#{id}", JSON.generate(response))
           puts "done".green
         end
         

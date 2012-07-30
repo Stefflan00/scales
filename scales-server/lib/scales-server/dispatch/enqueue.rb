@@ -7,11 +7,14 @@ module Scales
           def request(env)
             id  = create_random_id
             job = Request.to_job(id, env)
-          
+            
+            Scales::Server.status.put_request_in_queue!(job)
             Queue::Async.add(JSON.generate(job))
           
             response = PubSub::Async.subscribe("scales_response_#{id}")
-            Job.to_response(response)
+            response = Job.to_response(response)
+            Scales::Server.status.took_response_from_queue!(response)
+            response
           end
         
           private

@@ -20,6 +20,12 @@
 p.machine {
   margin-bottom: 0;
   margin-top: 10px; }
+
+.well.dark-grey {
+  background-color: #646464; }
+
+h2.white {
+  color: #FFFFFF; }
 /*!
  * Bootstrap v2.0.4
  *
