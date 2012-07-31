@@ -24,9 +24,9 @@ describe Scales::Worker::Cache::JSON do
   end
   
   it "appends an object" do
-    Scales::Storage::Sync.set "/tracks.json", @json
+    Scales::Storage::Sync.set_content "/tracks.json", @json
     described_class.append :json => '{ "id" : 2, "name" : "Wait for it" }', :to => "/tracks.json", :select => "$.tracks"
-    squeeze_json(Scales::Storage::Sync.get("/tracks.json")).should == squeeze_json(<<-JSON
+    squeeze_json(Scales::Storage::Sync.get_content("/tracks.json")).should == squeeze_json(<<-JSON
     { 
       "tracks" : [
         {
@@ -44,9 +44,9 @@ describe Scales::Worker::Cache::JSON do
   end
   
   it "prepends an object" do
-    Scales::Storage::Sync.set "/tracks.json", @json
+    Scales::Storage::Sync.set_content "/tracks.json", @json
     described_class.prepend :json => '{ "id" : 2, "name" : "Wait for it" }', :to => "/tracks.json", :select => "$.tracks"
-    squeeze_json(Scales::Storage::Sync.get("/tracks.json")).should == squeeze_json(<<-JSON
+    squeeze_json(Scales::Storage::Sync.get_content("/tracks.json")).should == squeeze_json(<<-JSON
     { 
       "tracks" : [
         {
@@ -64,9 +64,9 @@ describe Scales::Worker::Cache::JSON do
   end
   
   it "sets an object" do
-    Scales::Storage::Sync.set "/tracks.json", @json
+    Scales::Storage::Sync.set_content "/tracks.json", @json
     described_class.set :json => '{ "id" : 2, "name" : "Wait for it" }', :to => "/tracks.json", :select => "$.tracks"
-    squeeze_json(Scales::Storage::Sync.get("/tracks.json")).should == squeeze_json(<<-JSON
+    squeeze_json(Scales::Storage::Sync.get_content("/tracks.json")).should == squeeze_json(<<-JSON
     { 
       "tracks" : {
         "id" : 2,
@@ -78,9 +78,9 @@ describe Scales::Worker::Cache::JSON do
   end
   
   it "replaces an object" do
-    Scales::Storage::Sync.set "/tracks.json", @json
+    Scales::Storage::Sync.set_content "/tracks.json", @json
     described_class.replace :json => '{ "id" : 2, "name" : "Wait for it" }', :to => "/tracks.json", :select => "$.tracks"
-    squeeze_json(Scales::Storage::Sync.get("/tracks.json")).should == squeeze_json(<<-JSON
+    squeeze_json(Scales::Storage::Sync.get_content("/tracks.json")).should == squeeze_json(<<-JSON
     { 
       "tracks" : {
         "id" : 2,
@@ -92,9 +92,9 @@ describe Scales::Worker::Cache::JSON do
   end
   
   it "removes an object" do
-    Scales::Storage::Sync.set "/tracks.json", @json
+    Scales::Storage::Sync.set_content "/tracks.json", @json
     described_class.remove :at => "/tracks.json", :select => "$.tracks"
-    squeeze_json(Scales::Storage::Sync.get("/tracks.json")).should == squeeze_json(<<-JSON
+    squeeze_json(Scales::Storage::Sync.get_content("/tracks.json")).should == squeeze_json(<<-JSON
     {
       
     }
@@ -105,9 +105,9 @@ describe Scales::Worker::Cache::JSON do
   context Scales do
     
     it "appends an object" do
-      Scales::Storage::Sync.set "/tracks.json", @json
+      Scales::Storage::Sync.set_content "/tracks.json", @json
       Scales.append :json => '{ "id" : 2, "name" : "Wait for it" }', :to => "/tracks.json", :select => "$.tracks"
-      squeeze_json(Scales::Storage::Sync.get("/tracks.json")).should == squeeze_json(<<-JSON
+      squeeze_json(Scales::Storage::Sync.get_content("/tracks.json")).should == squeeze_json(<<-JSON
       { 
         "tracks" : [
           {
@@ -125,9 +125,9 @@ describe Scales::Worker::Cache::JSON do
     end
 
     it "prepends an object" do
-      Scales::Storage::Sync.set "/tracks.json", @json
+      Scales::Storage::Sync.set_content "/tracks.json", @json
       Scales.prepend :json => '{ "id" : 2, "name" : "Wait for it" }', :to => "/tracks.json", :select => "$.tracks"
-      squeeze_json(Scales::Storage::Sync.get("/tracks.json")).should == squeeze_json(<<-JSON
+      squeeze_json(Scales::Storage::Sync.get_content("/tracks.json")).should == squeeze_json(<<-JSON
       { 
         "tracks" : [
           {
@@ -145,9 +145,9 @@ describe Scales::Worker::Cache::JSON do
     end
 
     it "sets an object" do
-      Scales::Storage::Sync.set "/tracks.json", @json
+      Scales::Storage::Sync.set_content "/tracks.json", @json
       Scales.set :json => '{ "id" : 2, "name" : "Wait for it" }', :to => "/tracks.json", :select => "$.tracks"
-      squeeze_json(Scales::Storage::Sync.get("/tracks.json")).should == squeeze_json(<<-JSON
+      squeeze_json(Scales::Storage::Sync.get_content("/tracks.json")).should == squeeze_json(<<-JSON
       { 
         "tracks" : {
           "id" : 2,
@@ -159,9 +159,9 @@ describe Scales::Worker::Cache::JSON do
     end
 
     it "replaces an object" do
-      Scales::Storage::Sync.set "/tracks.json", @json
+      Scales::Storage::Sync.set_content "/tracks.json", @json
       Scales.replace :json => '{ "id" : 2, "name" : "Wait for it" }', :to => "/tracks.json", :select => "$.tracks"
-      squeeze_json(Scales::Storage::Sync.get("/tracks.json")).should == squeeze_json(<<-JSON
+      squeeze_json(Scales::Storage::Sync.get_content("/tracks.json")).should == squeeze_json(<<-JSON
       { 
         "tracks" : {
           "id" : 2,
@@ -173,9 +173,9 @@ describe Scales::Worker::Cache::JSON do
     end
 
     it "removes an object" do
-      Scales::Storage::Sync.set "/tracks.json", @json
+      Scales::Storage::Sync.set_content "/tracks.json", @json
       Scales.remove :json, :at => "/tracks.json", :select => "$.tracks"
-      squeeze_json(Scales::Storage::Sync.get("/tracks.json")).should == squeeze_json(<<-JSON
+      squeeze_json(Scales::Storage::Sync.get_content("/tracks.json")).should == squeeze_json(<<-JSON
       {
 
       }

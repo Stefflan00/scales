@@ -52,12 +52,12 @@ module Scales
             raise 'No path defined like this :to => "/tracks.json"'          if path.nil?
             raise 'No selector defined like this :select => "#tracks"'  if selector.nil?
             
-            json = Storage::Sync.get(path)
+            json = Storage::Sync.get_content(path)
             json = JsonPath.for(json)
             
             json = yield json, selector
             
-            Storage::Sync.set(path, json.to_hash.to_json)
+            Storage::Sync.set_content(path, json.to_hash.to_json)
             json
           end
                 

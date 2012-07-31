@@ -45,7 +45,7 @@ module Scales
     end
     
     def get(path)
-      Storage::Sync::get(path)
+      Storage::Sync::get_content(path)
     end
         
   end

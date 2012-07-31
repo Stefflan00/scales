@@ -4,7 +4,7 @@ describe Scales::Worker::Cache::Push do
   
   it "pushs a value to a key" do
     described_class.push :html => "A track", :to => "/tracks/15"
-    Scales::Storage::Sync.get("/tracks/15").should == "A track"
+    Scales::Storage::Sync.get_content("/tracks/15").should == "A track"
   end
   
   it "raises an exception when the :to parameter is missing" do
@@ -28,7 +28,7 @@ describe Scales::Worker::Cache::Push do
         
         received_response["path"].should   == "/tracks/15"
         received_response["format"].should == "HTML"
-        received_response["type"].should   == "push_key"
+        received_response["type"].should   == "push_resource"
         
         @subscriber.unsubscribe('scales_monitor_events')
       end
@@ -59,7 +59,7 @@ describe Scales::Worker::Cache::Push do
     
     it "pushs a value to a key" do
       Scales.push :html => "A track", :to => "/tracks/15"
-      Scales::Storage::Sync.get("/tracks/15").should == "A track"
+      Scales::Storage::Sync.get_content("/tracks/15").should == "A track"
     end
     
   end

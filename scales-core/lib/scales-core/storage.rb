@@ -3,8 +3,8 @@ module Scales
     RESOURCE_PREFIX = "scales_resource_"
     PARTIAL_PREFIX  = "scales_partial_"
 
-    autoload :Sync,           "scales-core/storage/sync"
-    autoload :Async,          "scales-core/storage/async"
+    autoload :Sync,   "scales-core/storage/sync"
+    autoload :Async,  "scales-core/storage/async"
     
     class << self
       

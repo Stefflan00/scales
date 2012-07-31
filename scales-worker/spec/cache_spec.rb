@@ -7,7 +7,7 @@ describe Scales do
   
   it "sync get" do
     @tracks = "Some tracks"
-    Scales::Storage::Sync.set "/tracks", @tracks
+    Scales::Storage::Sync.set_content "/tracks", @tracks
     
     Scales.get("/tracks").should == @tracks
   end

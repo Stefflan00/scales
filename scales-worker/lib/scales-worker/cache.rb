@@ -18,6 +18,10 @@ module Scales
           return XML  if params.keys.include?(:xml)
         end
         
+        def resource_or_partial?(path)
+          (path =~ /^\//) ? "resource" : "partial"
+        end
+        
       end
     end
   end

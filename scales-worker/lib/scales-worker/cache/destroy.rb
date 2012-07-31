@@ -6,18 +6,17 @@ module Scales
         
           def destroy(*paths)
             paths.each do |path|
-              key_or_partial = Cache.key_or_partial_for(path)
-              publish_destroy(path, key_or_partial)
-              key_or_partial == "key" ? Storage::Sync.del_content(path) : Storage::Sync.del_content(path)
+              publish_destroy(path)
+              Storage::Sync.del_content(path)
             end
           end
           
           private
           
-          def publish_destroy(path, key_or_partial)
+          def publish_destroy(path)
             data = {
               :path   => path,
-              :type   => "destroy_#{key_or_partial}"
+              :type   => "destroy_#{Cache.resource_or_partial?(path)}"
             }
             Storage::Sync.connection.publish "scales_monitor_events", data.to_json
           end

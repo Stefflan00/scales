@@ -8,7 +8,7 @@ describe Scales::Server::Dispatch::Enqueue do
       
       # Simulate response after 2 seconds
       EventMachine::Timer.new(2) do
-        id = Scales::Storage::Sync.get("test_last_request_id")
+        id = Scales::Storage::Sync.get_content("test_last_request_id")
         Scales::PubSub::Sync.publish(id, JSON.generate([201,{},""]))
       end
       

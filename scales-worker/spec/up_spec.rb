@@ -58,8 +58,8 @@ describe Scales::Up do
       Rake::Task['up5'].invoke
       task.paths.should have(2).paths
       
-      Scales::Storage::Sync.get("/tracks/1").should have_at_least(100).characters
-      Scales::Storage::Sync.get("/tracks/2").should have_at_least(100).characters
+      Scales::Storage::Sync.get_content("/tracks/1").should have_at_least(100).characters
+      Scales::Storage::Sync.get_content("/tracks/2").should have_at_least(100).characters
     end
   end
   

@@ -19,9 +19,9 @@ describe Scales::Worker::Cache::XML do
   end
   
   it "appends a node" do
-    Scales::Storage::Sync.set "/tracks.xml", @xml
+    Scales::Storage::Sync.set_content "/tracks.xml", @xml
     described_class.append :xml => '<track>Track 2</track>', :to => "/tracks.xml", :select => "/tracks"
-    squeeze(Scales::Storage::Sync.get("/tracks.xml")).should == squeeze(<<-XML
+    squeeze(Scales::Storage::Sync.get_content("/tracks.xml")).should == squeeze(<<-XML
       <tracks>
         <track>Track 1</track>
         <track>Track 2</track>
@@ -31,9 +31,9 @@ describe Scales::Worker::Cache::XML do
   end
   
   it "prepends a node" do
-    Scales::Storage::Sync.set "/tracks.xml", @xml
+    Scales::Storage::Sync.set_content "/tracks.xml", @xml
     described_class.prepend :xml => '<track>Track 2</track>', :to => "/tracks.xml", :select => "/tracks"
-    squeeze(Scales::Storage::Sync.get("/tracks.xml")).should == squeeze(<<-XML
+    squeeze(Scales::Storage::Sync.get_content("/tracks.xml")).should == squeeze(<<-XML
       <tracks>
         <track>Track 2</track>
         <track>Track 1</track>
@@ -43,9 +43,9 @@ describe Scales::Worker::Cache::XML do
   end
   
   it "sets a node" do
-    Scales::Storage::Sync.set "/tracks.xml", @xml
+    Scales::Storage::Sync.set_content "/tracks.xml", @xml
     described_class.set :xml => '<track>Track 2</track>', :at => "/tracks.xml", :select => "/tracks"
-    squeeze(Scales::Storage::Sync.get("/tracks.xml")).should == squeeze(<<-XML
+    squeeze(Scales::Storage::Sync.get_content("/tracks.xml")).should == squeeze(<<-XML
       <tracks>
         <track>Track 2</track>
       </tracks>
@@ -54,9 +54,9 @@ describe Scales::Worker::Cache::XML do
   end
   
   it "replaces a node" do
-    Scales::Storage::Sync.set "/tracks.xml", @xml
+    Scales::Storage::Sync.set_content "/tracks.xml", @xml
     described_class.replace :xml => '<track>Track 2</track>', :at => "/tracks.xml", :select => "/tracks/track"
-    squeeze(Scales::Storage::Sync.get("/tracks.xml")).should == squeeze(<<-XML
+    squeeze(Scales::Storage::Sync.get_content("/tracks.xml")).should == squeeze(<<-XML
       <tracks>
         <track>Track 2</track>
       </tracks>
@@ -65,9 +65,9 @@ describe Scales::Worker::Cache::XML do
   end
   
   it "removes a node" do
-    Scales::Storage::Sync.set "/tracks.xml", @xml
+    Scales::Storage::Sync.set_content "/tracks.xml", @xml
     described_class.remove :at => "/tracks.xml", :select => "/tracks/track"
-    squeeze(Scales::Storage::Sync.get("/tracks.xml")).should == squeeze(<<-XML
+    squeeze(Scales::Storage::Sync.get_content("/tracks.xml")).should == squeeze(<<-XML
       <tracks>
       </tracks>
     XML
@@ -77,9 +77,9 @@ describe Scales::Worker::Cache::XML do
   context Scales do
     
     it "appends a node" do
-      Scales::Storage::Sync.set "/tracks.xml", @xml
+      Scales::Storage::Sync.set_content "/tracks.xml", @xml
       Scales.append :xml => '<track>Track 2</track>', :to => "/tracks.xml", :select => "/tracks"
-      squeeze(Scales::Storage::Sync.get("/tracks.xml")).should == squeeze(<<-XML
+      squeeze(Scales::Storage::Sync.get_content("/tracks.xml")).should == squeeze(<<-XML
         <tracks>
           <track>Track 1</track>
           <track>Track 2</track>
@@ -89,9 +89,9 @@ describe Scales::Worker::Cache::XML do
     end
 
     it "prepends a node" do
-      Scales::Storage::Sync.set "/tracks.xml", @xml
+      Scales::Storage::Sync.set_content "/tracks.xml", @xml
       Scales.prepend :xml => '<track>Track 2</track>', :to => "/tracks.xml", :select => "/tracks"
-      squeeze(Scales::Storage::Sync.get("/tracks.xml")).should == squeeze(<<-XML
+      squeeze(Scales::Storage::Sync.get_content("/tracks.xml")).should == squeeze(<<-XML
         <tracks>
           <track>Track 2</track>
           <track>Track 1</track>
@@ -101,9 +101,9 @@ describe Scales::Worker::Cache::XML do
     end
 
     it "sets a node" do
-      Scales::Storage::Sync.set "/tracks.xml", @xml
+      Scales::Storage::Sync.set_content "/tracks.xml", @xml
       Scales.set :xml => '<track>Track 2</track>', :at => "/tracks.xml", :select => "/tracks"
-      squeeze(Scales::Storage::Sync.get("/tracks.xml")).should == squeeze(<<-XML
+      squeeze(Scales::Storage::Sync.get_content("/tracks.xml")).should == squeeze(<<-XML
         <tracks>
           <track>Track 2</track>
         </tracks>
@@ -112,9 +112,9 @@ describe Scales::Worker::Cache::XML do
     end
 
     it "replaces a node" do
-      Scales::Storage::Sync.set "/tracks.xml", @xml
+      Scales::Storage::Sync.set_content "/tracks.xml", @xml
       Scales.replace :xml => '<track>Track 2</track>', :at => "/tracks.xml", :select => "/tracks/track"
-      squeeze(Scales::Storage::Sync.get("/tracks.xml")).should == squeeze(<<-XML
+      squeeze(Scales::Storage::Sync.get_content("/tracks.xml")).should == squeeze(<<-XML
         <tracks>
           <track>Track 2</track>
         </tracks>
@@ -123,9 +123,9 @@ describe Scales::Worker::Cache::XML do
     end
 
     it "removes a node" do
-      Scales::Storage::Sync.set "/tracks.xml", @xml
+      Scales::Storage::Sync.set_content "/tracks.xml", @xml
       Scales.remove :xml, :at => "/tracks.xml", :select => "/tracks/track"
-      squeeze(Scales::Storage::Sync.get("/tracks.xml")).should == squeeze(<<-XML
+      squeeze(Scales::Storage::Sync.get_content("/tracks.xml")).should == squeeze(<<-XML
         <tracks>
         </tracks>
       XML

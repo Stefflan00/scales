@@ -42,9 +42,9 @@ describe Scales::Worker::Cache::HTML do
   end
   
   it "appends a node" do
-    Scales::Storage::Sync.set "/tracks", @html
+    Scales::Storage::Sync.set_content "/tracks", @html
     described_class.append :html => '<p id="track2">Track 2</p>', :to => "/tracks", :select => "#tracks"
-    squeeze(Scales::Storage::Sync.get("/tracks")).should == squeeze(<<-HTML
+    squeeze(Scales::Storage::Sync.get_content("/tracks")).should == squeeze(<<-HTML
       <html>
         <body>
           <div><h1>Tracks</h1></div>
@@ -59,9 +59,9 @@ describe Scales::Worker::Cache::HTML do
   end
   
   it "prepends a node" do
-    Scales::Storage::Sync.set "/tracks", @html
+    Scales::Storage::Sync.set_content "/tracks", @html
     described_class.prepend :html => '<p id="track2">Track 2</p>', :to => "/tracks", :select => "#tracks"
-    squeeze(Scales::Storage::Sync.get("/tracks")).should == squeeze(<<-HTML
+    squeeze(Scales::Storage::Sync.get_content("/tracks")).should == squeeze(<<-HTML
       <html>
         <body>
           <div><h1>Tracks</h1></div>
@@ -76,9 +76,9 @@ describe Scales::Worker::Cache::HTML do
   end
   
   it "sets a node" do
-    Scales::Storage::Sync.set "/tracks", @html
+    Scales::Storage::Sync.set_content "/tracks", @html
     described_class.set :html => '<p id="track2">Track 2</p>', :at => "/tracks", :select => "#tracks"
-    squeeze(Scales::Storage::Sync.get("/tracks")).should == squeeze(<<-HTML
+    squeeze(Scales::Storage::Sync.get_content("/tracks")).should == squeeze(<<-HTML
       <html>
         <body>
           <div><h1>Tracks</h1></div>
@@ -92,9 +92,9 @@ describe Scales::Worker::Cache::HTML do
   end
   
   it "replaces a node" do
-    Scales::Storage::Sync.set "/tracks", @html
+    Scales::Storage::Sync.set_content "/tracks", @html
     described_class.replace :html => '<p id="track2">Track 2</p>', :at => "/tracks", :select => "#tracks"
-    squeeze(Scales::Storage::Sync.get("/tracks")).should == squeeze(<<-HTML
+    squeeze(Scales::Storage::Sync.get_content("/tracks")).should == squeeze(<<-HTML
       <html>
         <body>
           <div><h1>Tracks</h1></div>
@@ -106,9 +106,9 @@ describe Scales::Worker::Cache::HTML do
   end
   
   it "removes a node" do
-    Scales::Storage::Sync.set "/tracks", @html
+    Scales::Storage::Sync.set_content "/tracks", @html
     described_class.remove :at => "/tracks", :select => "#tracks"
-    squeeze(Scales::Storage::Sync.get("/tracks")).should == squeeze(<<-HTML
+    squeeze(Scales::Storage::Sync.get_content("/tracks")).should == squeeze(<<-HTML
       <html>
         <body>
           <div><h1>Tracks</h1></div>
@@ -121,9 +121,9 @@ describe Scales::Worker::Cache::HTML do
   context Scales do
     
     it "appends a node" do
-      Scales::Storage::Sync.set "/tracks", @html
+      Scales::Storage::Sync.set_content "/tracks", @html
       Scales.append :html => '<p id="track2">Track 2</p>', :to => "/tracks", :select => "#tracks"
-      squeeze(Scales::Storage::Sync.get("/tracks")).should == squeeze(<<-HTML
+      squeeze(Scales::Storage::Sync.get_content("/tracks")).should == squeeze(<<-HTML
         <html>
           <body>
             <div><h1>Tracks</h1></div>
@@ -138,9 +138,9 @@ describe Scales::Worker::Cache::HTML do
     end
 
     it "prepends a node" do
-      Scales::Storage::Sync.set "/tracks", @html
+      Scales::Storage::Sync.set_content "/tracks", @html
       Scales.prepend :html => '<p id="track2">Track 2</p>', :to => "/tracks", :select => "#tracks"
-      squeeze(Scales::Storage::Sync.get("/tracks")).should == squeeze(<<-HTML
+      squeeze(Scales::Storage::Sync.get_content("/tracks")).should == squeeze(<<-HTML
         <html>
           <body>
             <div><h1>Tracks</h1></div>
@@ -155,9 +155,9 @@ describe Scales::Worker::Cache::HTML do
     end
 
     it "sets a node" do
-      Scales::Storage::Sync.set "/tracks", @html
+      Scales::Storage::Sync.set_content "/tracks", @html
       Scales.set :html => '<p id="track2">Track 2</p>', :at => "/tracks", :select => "#tracks"
-      squeeze(Scales::Storage::Sync.get("/tracks")).should == squeeze(<<-HTML
+      squeeze(Scales::Storage::Sync.get_content("/tracks")).should == squeeze(<<-HTML
         <html>
           <body>
             <div><h1>Tracks</h1></div>
@@ -171,9 +171,9 @@ describe Scales::Worker::Cache::HTML do
     end
 
     it "replaces a node" do
-      Scales::Storage::Sync.set "/tracks", @html
+      Scales::Storage::Sync.set_content "/tracks", @html
       Scales.replace :html => '<p id="track2">Track 2</p>', :at => "/tracks", :select => "#tracks"
-      squeeze(Scales::Storage::Sync.get("/tracks")).should == squeeze(<<-HTML
+      squeeze(Scales::Storage::Sync.get_content("/tracks")).should == squeeze(<<-HTML
         <html>
           <body>
             <div><h1>Tracks</h1></div>
@@ -185,9 +185,9 @@ describe Scales::Worker::Cache::HTML do
     end
 
     it "removes a node" do
-      Scales::Storage::Sync.set "/tracks", @html
+      Scales::Storage::Sync.set_content "/tracks", @html
       Scales.remove :html, :at => "/tracks", :select => "#tracks"
-      squeeze(Scales::Storage::Sync.get("/tracks")).should == squeeze(<<-HTML
+      squeeze(Scales::Storage::Sync.get_content("/tracks")).should == squeeze(<<-HTML
         <html>
           <body>
             <div><h1>Tracks</h1></div>

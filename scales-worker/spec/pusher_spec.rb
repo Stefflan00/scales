@@ -25,14 +25,14 @@ describe Scales::Worker::Pusher do
     env   = @pusher.process!(path)
     
     env.should be_a(Hash)
-    Scales::Storage::Sync.get("/tracks").should have_at_least(100).characters
+    Scales::Storage::Sync.get_content("/tracks").should have_at_least(100).characters
   end
   
   it "processes a full push" do    
     path  = { :to => "/tracks", :format => :html, :push => true }
     @pusher.process_push!(path)
     
-    Scales::Storage::Sync.get("/tracks").should have_at_least(100).characters
+    Scales::Storage::Sync.get_content("/tracks").should have_at_least(100).characters
   end
   
   it "processes a full update" do    

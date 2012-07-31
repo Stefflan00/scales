@@ -3,9 +3,9 @@ require 'helper'
 describe Scales::Worker::Cache::Destroy do
   
   it "destroys a value at a path" do
-    Scales::Storage::Sync.set "/tracks/15", "A track"
+    Scales::Storage::Sync.set_content "/tracks/15", "A track"
     described_class.destroy "/tracks/15"
-    Scales::Storage::Sync.get("/tracks/15").should be_nil
+    Scales::Storage::Sync.get_content("/tracks/15").should be_nil
   end
   
   it "sends a key event on destroying" do
@@ -20,7 +20,7 @@ describe Scales::Worker::Cache::Destroy do
         received_response = JSON.parse(message)
         
         received_response["path"].should   == "/tracks/15"
-        received_response["type"].should   == "destroy_key"
+        received_response["type"].should   == "destroy_resource"
         
         @subscriber.unsubscribe('scales_monitor_events')
       end
@@ -48,9 +48,9 @@ describe Scales::Worker::Cache::Destroy do
   
   context Scales do
     it "destroys a value at a path" do
-      Scales::Storage::Sync.set "/tracks/15", "A track"
+      Scales::Storage::Sync.set_content "/tracks/15", "A track"
       Scales.destroy "/tracks/15"
-      Scales::Storage::Sync.get("/tracks/15").should be_nil
+      Scales::Storage::Sync.get_content("/tracks/15").should be_nil
     end
   end
   

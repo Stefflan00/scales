@@ -52,12 +52,12 @@ module Scales
             raise 'No path defined like this :to => "/tracks.xml"'      if path.nil?
             raise 'No selector defined like this :select => "/tracks"'  if selector.nil?
             
-            xml = Storage::Sync.get(path)
+            xml = Storage::Sync.get_content(path)
             xml = Nokogiri::XML.parse(xml)
             
             yield xml.xpath(selector)
             
-            Storage::Sync.set(path, xml.inner_html)
+            Storage::Sync.set_content(path, xml.inner_html)
             xml.inner_html
           end
                 
