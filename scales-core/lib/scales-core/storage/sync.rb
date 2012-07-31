@@ -18,16 +18,28 @@ module Scales
           with_connection{ @@redis }
         end
         
+        def set_content(path, value)
+          set(Storage.prefix(path), value)
+        end
+        
+        def get_content(path, partials = false)
+          get(Storage.prefix(path), partials)
+        end
+        
+        def del_content(path)
+          del(Storage.prefix(path))
+        end
+        
         def set(key, value)
-          with_connection(key){ @@redis.set(key, value) }
+          with_connection{ @@redis.set(key, value) }
         end
         
         def get(key, partials = false)
-          with_connection(key){ partials ? Helper::PartialResolver.resolve(@@redis, key) : @@redis.get(key) }
+          with_connection{ partials ? Helper::PartialResolver.resolve(@@redis, key) : @@redis.get(key) }
         end
         
         def del(key)
-          with_connection(key){ @@redis.del(key) }
+          with_connection{ @@redis.del(key) }
         end
         
         def add(queue, job)
@@ -61,8 +73,7 @@ module Scales
         
         private
         
-        def with_connection(key = nil)
-          ReservedKeys.validate!(key) if key
+        def with_connection
           connect!
           yield
         end

@@ -56,12 +56,13 @@ module Scales
             raise 'No path defined like this :to => "/tracks"'          if path.nil?
             raise 'No selector defined like this :select => "#tracks"'  if selector.nil?
             
-            html = Storage::Sync.get(path)
-            html = is_html_page?(html) ? Nokogiri::HTML.parse(html) : Nokogiri::HTML.fragment(html)
+            key_or_partial  = Cache.key_or_partial_for(path)
+            html            = key_or_partial == "key" ? Storage::Sync.get_content(path) : Storage::Sync.get_content(path)
+            html            = is_html_page?(html) ? Nokogiri::HTML.parse(html) : Nokogiri::HTML.fragment(html)
             
             yield html.css(selector)
             
-            Storage::Sync.set(path, html.inner_html)
+            key_or_partial == "key" ? Storage::Sync.set_content(path, html.inner_html) : Storage::Sync.set_content(path, html.inner_html)
             html.inner_html
           end
                 

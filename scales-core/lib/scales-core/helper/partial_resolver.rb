@@ -24,7 +24,7 @@ module Scales
         def resolve_partial(redis, value)
           matched = value.match(PARTIAL_REGEX)
           tag, key = matched[1], matched[2]
-          partial = redis.get(key)
+          partial = redis.get(Storage::PARTIAL_PREFIX + key)
           
           value.gsub(tag, partial)
         end

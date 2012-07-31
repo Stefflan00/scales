@@ -25,21 +25,21 @@ describe Scales::Helper::PartialResolver do
   end
   
   it "returns value if key doesn't contain a partial" do
-    Scales::Storage::Sync.set "/tracks", "A text without partials"
-    described_class.resolve(Scales::Storage::Sync.connection, "/tracks").should == "A text without partials"
+    Scales::Storage::Sync.set_content "/tracks", "A text without partials"
+    described_class.resolve(Scales::Storage::Sync.connection, "scales_resource_/tracks").should == "A text without partials"
   end
   
   it "resolves a partial" do
-    Scales::Storage::Sync.set "header", "<p>The header</p>"
+    Scales::Storage::Sync.set_content "header", "<p>The header</p>"
     described_class.resolve_partial(Scales::Storage::Sync.connection, @html).should == @html.gsub('Scales.partial "header"', "<p>The header</p>")
   end
   
   it "multi resolves partials" do
-    Scales::Storage::Sync.set "/tracks", @html
-    Scales::Storage::Sync.set "header", @header
-    Scales::Storage::Sync.set "items", @items
+    Scales::Storage::Sync.set_content "/tracks", @html
+    Scales::Storage::Sync.set_content "header", @header
+    Scales::Storage::Sync.set_content "items", @items
     
-    described_class.resolve(Scales::Storage::Sync.connection, "/tracks").should == @html.gsub('Scales.partial "header"', @header).gsub("Scales.partial 'items'", @items)
+    described_class.resolve(Scales::Storage::Sync.connection, "scales_resource_/tracks").should == @html.gsub('Scales.partial "header"', @header).gsub("Scales.partial 'items'", @items)
   end
   
 end

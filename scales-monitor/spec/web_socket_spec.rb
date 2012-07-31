@@ -72,6 +72,30 @@ describe Scales::Monitor::WebSocket do
       end
     end
     
+    it "sends push keys" do
+      with_api(described_class, {:verbose => true, :log_stdout => true}) do |server|
+        Scales::Storage::Async.flushall!      
+        Scales::Storage::Async.set "/tracks",   "test 1"
+        Scales::Storage::Async.set "/tracks/2", "test 2"
+
+        keys = described_class.new.instance_eval{ push_keys }
+        keys.should have_at_least(2).responses
+        EM.stop
+      end
+    end
+    
+    it "sends push partials" do
+      with_api(described_class, {:verbose => true, :log_stdout => true}) do |server|
+        Scales::Storage::Async.flushall!     
+        Scales::Storage::Async.set "tracks",   "test 1"
+        Scales::Storage::Async.set "tracks/2", "test 2"
+
+        keys = described_class.new.instance_eval{ push_partials }
+        keys.should have_at_least(2).responses
+        EM.stop
+      end
+    end
+    
   end
   
   

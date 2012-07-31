@@ -28,7 +28,7 @@ describe Scales::Server do
   end
   
   it "should answer requests" do    
-    Scales::Storage::Sync.set "/", "Hey there!"
+    Scales::Storage::Sync.set_content "/", "Hey there!"
     
     EventMachine.run {
       http = EventMachine::HttpRequest.new('http://127.0.0.1:3004/').aget
@@ -44,7 +44,7 @@ describe Scales::Server do
       }
     }
     
-    Scales::Storage::Sync.del "/"
+    Scales::Storage::Sync.del_content "/"
   end
   
 end

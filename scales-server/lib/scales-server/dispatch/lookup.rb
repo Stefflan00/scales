@@ -5,7 +5,7 @@ module Scales
         class << self
       
           def ressource(env)
-            response = Storage::Async.get(path(env), Scales.config.partials)
+            response = Storage::Async.get_content(path(env), Scales.config.partials)
             response.nil? ? render_not_found : render(response)
           end
       

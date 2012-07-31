@@ -26,7 +26,7 @@ module Scales
         response  = @app.call(env)
         response.last.close
         
-        Storage::Sync.set(path[:to], Response.to_string(response)) if path[:push]
+        Storage::Sync.set_content(path[:to], Response.to_string(response)) if path[:push]
         
         env
       end

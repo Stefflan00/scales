@@ -61,6 +61,8 @@ module Scales
         
         request_queue.each{  |request| env.stream_send(request)  }
         response_queue.each{ |request| env.stream_send(response) }
+        
+        push_keys.each{  |key| env.stream_send(key)  }
       end
 
       def server_statuses
@@ -129,10 +131,46 @@ module Scales
         data
       end
       
+      def push_keys
+        keys = Storage::Async.connection.keys("/*")
+        return [] if keys.empty?
+        
+        data = []
+        keys.each do |key|
+          data << {
+            :path       => key,
+            :format     => format(key),
+            :type       => "push_key"
+          }.to_json
+        end
+        data
+      end
+      
+      def push_partials
+        keys = Storage::Async.connection.keys("/*")
+        return [] if keys.empty?
+        
+        data = []
+        keys.each do |key|
+          data << {
+            :path       => key,
+            :format     => format(key),
+            :type       => "push_partial"
+          }.to_json
+        end
+        data
+      end
+      
       private
       
       def redis_value(value, info)
         info.scan(/^#{value}:.*/).first.split(":").last
+      end
+      
+      def format(path)
+        format = "HTML"
+        Scales::Helper::ContentTypes::TYPES.each { |aformat, type| format = aformat.to_s.upcase and break if path =~ /\.#{aformat}(\?|$)/ }
+        format
       end
       
     end

@@ -11,15 +11,16 @@ module Scales
             format, content = params.to_a.first
             raise "Don't know where to push, missing :to => '/a/path' parameter"  if path.nil?
             raise "Unknown format :#{format}"                                     if format.to_content_type.nil?
-            publish_push(path, format)                                    
-            Storage::Sync.set(path, content)
+            key_or_partial = Cache.key_or_partial_for(path)
+            
+            publish_push(path, format, key_or_partial)                                    
+            key_or_partial == "key" ? Storage::Sync.set_content(path, content) : Storage::Sync.set_content(path, content)
             content
           end
           
           private
           
-          def publish_push(path, format)
-            key_or_partial = (path =~ /^\//) ? "key" : "partial"
+          def publish_push(path, format, key_or_partial)
             data = {
               :path   => path,
               :format => format.to_s.upcase,
