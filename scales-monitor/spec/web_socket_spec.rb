@@ -72,14 +72,14 @@ describe Scales::Monitor::WebSocket do
       end
     end
     
-    it "sends push keys" do
+    it "sends push resources" do
       with_api(described_class, {:verbose => true, :log_stdout => true}) do |server|
         Scales::Storage::Async.flushall!      
-        Scales::Storage::Async.set "/tracks",   "test 1"
-        Scales::Storage::Async.set "/tracks/2", "test 2"
+        Scales::Storage::Async.set_content "/tracks",   "test 1"
+        Scales::Storage::Async.set_content "/tracks/2", "test 2"
 
-        keys = described_class.new.instance_eval{ push_keys }
-        keys.should have_at_least(2).responses
+        resources = described_class.new.instance_eval{ push_resources }
+        resources.should have_at_least(2).resources
         EM.stop
       end
     end
@@ -87,11 +87,11 @@ describe Scales::Monitor::WebSocket do
     it "sends push partials" do
       with_api(described_class, {:verbose => true, :log_stdout => true}) do |server|
         Scales::Storage::Async.flushall!     
-        Scales::Storage::Async.set "tracks",   "test 1"
-        Scales::Storage::Async.set "tracks/2", "test 2"
+        Scales::Storage::Async.set_content "tracks",   "test 1"
+        Scales::Storage::Async.set_content "tracks/2", "test 2"
 
-        keys = described_class.new.instance_eval{ push_partials }
-        keys.should have_at_least(2).responses
+        partials = described_class.new.instance_eval{ push_partials }
+        partials.should have_at_least(2).partials
         EM.stop
       end
     end

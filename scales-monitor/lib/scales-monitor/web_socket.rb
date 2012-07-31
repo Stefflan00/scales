@@ -55,14 +55,15 @@ module Scales
       end
       
       def send_initial_statuses(env)
-        server_statuses.each{ |server| env.stream_send(server) }
-        cache_statuses.each{  |cache| env.stream_send(cache)   }
-        worker_statuses.each{ |worker| env.stream_send(worker) }
+        server_statuses.each{ |server| env.stream_send(server)    }
+        cache_statuses.each{  |cache|  env.stream_send(cache)     }
+        worker_statuses.each{ |worker| env.stream_send(worker)    }
         
-        request_queue.each{  |request| env.stream_send(request)  }
-        response_queue.each{ |request| env.stream_send(response) }
+        request_queue.each{  |request| env.stream_send(request)   }
+        response_queue.each{ |request| env.stream_send(response)  }
         
-        push_keys.each{  |key| env.stream_send(key)  }
+        push_resources.each{ |resource| env.stream_send(resource) }
+        push_partials.each{  |partial|  env.stream_send(partial)  }
       end
 
       def server_statuses
@@ -131,30 +132,30 @@ module Scales
         data
       end
       
-      def push_keys
-        keys = Storage::Async.connection.keys("/*")
-        return [] if keys.empty?
+      def push_resources
+        resources = Storage::Async.connection.keys("scales_resource_/*")
+        return [] if resources.empty?
         
         data = []
-        keys.each do |key|
+        resources.each do |resource|
           data << {
-            :path       => key,
-            :format     => format(key),
-            :type       => "push_key"
+            :path       => resource,
+            :format     => format(resource),
+            :type       => "push_resource"
           }.to_json
         end
         data
       end
       
       def push_partials
-        keys = Storage::Async.connection.keys("/*")
-        return [] if keys.empty?
+        partials = Storage::Async.connection.keys("scales_partial_*")
+        return [] if partials.empty?
         
         data = []
-        keys.each do |key|
+        partials.each do |partial|
           data << {
-            :path       => key,
-            :format     => format(key),
+            :path       => partial,
+            :format     => format(partial),
             :type       => "push_partial"
           }.to_json
         end
