@@ -9,16 +9,16 @@ describe Scales::Storage::Sync do
   
   it "should set and get and delete a resource" do
     Scales::Storage::Sync.set_content "test_key", "a test value"
-    Scales::Storage::Sync.get_content_content("test_key").should == "a test value"
+    Scales::Storage::Sync.get_content("test_key").should == "a test value"
     Scales::Storage::Sync.del_content "test_key"
-    Scales::Storage::Sync.get_content_content("test_key").should be_nil
+    Scales::Storage::Sync.get_content("test_key").should be_nil
   end
   
   it "should set and get and delete a partial" do
     Scales::Storage::Sync.set_content "test_key", "a test value"
-    Scales::Storage::Sync.get_content_content("test_key").should == "a test value"
+    Scales::Storage::Sync.get_content("test_key").should == "a test value"
     Scales::Storage::Sync.del_content "test_key"
-    Scales::Storage::Sync.get_content_content("test_key").should be_nil
+    Scales::Storage::Sync.get_content("test_key").should be_nil
   end
   
   context "partials" do
@@ -60,7 +60,7 @@ describe Scales::Storage::Sync do
       Scales::Storage::Sync.set_content "_header",      @header
       Scales::Storage::Sync.set_content "_sub_header",  @sub_header
       
-      squeeze(Scales::Storage::Sync.get_content_content("/tracks", true)).should == squeeze(@html.gsub('Scales.partial "_header"', @header).gsub('Scales.partial "_sub_header"', @sub_header))
+      squeeze(Scales::Storage::Sync.get_content("/tracks", true)).should == squeeze(@html.gsub('Scales.partial "_header"', @header).gsub('Scales.partial "_sub_header"', @sub_header))
     end
     
   end
