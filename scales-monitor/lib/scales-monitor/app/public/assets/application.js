@@ -4443,7 +4443,7 @@ replace(/(?:^|:|,)(?:\s*\[)+/g, ''))) {
 
     function Config() {}
 
-    Config.webSocket = "ws://localhost:9000/socket";
+    Config.webSocket = "ws://" + location.host + "/socket";
 
     return Config;
 
@@ -4625,8 +4625,15 @@ replace(/(?:^|:|,)(?:\s*\[)+/g, ''))) {
     };
 
     Machines.prototype.renderMachines = function(machines, div) {
-      var id, machine, out;
-      out = "";
+      var id, machine, machineAmount, out;
+      machineAmount = 0;
+      for (id in machines) {
+        machine = machines[id];
+        machineAmount += 1;
+      }
+      out = JST['app/views/_top']({
+        amount: machineAmount
+      });
       for (id in machines) {
         machine = machines[id];
         out += JST['app/views/_machine'](machine);
@@ -4709,15 +4716,14 @@ replace(/(?:^|:|,)(?:\s*\[)+/g, ''))) {
         item = items[id];
         itemAmount += 1;
       }
-      div.html(JST['app/views/_queue_top']({
+      out = JST['app/views/_top']({
         amount: itemAmount
-      }));
-      out = "";
+      });
       for (id in items) {
         item = items[id];
         out += JST['app/views/_queue_item'](item);
       }
-      return div.append(out);
+      return div.html(out);
     };
 
     return Queues;
@@ -4769,7 +4775,10 @@ replace(/(?:^|:|,)(?:\s*\[)+/g, ''))) {
         'JSON': '#FFA3A3',
         'XML': '#A3FFE5',
         'PDF': '#FFA3E2',
-        'TXT': '#C0A3FF'
+        'TXT': '#C0A3FF',
+        'PNG': '#FFC4EE',
+        'JPG': '#C4FFF3',
+        'ZIP': '#FDFFC4'
       };
     };
 
@@ -4812,7 +4821,7 @@ replace(/(?:^|:|,)(?:\s*\[)+/g, ''))) {
         resource = resources[id];
         resourceAmount += 1;
       }
-      out = JST['app/views/_resource_top']({
+      out = JST['app/views/_top']({
         amount: resourceAmount
       });
       resourcesArray = [];
@@ -5171,61 +5180,6 @@ replace(/(?:^|:|,)(?:\s*\[)+/g, ''))) {
 }).call(this);
 (function() {
   this.JST || (this.JST = {});
-  this.JST["app/views/_queue_top"] = function(__obj) {
-    if (!__obj) __obj = {};
-    var __out = [], __capture = function(callback) {
-      var out = __out, result;
-      __out = [];
-      callback.call(this);
-      result = __out.join('');
-      __out = out;
-      return __safe(result);
-    }, __sanitize = function(value) {
-      if (value && value.ecoSafe) {
-        return value;
-      } else if (typeof value !== 'undefined' && value != null) {
-        return __escape(value);
-      } else {
-        return '';
-      }
-    }, __safe, __objSafe = __obj.safe, __escape = __obj.escape;
-    __safe = __obj.safe = function(value) {
-      if (value && value.ecoSafe) {
-        return value;
-      } else {
-        if (!(typeof value !== 'undefined' && value != null)) value = '';
-        var result = new String(value);
-        result.ecoSafe = true;
-        return result;
-      }
-    };
-    if (!__escape) {
-      __escape = __obj.escape = function(value) {
-        return ('' + value)
-          .replace(/&/g, '&amp;')
-          .replace(/</g, '&lt;')
-          .replace(/>/g, '&gt;')
-          .replace(/"/g, '&quot;');
-      };
-    }
-    (function() {
-      (function() {
-      
-        __out.push('<div class="well dark-grey pagination-centered"><h2 class="white">');
-      
-        __out.push(__sanitize(this.amount));
-      
-        __out.push('</h2></div>\n');
-      
-      }).call(this);
-      
-    }).call(__obj);
-    __obj.safe = __objSafe, __obj.escape = __escape;
-    return __out.join('');
-  };
-}).call(this);
-(function() {
-  this.JST || (this.JST = {});
   this.JST["app/views/_resource"] = function(__obj) {
     if (!__obj) __obj = {};
     var __out = [], __capture = function(callback) {
@@ -5293,7 +5247,7 @@ replace(/(?:^|:|,)(?:\s*\[)+/g, ''))) {
 }).call(this);
 (function() {
   this.JST || (this.JST = {});
-  this.JST["app/views/_resource_top"] = function(__obj) {
+  this.JST["app/views/_top"] = function(__obj) {
     if (!__obj) __obj = {};
     var __out = [], __capture = function(callback) {
       var out = __out, result;

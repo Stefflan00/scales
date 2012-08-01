@@ -68,7 +68,7 @@ class App.Resources extends Spine.Controller
   renderResources: (resources, div) ->
     resourceAmount = 0
     resourceAmount += 1 for id, resource of resources
-    out = JST['app/views/_resource_top']({amount: resourceAmount})
+    out = JST['app/views/_top']({amount: resourceAmount})
     
     resourcesArray = []
     resourcesArray.push(resource) for id, resource of resources

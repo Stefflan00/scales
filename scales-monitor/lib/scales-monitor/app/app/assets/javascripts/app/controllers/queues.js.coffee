@@ -49,8 +49,7 @@ class App.Queues extends Spine.Controller
   renderQueueItems: (items, div) ->
     itemAmount = 0
     itemAmount += 1 for id, item of items
-    div.html JST['app/views/_queue_top']({amount: itemAmount})
+    out = JST['app/views/_top']({amount: itemAmount})
     
-    out = ""
     out += JST['app/views/_queue_item'](item) for id, item of items
-    div.append out
+    div.html out

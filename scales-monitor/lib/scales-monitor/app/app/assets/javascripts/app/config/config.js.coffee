@@ -5,4 +5,4 @@ window.App = ->
 Spine.Model.host = "http://localhost:3000"
 
 class App.Config
-  @webSocket : "ws://localhost:9000/socket"
+  @webSocket : "ws://#{location.host}/socket"

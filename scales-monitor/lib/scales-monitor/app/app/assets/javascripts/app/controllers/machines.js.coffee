@@ -51,7 +51,10 @@ class App.Machines extends Spine.Controller
     @html JST['app/views/machines'](@)
   
   renderMachines: (machines, div) ->
-    out = ""
+    machineAmount = 0
+    machineAmount += 1 for id, machine of machines
+    out = JST['app/views/_top']({amount: machineAmount})
+    
     out += JST['app/views/_machine'](machine) for id, machine of machines
     div.html out
     $("time.timeago").timeago()
