@@ -8,8 +8,9 @@ class TracksController < ApplicationController
       format.html # index.html.erb
       format.json { render json: @tracks }
     end
-    Scales.push :json => @tracks.to_json, :to => "/tracks.json"
-    Scales.push :html => html,            :to => "/tracks"
+    Scales.push :html => @tracks.size.to_s, :to => "_tracks_amount"
+    Scales.push :json => @tracks.to_json,   :to => "/tracks.json"
+    Scales.push :html => html,              :to => "/tracks"
   end
 
   # GET /tracks/1

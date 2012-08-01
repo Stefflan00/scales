@@ -1,0 +1,10 @@
+<div class="progress color" style="text-align: center;">
+  
+  <div class="span4 overlay">
+    <span style="float:left; margin-left:20px;"><%= @.format %></span>
+    <span class="pull-right" style="margin-right:20px;"><%= Math.round(@.progress*100)/100 %>%</span>
+    <span class="pull-right" style="margin-right:115px;"><%= @.amount %></span>
+  </div>
+  
+  <div class="bar color" style="width: <%= @.progress %>%; background-color: <%= @.color %>"></div>
+</div>

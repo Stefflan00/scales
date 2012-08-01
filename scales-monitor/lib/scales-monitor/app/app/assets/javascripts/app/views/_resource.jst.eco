@@ -1,0 +1,5 @@
+<div class="span1 pagination-centered">
+  <div class="well block" style="background-color:<%= @.color %>">
+    <a href="<%= if @.server? then "http://#{@.server.ip}:#{@.server.port}#{@.path}" else "#/resources" %>" rel="tooltip" title="<%= @.path %>"><%= @.format %></a>
+  </div>
+</div>

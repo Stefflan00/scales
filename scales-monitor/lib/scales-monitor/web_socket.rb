@@ -139,7 +139,7 @@ module Scales
         data = []
         resources.each do |resource|
           data << {
-            :path       => resource,
+            :path       => resource.gsub("scales_resource_", ""),
             :format     => format(resource),
             :type       => "push_resource"
           }.to_json
@@ -154,7 +154,7 @@ module Scales
         data = []
         partials.each do |partial|
           data << {
-            :path       => partial,
+            :path       => partial.gsub("scales_partial_", ""),
             :format     => format(partial),
             :type       => "push_partial"
           }.to_json

@@ -20,3 +20,27 @@
 p.machine{ margin-bottom:0; margin-top: 10px}
 .well.dark-grey{ background-color: rgb(100, 100, 100); }
 h2.white{ color:#FFFFFF; }
+
+.block, .block a, .block a:hover, .block a:visited{
+  color: #5A5A5A;
+  text-decoration: none;
+}
+
+.progress.color{
+  height: 60px;
+}
+
+.progress .bar.color{
+  background-image: none;
+  height: 60px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+     -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+          box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+}
+
+.progress .overlay{
+  color: #5A5A5A;
+  margin-left: 0; 
+  float: left; 
+  line-height: 60px;
+}
