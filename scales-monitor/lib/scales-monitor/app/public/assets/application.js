@@ -4915,7 +4915,7 @@ replace(/(?:^|:|,)(?:\s*\[)+/g, ''))) {
     Resources.prototype.renderContentTypes = function() {
       var format, formats, out, total, _i, _len, _ref;
       _ref = this.processContentTypes(), formats = _ref[0], total = _ref[1];
-      out = JST['app/views/_resource_top']({
+      out = JST['app/views/_top']({
         amount: total
       });
       for (_i = 0, _len = formats.length; _i < _len; _i++) {
@@ -4938,20 +4938,11 @@ replace(/(?:^|:|,)(?:\s*\[)+/g, ''))) {
 
     Socket.setup = function() {
       var _this = this;
-      console.log("Connecting to " + App.Config.webSocket);
       this.socket = new WebSocket(App.Config.webSocket);
-      this.socket.onopen = function() {
-        return console.log("Connected");
-      };
-      this.socket.onerror = function(error) {
-        return console.log("Error: " + error);
-      };
       return this.socket.onmessage = function(message) {
         var data, type;
         data = JSON.parse(message.data);
         type = data.type;
-        console.log("Received: " + type + " with data:");
-        console.log(data);
         return Spine.trigger(type, data);
       };
     };
@@ -5393,7 +5384,7 @@ replace(/(?:^|:|,)(?:\s*\[)+/g, ''))) {
     (function() {
       (function() {
       
-        __out.push('<header class="jumbotron subhead">\n  <h1>Machines</h1>\n  <p class="lead">Overview of all Servers, Caches and Workers</p>\n</header>\n\n<section>\n\n<div class="row">\n  \n  <div class="span4">\n    <div class="page-header"><h1>Servers</h1></div>\n    <div id="servers"></div>\n  </div>\n  \n  <div class="span4">\n    <div class="page-header"><h1>Caches</h1></div>\n    <div id="caches"></div>\n  </div>\n  \n  <div class="span4">\n    <div class="page-header"><h1>Workers</h1></div>\n    <div id="workers"></div>\n  </div>\n  \n</div>\n\n</section>\n');
+        __out.push('<header class="jumbotron subhead">\n  <h1>Machines</h1>\n  <p class="lead">Overview of all Servers, Caches and Workers</p>\n</header>\n\n<section>\n\n<div class="row">\n  \n  <div class="span4">\n    <div class="page-header"><h1>Servers</h1></div>\n    <div id="servers">\n      <div class="well dark-grey pagination-centered"><h2 class="white">0</h2></div>\n    </div>\n  </div>\n  \n  <div class="span4">\n    <div class="page-header"><h1>Caches</h1></div>\n    <div id="caches">\n      <div class="well dark-grey pagination-centered"><h2 class="white">0</h2></div>\n    </div>\n  </div>\n  \n  <div class="span4">\n    <div class="page-header"><h1>Workers</h1></div>\n    <div id="workers">\n      <div class="well dark-grey pagination-centered"><h2 class="white">0</h2></div>\n    </div>\n  </div>\n  \n</div>\n\n</section>\n');
       
       }).call(this);
       

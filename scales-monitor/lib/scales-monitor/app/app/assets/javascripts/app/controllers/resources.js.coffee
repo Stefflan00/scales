@@ -120,7 +120,7 @@ class App.Resources extends Spine.Controller
   renderContentTypes: ->
     [formats, total] = @processContentTypes()
     
-    out = JST['app/views/_resource_top']({amount: total})
+    out = JST['app/views/_top']({amount: total})
     out += JST['app/views/_format_bar'](format) for format in formats
     @contentTypesDiv.html out
     
