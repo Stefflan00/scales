@@ -25,10 +25,13 @@ class App.Resources extends Spine.Controller
   
   bindColors: ->
     @colors = 
-      'HTML' : '#EDFFA3'
-      'CSS'  : '#A3E2FF'
-      'JS'  : '#FFDAA3'
+      'HTML'  : '#EDFFA3'
+      'CSS'   : '#A3E2FF'
+      'JS'    : '#FFDAA3'
       'JSON'  : '#FFA3A3'
+      'XML'   : '#A3FFE5'
+      'PDF'   : '#FFA3E2'
+      'TXT'   : '#C0A3FF'
   
   bindEvents: ->
     

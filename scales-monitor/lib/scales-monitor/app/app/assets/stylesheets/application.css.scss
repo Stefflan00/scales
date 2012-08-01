@@ -44,3 +44,15 @@ h2.white{ color:#FFFFFF; }
   float: left; 
   line-height: 60px;
 }
+
+.log.well{
+  background-color: rgb(30, 30, 30);
+  color: rgb(0, 158, 242);
+  font-family: 'Monaco', monospace;
+  height: 400px;
+  overflow-y: scroll;
+  font-size: 11px;
+}
+
+.log span.date{ font-weight:bold; }
+.log span.event{ font-weight:bold; color: #91FF00; }
