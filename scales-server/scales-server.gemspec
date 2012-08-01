@@ -18,6 +18,6 @@ Gem::Specification.new do |gem|
   # Dependencies
   gem.add_dependency  "rake",         ">= 0.9.2.2"
   gem.add_dependency  "rspec",        ">= 2.11"
-  gem.add_dependency  "scales-core",  ">= 0.0.1"
+  gem.add_dependency  "scales-core",  Scales::Server::VERSION
   gem.add_dependency  "goliath",      ">= 1.0.0.beta.1"
 end
