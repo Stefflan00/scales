@@ -16,7 +16,7 @@ module Scales
           end
       
           def render_not_found
-            [404, {}, ""]
+            [404, {}, "Not found"]
           end
       
           def render(response)
