@@ -38,3 +38,17 @@ task :install do
   end
   fail("Errors in #{errors.join(', ')}") unless errors.empty?
 end
+
+desc 'Bump all versions to match version.rb'
+task :update_versions do
+  require File.dirname(__FILE__) + "/version"
+
+  PROJECTS.each do |project|
+    Dir["#{project}/lib/*/version.rb"].each do |file|
+      version_file = File.read(file)
+      version_file.gsub! /VERSION = \".+\"/, "VERSION = \"#{Scales::VERSION}\""
+      File.write(file, version_file)
+    end
+  end
+  puts "Updated to #{Scales::VERSION}"
+end
