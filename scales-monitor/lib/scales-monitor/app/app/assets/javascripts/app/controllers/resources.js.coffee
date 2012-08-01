@@ -32,6 +32,9 @@ class App.Resources extends Spine.Controller
       'XML'   : '#A3FFE5'
       'PDF'   : '#FFA3E2'
       'TXT'   : '#C0A3FF'
+      'PNG'   : '#FFC4EE'
+      'JPG'   : '#C4FFF3'
+      'ZIP'   : '#FDFFC4'
   
   bindEvents: ->
     

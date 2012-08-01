@@ -12,7 +12,10 @@ module Scales
         :json  => 'application/json',
         :rss   => 'application/rss+xml',
         :xml   => 'application/xml',
-        :pdf   => 'application/pdf'
+        :pdf   => 'application/pdf',
+        :zip   => 'application/zip',
+        :jpg   => 'image/jpeg',
+        :png   => 'image/png'
       }
       
       class ::Symbol
