@@ -1,5 +1,5 @@
 module Scales
   module Monitor
-    VERSION = "0.0.1.beta.1"
+    VERSION = "0.0.1.beta.2"
   end
 end

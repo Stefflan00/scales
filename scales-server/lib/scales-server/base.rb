@@ -3,7 +3,7 @@ module Scales
     class << self
       
       def run!
-        ARGV << "--stdout" << "--environment" << "#{Scales.env}"
+        ARGV << "--environment" << "#{Scales.env}"
         
         server      = Server.new
         runner      = Goliath::Runner.new(ARGV, server)

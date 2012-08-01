@@ -51,12 +51,9 @@ module Scales
         thread = Thread.new do
           Thread.current[:post_process_queue] = []
           id, response = process!(job)
-          print "#{id} -> " + "#{response.first}".green + " - #{Thread.current[:post_process_queue].size} post jobs -> "
           post_process!(job)
-          print "done".green + " - publishing -> "
           @status.put_response_in_queue!(response)
           Scales::PubSub::Sync.publish("scales_response_#{id}", JSON.generate(response))
-          puts "done".green
         end
         
         thread.join if should_wait_for_request_to_finish
