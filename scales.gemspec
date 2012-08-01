@@ -9,7 +9,7 @@ Gem::Specification.new do |gem|
   gem.homepage      = "http://itscales.org"
 
   gem.executables   = []
-  gem.name          = "scales"
+  gem.name          = "scales-framework"
   gem.version       = Scales::VERSION
   gem.required_ruby_version     = '>= 1.9.3'
   
