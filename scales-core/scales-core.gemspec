@@ -4,9 +4,9 @@ require File.expand_path('../lib/scales-core/version', __FILE__)
 Gem::Specification.new do |gem|
   gem.authors       = ["Thomas Fankhauser"]
   gem.email         = ["tommylefunk@googlemail.com"]
-  gem.description   = %q{Scales core functionalities}
-  gem.summary       = %q{Scales core functionalities}
-  gem.homepage      = ""
+  gem.description   = %q{Super Scale Caching Framework - Core}
+  gem.summary       = %q{Provides core functionalities like storage, queues, pubsub and configurations.}
+  gem.homepage      = "http://itscales.org"
 
   gem.files         = `git ls-files`.split($\)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }

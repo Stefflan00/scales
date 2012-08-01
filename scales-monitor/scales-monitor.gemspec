@@ -4,8 +4,8 @@ require File.expand_path('../lib/scales-monitor/version', __FILE__)
 Gem::Specification.new do |gem|
   gem.authors       = ["Thomas Fankhauser"]
   gem.email         = ["tommylefunk@googlemail.com"]
-  gem.description   = %q{Scales monitor server}
-  gem.summary       = %q{Scales monitor server}
+  gem.description   = %q{Super Scale Caching Framework - Monitor Server}
+  gem.summary       = %q{Monitoring in the form of a website that updates in real-time using a websocket connected to the main system.}
   gem.homepage      = "http://itscales.org"
 
   gem.files         = `git ls-files`.split($\)

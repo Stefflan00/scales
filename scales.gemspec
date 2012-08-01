@@ -4,8 +4,8 @@ require File.expand_path('../version', __FILE__)
 Gem::Specification.new do |gem|
   gem.authors       = ["Thomas Fankhauser"]
   gem.email         = ["tommylefunk@googlemail.com"]
-  gem.summary       = %q{Full-Stack Super Scale System}
-  gem.description   = %q{Super Scale System}
+  gem.summary       = %q{Super Scale Caching Framework}
+  gem.description   = %q{Scaleable caching framework with 100% cache coverage, async server instances and sync worker instances supporting rack applications like Rails.}
   gem.homepage      = "http://itscales.org"
 
   gem.executables   = []

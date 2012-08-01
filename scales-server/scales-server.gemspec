@@ -4,8 +4,8 @@ require File.expand_path('../lib/scales-server/version', __FILE__)
 Gem::Specification.new do |gem|
   gem.authors       = ["Thomas Fankhauser"]
   gem.email         = ["tommylefunk@googlemail.com"]
-  gem.description   = %q{Scales Server}
-  gem.summary       = %q{Receives all requests and dispatches them}
+  gem.description   = %q{Super Scale Caching Framework - Server}
+  gem.summary       = %q{Serves all requests asynchronous from the cache and puts jobs into the request queue for the workers.}
   gem.homepage      = "http://itscales.org"
 
   gem.files         = Dir['LICENSE', 'lib/**/*']
