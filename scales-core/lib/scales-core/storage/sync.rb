@@ -2,6 +2,7 @@ module Scales
   module Storage
     module Sync
       @@redis = nil
+      @@pids = [Process.pid]
       
       class << self
         
@@ -74,6 +75,13 @@ module Scales
         private
         
         def with_connection
+          
+          # Reconnects forks
+          unless @@pids.include?(Process.pid)
+            force_reconnect!
+            @@pids << Process.pid
+          end
+          
           connect!
           yield
         end
