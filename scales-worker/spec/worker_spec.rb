@@ -61,10 +61,20 @@ describe Scales::Worker::Worker do
     job = fixture "create_track_request.json"
     Scales::Queue::Sync.add(job)
     
-    id, response = @worker.process_request!
+    Thread.new do
+      sleep 2
+      Scales::Storage::Sync.new_connection!.subscribe('scales_response_channel') do |on|
+        on.message do |channel, message|
+          puts "Waiting for response"
+          response = JSON.parse(message)
+          response.should be_a(Array)
+          response.should have(3).entries
+        end
+      end
+      
+    end
     
-    job = Scales::PubSub::Sync.subscribe("scales_response_#{id}")
-    JSON.parse(job).should == response
+    @worker.process_request!
   end
   
   context "post processing" do
