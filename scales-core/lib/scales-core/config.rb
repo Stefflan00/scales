@@ -3,11 +3,12 @@ module Scales
     require 'ostruct'
     
     DEFAULTS = {
-      :host       => "localhost",
-      :port       => 6379,
-      :password   => nil,
-      :database   => 0,
-      :partials   => false
+      :host           => "localhost",
+      :port           => 6379,
+      :password       => nil,
+      :database       => 0,
+      :partials       => false,
+      :worker_threads => 30
     }
     
     @@pwd = "."

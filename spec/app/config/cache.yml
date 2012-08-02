@@ -3,15 +3,18 @@ development:
   port: 6379
   password: 
   database: 1
+  worker_threads: 10
 
 test:
   host: localhost
   port: 6379
   password: 
   database: 2
+  worker_threads: 5
 
 production:
   host: 123.123.123.123
   port: 6380
   password: secret
   database: 5
+  worker_threads: 30

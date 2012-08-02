@@ -4,6 +4,7 @@ development:
   password: 
   database: 1
   partials: false
+  worker_threads: 10
 
 test:
   host: localhost
@@ -11,6 +12,7 @@ test:
   password: 
   database: 2
   partials: false
+  worker_threads: 5
 
 production:
   host: localhost
@@ -18,3 +20,4 @@ production:
   password: 
   database: 0
   partials: false
+  worker_threads: 30

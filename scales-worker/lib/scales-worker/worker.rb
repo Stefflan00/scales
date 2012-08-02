@@ -3,9 +3,11 @@ module Scales
     class Worker
       attr_reader :app
       attr_reader :type
+      attr_reader :pool
+      attr_reader :status
     
       def initialize(type = Application::Rails)
-        @type, @app, @status = type, type.app, Status.new("localhost")
+        @type, @app, @status, @pool = type, type.app, Status.new("localhost"), []
         at_exit{ @status.stop! }
       end
       
@@ -43,22 +45,26 @@ module Scales
       end
       
       # Wait for a request, process it, publish the response and exit
-      def process_request!(should_wait_for_request_to_finish = false)
+      def process_request!
         job = Scales::Queue::Sync.pop
         id, response = nil, nil
         
-        Thread.abort_on_exception = true
-        thread = Thread.new do
-          Thread.current[:post_process_queue] = []
-          id, response = process!(job)
-          post_process!(job)
-          @status.put_response_in_queue!(response)
-          Scales::PubSub::Sync.publish("scales_response_#{id}", JSON.generate(response))
-        end
-        
-        thread.join if should_wait_for_request_to_finish
+        Thread.current[:post_process_queue] = []
+        id, response = process!(job)
+        post_process!(job)
+        @status.put_response_in_queue!(response)
+        Scales::PubSub::Sync.publish("scales_response_#{id}", JSON.generate(response))
         
         [id, response]
+      end
+      
+      def start_pool!(size = Scales.config.worker_threads)
+        Thread.abort_on_exception = true
+        size.times do
+          @pool << Thread.new do
+            loop{ process_request! }
+          end
+        end
       end
       
       # Loop the processing of requests
@@ -71,8 +77,9 @@ module Scales
         puts "Redis:          #{Scales.config.host}:#{Scales.config.port}/#{Scales.config.database}".green
         
         begin
-          loop{ process_request! }
+          start_pool!
         rescue Interrupt => e
+          @pool.map(&:exit)
           puts "Goodbye".green
         end
       end

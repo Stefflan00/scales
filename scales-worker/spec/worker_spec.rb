@@ -61,7 +61,7 @@ describe Scales::Worker::Worker do
     job = fixture "create_track_request.json"
     Scales::Queue::Sync.add(job)
     
-    id, response = @worker.process_request!(true)
+    id, response = @worker.process_request!
     
     job = Scales::PubSub::Sync.subscribe("scales_response_#{id}")
     JSON.parse(job).should == response
