@@ -24,7 +24,11 @@ module Scales
         env = Path.with_options_to_env(path)
         
         response  = @app.call(env)
-        response.last.close
+        puts "Env is: #{env.inspect}"
+        puts "Response is: #{response.inspect}"
+        response.last.close if response.last.respond_to?(:close)
+        
+        puts "Final response is: #{Response.to_string(response)}"
         
         Storage::Sync.set_content(path[:to], Response.to_string(response)) if path[:push]
         
@@ -37,7 +41,7 @@ module Scales
           
           begin
             response  = @app.call(request)
-            response.last.close
+            response.last.close if response.last.respond_to?(:close)
           rescue Exception => e
             puts e
           end

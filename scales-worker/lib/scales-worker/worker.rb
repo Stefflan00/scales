@@ -21,7 +21,7 @@ module Scales
         
         begin
           response  = @app.call(env)
-          response.last.close
+          response.last.close if response.last.respond_to?(:close)
           [id, Response.to_job(id, response)]
         rescue
           [id, [500, {}, ""]]
@@ -35,7 +35,7 @@ module Scales
           
           begin
             response  = @app.call(request)
-            response.last.close
+            response.last.close if response.last.respond_to?(:close)
           rescue Exception => e
             puts e
           end
