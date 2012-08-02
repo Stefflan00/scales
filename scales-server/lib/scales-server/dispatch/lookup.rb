@@ -4,7 +4,7 @@ module Scales
       module Lookup
         class << self
       
-          def ressource(env)
+          def resource(env)
             response = Storage::Async.get_content(path(env), Scales.config.partials)
             response.nil? ? render_not_found : render(response)
           end

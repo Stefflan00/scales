@@ -25,8 +25,8 @@ module Scales
           response  = @app.call(env)
           response.last.close if response.last.respond_to?(:close)
           [id, Response.to_job(id, response)]
-        rescue
-          [id, [500, {}, ""]]
+        rescue Exception => e
+          [id, [500, {}, e.to_s]]
         end
       end
       
@@ -53,7 +53,7 @@ module Scales
         id, response = process!(job)
         post_process!(job)
         @status.put_response_in_queue!(response)
-        Scales::PubSub::Sync.publish("scales_response_#{id}", JSON.generate(response))
+        Scales::Storage::Sync.connection.publish("scales_response_channel", JSON.generate(response))
         
         [id, response]
       end
