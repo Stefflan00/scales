@@ -24,11 +24,7 @@ module Scales
         env = Path.with_options_to_env(path)
         
         response  = @app.call(env)
-        puts "Env is: #{env.inspect}"
-        puts "Response is: #{response.inspect}"
         response.last.close if response.last.respond_to?(:close)
-        
-        puts "Final response is: #{Response.to_string(response)}"
         
         Storage::Sync.set_content(path[:to], Response.to_string(response)) if path[:push]
         
