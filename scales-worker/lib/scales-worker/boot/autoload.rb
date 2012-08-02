@@ -1,4 +1,5 @@
 require 'scales-core'
+require 'logger'
 
 autoload :Rake,     "scales-worker/boot/initializers/rake"
 autoload :Nokogiri, "scales-worker/boot/initializers/nokogiri"

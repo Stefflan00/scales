@@ -62,7 +62,14 @@ module Scales
         Thread.abort_on_exception = true
         size.times do
           @pool << Thread.new do
-            loop{ process_request! }
+            loop do
+              begin
+                process_request!
+              rescue Exception => e
+                @status.logger.error(e.to_s)
+                raise e if Scales.env == "test"
+              end
+            end
           end
         end
         sleep
@@ -75,6 +82,7 @@ module Scales
         puts "Environment:    #{Scales.env}".green
         puts "Application:    #{@type.name}".green
         puts "Path:           #{Dir.pwd}".green
+        puts "Log Path:       #{@status.log_path}".green
         puts "Threads:        #{Scales.config.worker_threads}".green
         puts "Redis:          #{Scales.config.host}:#{Scales.config.port}/#{Scales.config.database}".green
         

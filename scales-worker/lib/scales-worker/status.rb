@@ -2,12 +2,14 @@ module Scales
   module Worker
     
     class Status
-      attr_reader :key, :id, :address, :port
+      attr_reader :key, :id, :address, :port, :logger, :log_path
       
       def initialize address, port = nil
-        @id   = SecureRandom.hex(8)
-        @key  = "scales_worker_#{@id}"
+        @id             = SecureRandom.hex(8)
+        @key            = "scales_worker_#{@id}"
         @address, @port = address.to_s, port.to_s
+        @log_path       = "log/scales_worker.#{@id}.log"
+        @logger         = Logger.new(Scales.env == "test" ? STDOUT : @log_path)
       end
       
       def start!
