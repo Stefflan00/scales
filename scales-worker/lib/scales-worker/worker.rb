@@ -65,6 +65,7 @@ module Scales
             loop{ process_request! }
           end
         end
+        sleep
       end
       
       # Loop the processing of requests
@@ -74,6 +75,7 @@ module Scales
         puts "Environment:    #{Scales.env}".green
         puts "Application:    #{@type.name}".green
         puts "Path:           #{Dir.pwd}".green
+        puts "Threads:        #{Scales.config.worker_threads}".green
         puts "Redis:          #{Scales.config.host}:#{Scales.config.port}/#{Scales.config.database}".green
         
         begin
