@@ -4469,6 +4469,7 @@ replace(/(?:^|:|,)(?:\s*\[)+/g, ''))) {
         Log.__super__.constructor.apply(this, arguments);
         this.render();
         this.bindEvents();
+        this.changed = false;
         setInterval(function() {
           return _this.eventsDiv.animate({
             scrollTop: _this.eventsDiv[0].scrollHeight
@@ -4549,7 +4550,8 @@ replace(/(?:^|:|,)(?:\s*\[)+/g, ''))) {
             out += "<br/>&nbsp;&nbsp;&nbsp; -> " + item + " = " + data;
           }
         }
-        return this.eventsDiv.append(out);
+        this.eventsDiv.append(out);
+        return this.changed = true;
       };
   
       return Log;
@@ -4746,13 +4748,25 @@ replace(/(?:^|:|,)(?:\s*\[)+/g, ''))) {
     };
 
     function Resources() {
-      var _ref;
+      var _ref, _ref1,
+        _this = this;
       Resources.__super__.constructor.apply(this, arguments);
       _ref = [{}, {}, {}], this.resources = _ref[0], this.partials = _ref[1], this.servers = _ref[2];
+      _ref1 = [false, false], this.resourcesChanged = _ref1[0], this.partialsChanged = _ref1[1];
       this.colors = {};
       this.bindColors();
       this.render();
       this.bindEvents();
+      setInterval(function() {
+        if (_this.resourcesChanged) {
+          _this.resourcesChanged = false;
+          _this.renderResources(_this.resources, _this.resourcesDiv);
+        }
+        if (_this.partialsChanged) {
+          _this.partialsChanged = false;
+          return _this.renderResources(_this.partials, _this.partialsDiv);
+        }
+      }, 200);
     }
 
     Resources.prototype.activate = function() {
@@ -4786,27 +4800,27 @@ replace(/(?:^|:|,)(?:\s*\[)+/g, ''))) {
       var _this = this;
       Spine.bind('push_resource', function(resource) {
         _this.resources[resource.path] = resource;
-        return _this.renderResources(_this.resources, _this.resourcesDiv);
+        return _this.resourcesChanged = true;
       });
       Spine.bind('destroy_resource', function(resource) {
         delete _this.resources[resource.path];
-        return _this.renderResources(_this.resources, _this.resourcesDiv);
+        return _this.resourcesChanged = true;
       });
       Spine.bind('push_partial', function(partial) {
         _this.partials[partial.path] = partial;
-        return _this.renderResources(_this.partials, _this.partialsDiv);
+        return _this.partialsChanged = true;
       });
       Spine.bind('destroy_partial', function(partial) {
         delete _this.partials[partial.path];
-        return _this.renderResources(_this.partials, _this.partialsDiv);
+        return _this.partialsChanged = true;
       });
       Spine.bind('server_started', function(server) {
         _this.servers[server.id] = server;
-        return _this.renderResources(_this.resources, _this.resourcesDiv);
+        return _this.resourcesChanged = true;
       });
       return Spine.bind('server_stopped', function(server) {
         delete _this.servers[server.id];
-        return _this.renderResources(_this.resources, _this.resourcesDiv);
+        return _this.resourcesChanged = true;
       });
     };
 
@@ -5486,7 +5500,7 @@ replace(/(?:^|:|,)(?:\s*\[)+/g, ''))) {
     (function() {
       (function() {
       
-        __out.push('<header class="jumbotron subhead">\n  <h1>Resources</h1>\n  <p class="lead">Overview of all Resources, the Partials and Content Types</p>\n</header>\n\n<section>\n\n<div class="row">\n  \n  <div class="span4">\n    <div class="page-header"><h1>Resources</h1></div>\n    <div id="resources">\n      <div class="well dark-grey pagination-centered"><h2 class="white">0</h2></div>\n    </div>\n  </div>\n  \n  <div class="span4">\n    <div class="page-header"><h1>Partials</h1></div>\n    <div id="partials">\n      <div class="well dark-grey pagination-centered"><h2 class="white">0</h2></div>\n    </div>\n  </div>\n  \n  <div class="span4">\n    <div class="page-header"><h1>Content Types</h1></div>\n    <div id="content_types"></div>\n  </div>\n  \n</div>\n\n</section>\n');
+        __out.push('<header class="jumbotron subhead">\n  <h1>Resources</h1>\n  <p class="lead">Overview of all Resources, the Partials and Content Types</p>\n</header>\n\n<section>\n\n<div class="row">\n  \n  <div class="span4">\n    <div class="page-header"><h1>Resources</h1></div>\n    <div id="resources">\n      <div class="well dark-grey pagination-centered"><h2 class="white">0</h2></div>\n    </div>\n  </div>\n  \n  <div class="span4">\n    <div class="page-header"><h1>Partials</h1></div>\n    <div id="partials">\n      <div class="well dark-grey pagination-centered"><h2 class="white">0</h2></div>\n    </div>\n  </div>\n  \n  <div class="span4">\n    <div class="page-header"><h1>Content Types</h1></div>\n    <div id="content_types">\n      <div class="well dark-grey pagination-centered"><h2 class="white">0</h2></div>\n    </div>\n  </div>\n  \n</div>\n\n</section>\n');
       
       }).call(this);
       

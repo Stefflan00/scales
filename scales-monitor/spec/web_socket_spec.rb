@@ -60,18 +60,6 @@ describe Scales::Monitor::WebSocket do
       end
     end
     
-    it "sends responds" do
-      with_api(described_class, {:verbose => true, :log_stdout => true}) do |server|
-        json = "[302,{\"Location\":\"http://0.0.0.0:3005/tracks/170\",\"Content-Type\":\"text/html; charset=utf-8\",\"Set-Cookie\":\"_app_session=BAh7B0kiCmZsYXNoBjoGRUZvOiVBY3Rpb25EaXNwYXRjaDo6Rmxhc2g6OkZsYXNoSGFzaAk6CkB1c2VkbzoIU2V0BjoKQGhhc2h7ADoMQGNsb3NlZEY6DUBmbGFzaGVzewY6C25vdGljZUkiJFRyYWNrIHdhcyBzdWNjZXNzZnVsbHkgY3JlYXRlZC4GOwBGOglAbm93MEkiD3Nlc3Npb25faWQGOwBGSSIlZDkxNDA4OTFmMWVhZTJlNGU2MmM3MmRkOTA4NDZjODUGOwBU--fd4912d39bd51eedcd5bf0519a939e5b38317b34; path=/; HttpOnly\",\"scales.id\":\"155a255dd3604fa2e39469e30aef3206\"},\"<html><body>You are being <a href=\\\"http://0.0.0.0:3005/tracks/170\\\">redirected</a>.</body></html>\"]"
-        Scales::Storage::Async.connection.lpush("scales_response_155a255dd3604fa2e39469e30aef3206", json)
-        Scales::Storage::Async.connection.lpush("scales_response_155a255dd3604fa2e39469e30aef3207", json)
-
-        responses = described_class.new.instance_eval{ response_queue }
-        responses.should have_at_least(2).responses
-        EM.stop
-      end
-    end
-    
     it "sends push resources" do
       with_api(described_class, {:verbose => true, :log_stdout => true}) do |server|
         Scales::Storage::Async.flushall!      

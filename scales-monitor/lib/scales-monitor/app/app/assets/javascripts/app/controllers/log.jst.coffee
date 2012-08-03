@@ -7,6 +7,7 @@ class App.Log extends Spine.Controller
     super
     @render()
     @bindEvents()
+    @changed = false
     setInterval => 
       @eventsDiv.animate({ scrollTop: @eventsDiv[0].scrollHeight }, 500)
     , 1000
@@ -56,3 +57,4 @@ class App.Log extends Spine.Controller
         out += "<br/>&nbsp;&nbsp;&nbsp; -> #{item} = #{data}"
       
     @eventsDiv.append out
+    @changed = true

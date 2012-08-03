@@ -8,10 +8,20 @@ class App.Resources extends Spine.Controller
   constructor: ->
     super
     [@resources, @partials, @servers] = [{}, {}, {}]
+    [@resourcesChanged, @partialsChanged] = [false, false]
     @colors = {}
     @bindColors()
     @render()
     @bindEvents()
+    setInterval => 
+      if @resourcesChanged
+        @resourcesChanged = false
+        @renderResources(@resources, @resourcesDiv)
+      
+      if @partialsChanged
+        @partialsChanged = false
+        @renderResources(@partials, @partialsDiv)
+    , 200
   
   activate: ->
     @el.addClass("active")
@@ -40,27 +50,27 @@ class App.Resources extends Spine.Controller
     
     Spine.bind 'push_resource', (resource) =>
       @resources[resource.path] = resource
-      @renderResources(@resources, @resourcesDiv)
+      @resourcesChanged = true
     
     Spine.bind 'destroy_resource', (resource) =>
       delete @resources[resource.path]
-      @renderResources(@resources, @resourcesDiv)
+      @resourcesChanged = true
     
     Spine.bind 'push_partial', (partial) =>
       @partials[partial.path] = partial
-      @renderResources(@partials, @partialsDiv)
+      @partialsChanged = true
 
     Spine.bind 'destroy_partial', (partial) =>
       delete @partials[partial.path]
-      @renderResources(@partials, @partialsDiv)
+      @partialsChanged = true
     
     Spine.bind 'server_started', (server) =>
       @servers[server.id] = server
-      @renderResources(@resources, @resourcesDiv)
+      @resourcesChanged = true
 
     Spine.bind 'server_stopped', (server) =>
       delete @servers[server.id]
-      @renderResources(@resources, @resourcesDiv)
+      @resourcesChanged = true
   
   render: ->
     @html JST['app/views/resources'](@)
@@ -91,6 +101,7 @@ class App.Resources extends Spine.Controller
     div.html out
     div.tooltip({ selector: "a" })
     @renderContentTypes()
+    
   
   processContentTypes: ->
     formats = {}

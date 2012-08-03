@@ -6,7 +6,7 @@ module Scales
       
       def on_open(env)
         send_initial_statuses(env)
-        setup_subscription
+        setup_subscription!
         add_to_subscribers(env)
       end
 
@@ -15,7 +15,6 @@ module Scales
       end
 
       def on_message(env, msg)
-        env.stream_send(msg)
       end
 
       def on_close(env)
@@ -34,7 +33,7 @@ module Scales
       
       private
       
-      def setup_subscription
+      def setup_subscription!
         return if @subscribed
         @subscribers = []
         
@@ -43,6 +42,7 @@ module Scales
         events.on(:message) do |channel, message|
           @subscribers.each { |subscriber| subscriber.stream_send(message) }
         end
+        
         @subscribed = true
       end
       
@@ -60,7 +60,6 @@ module Scales
         worker_statuses.each{ |worker| env.stream_send(worker)    }
         
         request_queue.each{  |request| env.stream_send(request)   }
-        response_queue.each{ |request| env.stream_send(response)  }
         
         push_resources.each{ |resource| env.stream_send(resource) }
         push_partials.each{  |partial|  env.stream_send(partial)  }
@@ -107,26 +106,6 @@ module Scales
             :type       => "server_put_request_in_queue",
             :path       => job['PATH_INFO'],
             :method     => job['REQUEST_METHOD']
-          }.to_json
-        end
-        data
-      end
-      
-      def response_queue
-        responses = Storage::Async.connection.keys("scales_response_*")
-        return [] if responses.empty?
-        
-        data = []
-        responses.each do |response_key|
-          response = Storage::Async.connection.lindex(response_key, 0)
-          response = JSON.parse(response)
-          data << {
-            :id         => response[1]['scales.id'],
-            :worker_id  => nil,
-            :type       => "worker_put_response_in_queue",
-            :path       => response[1]['PATH_INFO'],
-            :method     => response[1]['REQUEST_METHOD'],
-            :status     => response[0]
           }.to_json
         end
         data

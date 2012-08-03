@@ -26,7 +26,7 @@ module Scales
         response  = @app.call(env)
         response.last.close if response.last.respond_to?(:close)
         
-        Storage::Sync.set_content(path[:to], Response.to_string(response)) if path[:push]
+        push_response(path, Response.to_string(response)) if path[:push]
         
         env
       end
@@ -69,6 +69,18 @@ module Scales
         
         puts "Pushing paths:  #{progress}% (#{@done}/#{@total})".green
         puts "Done.".green
+      end
+      
+      private
+      
+      def push_response(path, response)
+        Storage::Sync.set_content(path[:to], response) 
+        data = {
+          :path   => path[:to],
+          :format => path[:format].to_s.upcase,
+          :type   => "push_#{Cache.resource_or_partial?(path[:to])}"
+        }
+        Storage::Sync.connection.publish "scales_monitor_events", data.to_json
       end
     end
   end
