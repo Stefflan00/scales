@@ -62,7 +62,7 @@ describe Scales::Worker::Worker do
   it "process a whole iteration with the queue", :iteration do
     in_process_thread do
       job = fixture "create_track_request.json"
-      Scales::Queue::Sync.add(job)
+      Scales::Storage::Sync.add(Storage::REQUEST_QUEUE, job)
     
       Thread.new do
         sleep 2

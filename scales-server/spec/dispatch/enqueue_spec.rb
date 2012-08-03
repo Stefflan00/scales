@@ -14,7 +14,7 @@ describe Scales::Server::Dispatch::Enqueue do
         # Simulate response after 2 seconds
         EventMachine::Timer.new(2) do
           id = Scales::Storage::Sync.get("test_last_request_id")
-          Scales::Storage::Sync.connection.publish("scales_response_channel", JSON.generate([201,{ 'scales.id' => id },""]))
+          Scales::Storage::Sync.connection.publish(Scales::Storage::RESPONSE_CHANNEL, JSON.generate([201,{ 'scales.id' => id },""]))
         end
       
         post_request(:path => '/new') do |client|

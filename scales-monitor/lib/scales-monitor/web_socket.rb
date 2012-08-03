@@ -95,11 +95,11 @@ module Scales
       end
       
       def request_queue
-        requests = Storage::Async.connection.llen("scales_request_queue")
+        requests = Storage::Async.connection.llen(Scales::Storage::REQUEST_QUEUE)
         return [] if requests == 0
         
         data = []
-        Storage::Async.connection.lrange("scales_request_queue", 0, requests).each do |request|
+        Storage::Async.connection.lrange(Scales::Storage::REQUEST_QUEUE, 0, requests).each do |request|
           job = JSON.parse(request)
           data << {
             :id         => job['scales.id'],

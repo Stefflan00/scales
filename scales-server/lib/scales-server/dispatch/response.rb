@@ -31,7 +31,7 @@ module Scales
             connect!
             return if @@subscribed
 
-            @@redis.subscribe("scales_response_channel")
+            @@redis.subscribe(Storage::RESPONSE_CHANNEL)
             @@redis.on(:message) do |channel, message|
               response  = Job.to_response(message)
               id        = response[1]['scales.id']

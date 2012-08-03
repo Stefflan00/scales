@@ -16,7 +16,7 @@ describe Scales::Server::Dispatch::Response do
       # Simulate response after 2 seconds
       EventMachine::Timer.new(2) do
         @worker = Scales::Storage::Sync.new_connection!
-        @worker.publish("scales_response_channel", JSON.generate(@response))
+        @worker.publish(Scales::Storage::RESPONSE_CHANNEL, JSON.generate(@response))
       end
       
       described_class.subscribe(@id).should == @response

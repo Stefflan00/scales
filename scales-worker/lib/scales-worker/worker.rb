@@ -46,14 +46,14 @@ module Scales
       
       # Wait for a request, process it, publish the response and exit
       def process_request!
-        job = Thread.current[:redis_blocking].brpop(Scales::Queue::NAME, 0).last
+        job = Thread.current[:redis_blocking].brpop(Scales::Storage::REQUEST_QUEUE, 0).last
         id, response = nil, nil
         
         Thread.current[:post_process_queue] = []
         id, response = process!(job)
         post_process!(job)
         @status.put_response_in_queue!(response)
-        Thread.current[:redis_nonblocking].publish("scales_response_channel", JSON.generate(response))
+        Thread.current[:redis_nonblocking].publish(Scales::Storage::RESPONSE_CHANNEL, JSON.generate(response))
         
         [id, response]
       end

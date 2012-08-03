@@ -9,7 +9,7 @@ module Scales
             job = Request.to_job(id, env)
             
             Scales::Server.status.put_request_in_queue!(job)
-            Queue::Async.add(JSON.generate(job))
+            Storage::Async.add(Storage::REQUEST_QUEUE, JSON.generate(job))
           
             response = Response.subscribe(id)
             Scales::Server.status.took_response_from_queue!(response)

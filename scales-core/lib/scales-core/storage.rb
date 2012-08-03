@@ -1,7 +1,9 @@
 module Scales
   module Storage
-    RESOURCE_PREFIX = "scales_resource_"
-    PARTIAL_PREFIX  = "scales_partial_"
+    REQUEST_QUEUE     = "scales_request_queue"
+    RESPONSE_CHANNEL  = "scales_response_channel"
+    RESOURCE_PREFIX   = "scales_resource_"
+    PARTIAL_PREFIX    = "scales_partial_"
 
     autoload :Sync,   "scales-core/storage/sync"
     autoload :Async,  "scales-core/storage/async"
