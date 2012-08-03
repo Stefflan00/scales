@@ -10,8 +10,7 @@ Scales.pwd = Dir.pwd
 arguments = ARGV.dup
 while !arguments.empty? do
   argument  = arguments.shift
-  @port     = arguments.shift if argument == "-p" or argument == "--port"
-  @servers << argument
+  if argument == "-p" or argument == "--port" then @port = arguments.shift else @servers << argument end
 end
 
 Scales::Server::Proxy::Backend.add(@servers)
