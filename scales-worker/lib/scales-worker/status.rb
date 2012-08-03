@@ -10,6 +10,7 @@ module Scales
         @address, @port = address.to_s, port.to_s
         @log_path       = "log/scales_worker.#{@id}.log"
         @logger         = Logger.new(Scales.env == "test" ? STDOUT : @log_path)
+        @redis          = Scales::Storage::Sync.new_connection!
       end
       
       def start!
@@ -24,8 +25,8 @@ module Scales
         }
         json = JSON.generate(data)
         
-        Thread.current[:redis_nonblocking].set(@key, json)
-        Thread.current[:redis_nonblocking].publish("scales_monitor_events", json)
+        @redis.set(@key, json)
+        @redis.publish("scales_monitor_events", json)
         @already_stopped = false
       end
       
@@ -38,8 +39,8 @@ module Scales
           :type       => "worker_stopped"
         }
         json = JSON.generate(data)
-        Thread.current[:redis_nonblocking].del(@key)
-        Thread.current[:redis_nonblocking].publish("scales_monitor_events", json)
+        @redis.del(@key)
+        @redis.publish("scales_monitor_events", json)
         @already_stopped = true
       end
       
@@ -52,7 +53,7 @@ module Scales
           :method     => job['REQUEST_METHOD']
         }
         json = JSON.generate(data)
-        Thread.current[:redis_nonblocking].publish("scales_monitor_events", json)
+        @redis.publish("scales_monitor_events", json)
       end
       
       def put_response_in_queue!(response)
@@ -65,7 +66,7 @@ module Scales
           :status     => response[0]
         }
         json = JSON.generate(data)
-        Thread.current[:redis_nonblocking].publish("scales_monitor_events", json)
+        @redis.publish("scales_monitor_events", json)
       end
       
     end  

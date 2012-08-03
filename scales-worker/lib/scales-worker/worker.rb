@@ -9,7 +9,6 @@ module Scales
       def initialize(type = Application::Rails)
         @type, @app, @status, @pool = type, type.app, Status.new("localhost"), []
         at_exit{ @status.stop! }
-        Thread.current[:redis_nonblocking]  = Scales::Storage::Sync.new_connection!
       end
       
       def parse(job)
