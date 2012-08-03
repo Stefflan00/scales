@@ -24,8 +24,8 @@ module Scales
         }
         json = JSON.generate(data)
         
-        Storage::Sync.connection.set(@key, json)
-        Storage::Sync.connection.publish("scales_monitor_events", json)
+        Thread.current[:redis_nonblocking].set(@key, json)
+        Thread.current[:redis_nonblocking].publish("scales_monitor_events", json)
         @already_stopped = false
       end
       
@@ -38,8 +38,8 @@ module Scales
           :type       => "worker_stopped"
         }
         json = JSON.generate(data)
-        Storage::Sync.connection.del(@key)
-        Storage::Sync.connection.publish("scales_monitor_events", json)
+        Thread.current[:redis_nonblocking].del(@key)
+        Thread.current[:redis_nonblocking].publish("scales_monitor_events", json)
         @already_stopped = true
       end
       
@@ -52,7 +52,7 @@ module Scales
           :method     => job['REQUEST_METHOD']
         }
         json = JSON.generate(data)
-        Storage::Sync.connection.publish("scales_monitor_events", json)
+        Thread.current[:redis_nonblocking].publish("scales_monitor_events", json)
       end
       
       def put_response_in_queue!(response)
@@ -65,7 +65,7 @@ module Scales
           :status     => response[0]
         }
         json = JSON.generate(data)
-        Storage::Sync.connection.publish("scales_monitor_events", json)
+        Thread.current[:redis_nonblocking].publish("scales_monitor_events", json)
       end
       
     end  

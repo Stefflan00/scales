@@ -9,6 +9,7 @@ module Scales
       def initialize(type = Application::Rails)
         @type, @app, @status, @pool = type, type.app, Status.new("localhost"), []
         at_exit{ @status.stop! }
+        Thread.current[:redis_nonblocking]  = Scales::Storage::Sync.new_connection!
       end
       
       def parse(job)
@@ -46,14 +47,14 @@ module Scales
       
       # Wait for a request, process it, publish the response and exit
       def process_request!
-        job = Scales::Queue::Sync.pop
+        job = Thread.current[:redis_blocking].brpop(Scales::Queue::NAME, 0).last
         id, response = nil, nil
         
         Thread.current[:post_process_queue] = []
         id, response = process!(job)
         post_process!(job)
         @status.put_response_in_queue!(response)
-        Scales::Storage::Sync.connection.publish("scales_response_channel", JSON.generate(response))
+        Thread.current[:redis_nonblocking].publish("scales_response_channel", JSON.generate(response))
         
         [id, response]
       end
@@ -62,6 +63,8 @@ module Scales
         Thread.abort_on_exception = true
         size.times do
           @pool << Thread.new do
+            Thread.current[:redis_blocking]     = Scales::Storage::Sync.new_connection!
+            Thread.current[:redis_nonblocking]  = Scales::Storage::Sync.new_connection!
             loop do
               begin
                 process_request!

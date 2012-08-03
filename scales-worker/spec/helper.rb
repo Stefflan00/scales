@@ -18,6 +18,8 @@ module Helpers
   def in_process_thread
     thread = Thread.new do
       Thread.current[:post_process_queue] = []
+      Thread.current[:redis_blocking]     = Scales::Storage::Sync.new_connection!
+      Thread.current[:redis_nonblocking]  = Scales::Storage::Sync.new_connection!
       yield
     end.join
   end

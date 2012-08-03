@@ -32,49 +32,53 @@ describe Scales::Worker::Worker do
   end
   
   it "processes a job completely" do
-    Thread.current[:post_process_queue] = []
-    job           = fixture "create_track_request.json"
-    id, response  = @worker.process!(job)
+    in_process_thread do
+      job           = fixture "create_track_request.json"
+      id, response  = @worker.process!(job)
     
-    response.should be_a(Array)
-    response.should have(3).entries
-    response[0].should == 302
-    response[1].should be_a(Hash)
-    response[1]['scales.id'].should == "2c43b4fa508b923ad563b5395e1f4619"
-    response[2].should be_a(String)
+      response.should be_a(Array)
+      response.should have(3).entries
+      response[0].should == 302
+      response[1].should be_a(Hash)
+      response[1]['scales.id'].should == "2c43b4fa508b923ad563b5395e1f4619"
+      response[2].should be_a(String)
+    end
   end
   
   it "should not crash on a process error" do
-    Thread.current[:post_process_queue] = []
-    job           = fixture "no_route_request.json"
-    id, response  = @worker.process!(job)
+    in_process_thread do
+      job           = fixture "no_route_request.json"
+      id, response  = @worker.process!(job)
     
-    response.should be_a(Array)
-    response.should have(3).entries
-    response[0].should == 404
-    response[1].should be_a(Hash)
-    response[1]['scales.id'].should == "2c43b4fa508b923ad563b5395e1f4619"
-    response[2].should be_a(String)
+      response.should be_a(Array)
+      response.should have(3).entries
+      response[0].should == 404
+      response[1].should be_a(Hash)
+      response[1]['scales.id'].should == "2c43b4fa508b923ad563b5395e1f4619"
+      response[2].should be_a(String)
+    end
   end
   
   it "process a whole iteration with the queue", :iteration do
-    job = fixture "create_track_request.json"
-    Scales::Queue::Sync.add(job)
+    in_process_thread do
+      job = fixture "create_track_request.json"
+      Scales::Queue::Sync.add(job)
     
-    Thread.new do
-      sleep 2
-      Scales::Storage::Sync.new_connection!.subscribe('scales_response_channel') do |on|
-        on.message do |channel, message|
-          puts "Waiting for response"
-          response = JSON.parse(message)
-          response.should be_a(Array)
-          response.should have(3).entries
+      Thread.new do
+        sleep 2
+        Scales::Storage::Sync.new_connection!.subscribe('scales_response_channel') do |on|
+          on.message do |channel, message|
+            puts "Waiting for response"
+            response = JSON.parse(message)
+            response.should be_a(Array)
+            response.should have(3).entries
+          end
         end
-      end
       
-    end
+      end
     
-    @worker.process_request!
+      @worker.process_request!
+    end
   end
   
   context "post processing" do
