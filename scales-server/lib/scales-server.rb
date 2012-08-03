@@ -5,6 +5,7 @@ module Scales
     autoload :Status,       "scales-server/status"
     autoload :ContentType,  "scales-server/content_type"
     autoload :Server,       "scales-server/server"
+    autoload :Proxy,        "scales-server/proxy"
     autoload :Dispatch,     "scales-server/dispatch"
   end
 end

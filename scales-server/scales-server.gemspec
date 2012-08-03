@@ -20,4 +20,5 @@ Gem::Specification.new do |gem|
   gem.add_dependency  "rspec",        ">= 2.11"
   gem.add_dependency  "scales-core",  Scales::Server::VERSION
   gem.add_dependency  "goliath",      ">= 1.0.0.beta.1"
+  gem.add_dependency  "em-proxy",     ">= 0.1.6"
 end
